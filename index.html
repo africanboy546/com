@@ -1,0 +1,3765 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AfricanBoy 🚀 - Premium Creator Promotion Platform</title>
+    
+    <!-- SEO -->
+    <meta name="description" content="Free promotion platform for adult content creators. Showcase your profile, get discovered, and grow your audience with real-time analytics.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- Toastify -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --primary-light: #a78bfa;
+            --secondary: #ec4899;
+            --secondary-dark: #db2777;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --dark-lighter: #334155;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --gray-dark: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --twitter: #1da1f2;
+            --onlyfans: #00aff0;
+            --fansly: #9146ff;
+            --allaccessfans: #ff2d55;
+            --instagram: #e4405f;
+            --youtube: #ff0000;
+            --tiktok: #000000;
+            
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-dark: linear-gradient(135deg, var(--dark), var(--dark-light));
+            --gradient-twitter: linear-gradient(135deg, var(--twitter), #1a91da);
+            
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.25);
+            
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 9999px;
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== CONTAINERS ===== */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 6rem 0;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-secondary {
+            background: var(--dark-light);
+            color: var(--light);
+            border: 1px solid var(--dark-lighter);
+        }
+
+        .btn-secondary:hover {
+            background: var(--dark-lighter);
+            transform: translateY(-2px);
+        }
+
+        .btn-twitter {
+            background: var(--twitter);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-lg {
+            padding: 1.25rem 2.5rem;
+            font-size: 1.125rem;
+        }
+
+        /* ===== AGE GATE ===== */
+        .age-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .age-gate-content {
+            background: var(--dark-light);
+            border-radius: var(--radius-xl);
+            padding: 4rem;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow-2xl);
+            border: 1px solid var(--dark-lighter);
+            animation: scaleIn 0.6s ease;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 0.75rem 0;
+            background: rgba(15, 23, 42, 0.98);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--light);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding-top: 10rem;
+            padding-bottom: 6rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            z-index: -2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.1;
+            animation: slideUp 0.8s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            animation: slideUp 0.8s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: slideUp 0.8s ease 0.4s both;
+        }
+
+        /* ===== STATS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 5rem;
+        }
+
+        .stat-card {
+            background: var(--dark-light);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid var(--dark-lighter);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .stat-value {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== CREATORS GRID ===== */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .creators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .creator-card {
+            background: var(--dark-light);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid var(--dark-lighter);
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .creator-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .creator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
+        }
+
+        .creator-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .creator-cover {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .creator-cover-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .creator-card:hover .creator-cover-img {
+            transform: scale(1.1);
+        }
+
+        .creator-cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.95), transparent);
+        }
+
+        .creator-avatar {
+            position: absolute;
+            bottom: -50px;
+            left: 2rem;
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-full);
+            border: 4px solid var(--dark-light);
+            object-fit: cover;
+            background: var(--dark);
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .creator-card:hover .creator-avatar {
+            transform: scale(1.1);
+        }
+
+        .creator-badges {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            padding: 0.375rem 0.875rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-featured {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .badge-verified {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: white;
+        }
+
+        .badge-trending {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .badge-new {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .creator-info {
+            padding: calc(3rem + 50px) 2rem 2rem;
+        }
+
+        .creator-name {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .creator-username {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .creator-bio {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .creator-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-lg);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .creator-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            padding: 0.375rem 0.875rem;
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--primary);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .creator-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* ===== TWITTER FEED ===== */
+        .twitter-section {
+            background: var(--dark-light);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .twitter-header {
+            padding: 2rem;
+            background: var(--gradient-twitter);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .twitter-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .twitter-logo {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .twitter-feed-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .twitter-feed-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .twitter-feed-container::-webkit-scrollbar-track {
+            background: var(--dark-lighter);
+            border-radius: var(--radius-full);
+        }
+
+        .twitter-feed-container::-webkit-scrollbar-thumb {
+            background: var(--twitter);
+            border-radius: var(--radius-full);
+        }
+
+        .twitter-feed-container::-webkit-scrollbar-thumb:hover {
+            background: #1a91da;
+        }
+
+        .tweet-card {
+            background: var(--dark);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--dark-lighter);
+            transition: var(--transition);
+            animation: slideIn 0.5s ease;
+        }
+
+        .tweet-card:hover {
+            border-color: var(--twitter);
+            transform: translateX(5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tweet-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--twitter);
+        }
+
+        .tweet-user {
+            flex: 1;
+        }
+
+        .tweet-name {
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .tweet-handle {
+            color: var(--twitter);
+            font-size: 0.875rem;
+        }
+
+        .tweet-time {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .tweet-content {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .tweet-image {
+            width: 100%;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tweet-image:hover {
+            transform: scale(1.02);
+        }
+
+        .tweet-stats {
+            display: flex;
+            gap: 2rem;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .tweet-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .tweet-stat:hover {
+            color: var(--twitter);
+        }
+
+        .tweet-stat.liked {
+            color: #e0245e;
+        }
+
+        .tweet-stat.retweeted {
+            color: #17bf63;
+        }
+
+        /* ===== SUBMISSION FORM ===== */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--dark-light);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .form-progress::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--dark-lighter);
+            z-index: 1;
+        }
+
+        .progress-step {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--dark-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .progress-step.active,
+        .progress-step.completed {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+        }
+
+        .progress-step.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--dark);
+            border: 2px solid var(--dark-lighter);
+            border-radius: var(--radius-md);
+            color: var(--light);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .avatar-upload {
+            border: 3px dashed var(--dark-lighter);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-upload:hover {
+            border-color: var(--primary);
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .avatar-upload.dragover {
+            border-color: var(--primary);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .avatar-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--primary);
+            display: none;
+        }
+
+        .avatar-preview.show {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .cover-upload {
+            border: 3px dashed var(--dark-lighter);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .cover-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            display: none;
+            margin-bottom: 1rem;
+        }
+
+        .cover-preview.show {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--dark-lighter);
+        }
+
+        /* ===== ANALYTICS SECTION ===== */
+        .analytics-section {
+            background: var(--dark-light);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            margin-top: 3rem;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .analytics-card {
+            background: var(--dark);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border: 1px solid var(--dark-lighter);
+        }
+
+        .analytics-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .analytics-title i {
+            color: var(--primary);
+        }
+
+        /* ===== LIVE UPDATES ===== */
+        .live-updates {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 350px;
+        }
+
+        .live-notification {
+            background: var(--dark-light);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary);
+            box-shadow: var(--shadow-xl);
+            animation: slideInRight 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--dark-lighter);
+            transform-origin: right bottom;
+        }
+
+        .live-notification:hover {
+            transform: translateX(-5px);
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--light);
+        }
+
+        .notification-message {
+            color: var(--gray);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .notification-time {
+            color: var(--gray-dark);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .notification-close:hover {
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            background: white;
+            color: var(--primary);
+            font-size: 1.125rem;
+            padding: 1.25rem 3rem;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark-light);
+            border-top: 1px solid var(--dark-lighter);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid var(--dark-lighter);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--dark-lighter);
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        /* ===== CREATOR PROFILE MODAL ===== */
+        .profile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-modal.active {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .profile-modal-content {
+            background: var(--dark);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .profile-header {
+            padding: 4rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-wallpaper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.8));
+            z-index: 2;
+        }
+
+        .profile-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--light);
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-close:hover {
+            background: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .profile-header-content {
+            position: relative;
+            z-index: 3;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 3rem;
+            align-items: flex-end;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .profile-avatar-container {
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: var(--radius-full);
+            border: 6px solid var(--dark);
+            object-fit: cover;
+            box-shadow: var(--shadow-2xl);
+            background: var(--dark-light);
+        }
+
+        .profile-badges {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .profile-username {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .profile-bio-short {
+            font-size: 1.125rem;
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-stats {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            line-height: 1;
+        }
+
+        .profile-stat-label {
+            font-size: 0.875rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-actions {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        .profile-body {
+            padding: 4rem 0;
+            background: var(--dark-light);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .profile-section {
+            background: var(--dark);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--dark-lighter);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .profile-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .profile-section-title i {
+            color: var(--primary);
+        }
+
+        .about-me-content {
+            color: var(--gray);
+            line-height: 1.8;
+            font-size: 1.0625rem;
+        }
+
+        .about-me-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-me-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .content-type {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--primary);
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            transition: var(--transition);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .content-type:hover {
+            background: rgba(139, 92, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ===== SOCIAL LINKS ===== */
+        .social-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .social-links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .social-link-card {
+            background: var(--dark-lighter);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .social-link-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .social-icon.twitter { background: var(--twitter); }
+        .social-icon.instagram { background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d); }
+        .social-icon.onlyfans { background: var(--onlyfans); }
+        .social-icon.fansly { background: var(--fansly); }
+        .social-icon.allaccessfans { background: var(--allaccessfans); }
+        .social-icon.youtube { background: var(--youtube); }
+        .social-icon.tiktok { background: var(--tiktok); }
+        .social-icon.telegram { background: #0088cc; }
+        .social-icon.discord { background: #5865f2; }
+        .social-icon.snapchat { background: #fffc00; color: #000; }
+        .social-icon.twitch { background: #9146ff; }
+
+        .social-info {
+            flex: 1;
+        }
+
+        .social-platform {
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 0.25rem;
+        }
+
+        .social-handle {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .social-cta {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== PREMIUM LINKS SECTION ===== */
+        .premium-links {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .premium-links-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .premium-links-title i {
+            color: var(--primary);
+        }
+
+        .premium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .premium-card {
+            background: var(--dark);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .premium-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .premium-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .premium-icon.onlyfans { background: var(--onlyfans); }
+        .premium-icon.fansly { background: var(--fansly); }
+        .premium-icon.allaccessfans { background: var(--allaccessfans); }
+
+        .premium-name {
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+
+        .premium-desc {
+            color: var(--gray);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .premium-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .premium-features {
+            list-style: none;
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .premium-features li {
+            color: var(--gray);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .premium-features li i {
+            color: var(--success);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 2rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                box-shadow: var(--shadow-xl);
+                border-bottom: 1px solid var(--dark-lighter);
+            }
+            
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .profile-name {
+                font-size: 2rem;
+            }
+            
+            .profile-stat-value {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 2rem;
+            }
+            
+            .twitter-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .cta-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--dark-lighter);
+            border-radius: var(--radius-full);
+            border: 3px solid var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Age Gate -->
+    <div id="age-gate" class="age-gate">
+        <div class="age-gate-content">
+            <div style="width: 120px; height: 120px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 3.5rem; animation: pulse 2s infinite;">
+                🔞
+            </div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800;">Age Verification Required</h2>
+            <p style="font-size: 1.125rem; color: var(--gray); margin-bottom: 2.5rem; line-height: 1.6;">
+                This website contains adult-oriented promotional content. You must be at least 18 years old to enter.
+            </p>
+            <div style="display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 2rem;">
+                <button id="enter-btn" class="btn btn-primary btn-lg">
+                    <i class="fas fa-check-circle"></i> I am 18+ years old
+                </button>
+                <button id="exit-btn" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-times-circle"></i> Exit Site
+                </button>
+            </div>
+            <p style="font-size: 0.875rem; color: var(--gray-dark);">
+                By entering, you agree to our <a href="#terms" style="color: var(--primary); text-decoration: none; font-weight: 600;">Terms of Service</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Live Updates -->
+    <div class="live-updates" id="live-updates"></div>
+
+    <!-- Creator Profile Modal -->
+    <div id="profile-modal" class="profile-modal">
+        <div class="profile-modal-content">
+            <!-- Profile content loaded dynamically -->
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#home" class="logo">
+                <span class="logo-icon">🚀</span>
+                <span>AfricanBoy</span>
+                <span class="badge badge-trending" style="margin-left: 0.5rem;">PREMIUM</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#creators" class="nav-link">Creators</a></li>
+                <li><a href="#twitter" class="nav-link">Community</a></li>
+                <li><a href="#analytics" class="nav-link">Analytics</a></li>
+                <li><a href="#submit" class="nav-link">Get Listed</a></li>
+                <div class="nav-actions">
+                    <button id="theme-toggle" class="btn btn-sm btn-secondary">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#submit" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Submit Profile
+                    </a>
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero section">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title animate__animated animate__fadeInUp">
+                    Launch Your Creator Career 🚀
+                </h1>
+                <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
+                    Join thousands of content creators getting <span class="gradient-text">real-time promotion</span>, 
+                    detailed profiles, and exponential audience growth. 100% free, forever.
+                </p>
+                <div class="hero-buttons animate__animated animate__fadeInUp animate__delay-2s">
+                    <a href="#submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-bolt"></i> Start Free Promotion
+                    </a>
+                    <a href="#creators" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-users"></i> Browse Creators
+                    </a>
+                    <button id="demo-btn" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-play-circle"></i> Watch Demo
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card animate__animated animate__fadeInUp">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-value" id="live-creators">3,847</div>
+                    <p>Active Creators</p>
+                    <div class="stat-trend">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+47 this week</span>
+                    </div>
+                </div>
+                <div class="stat-card animate__animated animate__fadeInUp animate-delay-1">
+                    <div class="stat-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-value" id="live-views">8.2M</div>
+                    <p>Monthly Views</p>
+                    <div class="stat-trend">
+                        <i class="fas fa-fire"></i>
+                        <span>Trending +24%</span>
+                    </div>
+                </div>
+                <div class="stat-card animate__animated animate__fadeInUp animate-delay-2">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-value" id="live-growth">289%</div>
+                    <p>Avg. Growth</p>
+                    <div class="stat-trend">
+                        <i class="fas fa-rocket"></i>
+                        <span>Record high</span>
+                    </div>
+                </div>
+                <div class="stat-card animate__animated animate__fadeInUp animate-delay-3">
+                    <div class="stat-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="stat-value">24/7</div>
+                    <p>Live Updates</p>
+                    <div class="stat-trend">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Real-time data</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Creators -->
+    <section id="creators" class="section" style="background: linear-gradient(180deg, var(--dark) 0%, var(--dark-light) 100%);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🔥 Featured Creators</h2>
+                <p class="section-subtitle">Click any creator to view their detailed profile with "About Me" and social links</p>
+            </div>
+            
+            <div class="creators-grid" id="creators-grid">
+                <!-- Creators loaded dynamically -->
+            </div>
+            
+            <div class="load-more-container" style="text-align: center; margin-top: 3rem;">
+                <button id="load-more" class="btn btn-primary btn-lg">
+                    <span class="btn-text">
+                        <i class="fas fa-sync-alt"></i> Load More Creators
+                    </span>
+                    <div class="load-more-spinner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; border: 3px solid rgba(255, 255, 255, 0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; opacity: 0; transition: opacity 0.3s ease;"></div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Twitter Community Feed -->
+    <section id="twitter" class="section">
+        <div class="container">
+            <div class="twitter-section">
+                <div class="twitter-header">
+                    <div class="twitter-title">
+                        <i class="fab fa-twitter twitter-logo"></i>
+                        <div>
+                            <h2 style="color: white; font-size: 1.75rem; font-weight: 700;">Community Highlights</h2>
+                            <p style="color: rgba(255, 255, 255, 0.9);">Live from @africanboyyyyy & Featured Creators</p>
+                        </div>
+                    </div>
+                    <button id="refresh-tweets" class="btn btn-twitter">
+                        <i class="fas fa-sync-alt"></i> Refresh Feed
+                    </button>
+                </div>
+                
+                <div class="twitter-feed-container" id="twitter-feed">
+                    <!-- Tweets loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Preview -->
+    <section id="analytics" class="section" style="background: var(--dark-light);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">📊 Advanced Analytics</h2>
+                <p class="section-subtitle">Real-time insights and performance tracking for creators</p>
+            </div>
+            
+            <div class="analytics-section">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3 class="analytics-title">
+                            <i class="fas fa-chart-line"></i>
+                            Performance Metrics
+                        </h3>
+                        <div style="display: grid; gap: 1rem;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="color: var(--gray);">Engagement Rate</span>
+                                    <span style="color: var(--success); font-weight: 600;">8.7%</span>
+                                </div>
+                                <div style="height: 6px; background: var(--dark-lighter); border-radius: var(--radius-full); overflow: hidden;">
+                                    <div style="width: 87%; height: 100%; background: var(--success);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="color: var(--gray);">Avg. Daily Views</span>
+                                    <span style="color: var(--primary); font-weight: 600;">2,458</span>
+                                </div>
+                                <div style="height: 6px; background: var(--dark-lighter); border-radius: var(--radius-full); overflow: hidden;">
+                                    <div style="width: 75%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="color: var(--gray);">Conversion Rate</span>
+                                    <span style="color: var(--secondary); font-weight: 600;">4.2%</span>
+                                </div>
+                                <div style="height: 6px; background: var(--dark-lighter); border-radius: var(--radius-full); overflow: hidden;">
+                                    <div style="width: 42%; height: 100%; background: var(--secondary);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3 class="analytics-title">
+                            <i class="fas fa-users"></i>
+                            Audience Demographics
+                        </h3>
+                        <div style="display: grid; gap: 1rem;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="color: var(--gray);">Age 18-24</span>
+                                    <span style="color: var(--primary); font-weight: 600;">42%</span>
+                                </div>
+                                <div style="height: 6px; background: var(--dark-lighter); border-radius: var(--radius-full); overflow: hidden;">
+                                    <div style="width: 42%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="color: var(--gray);">Age 25-34</span>
+                                    <span style="color: var(--primary); font-weight: 600;">38%</span>
+                                </div>
+                                <div style="height: 6px; background: var(--dark-lighter); border-radius: var(--radius-full); overflow: hidden;">
+                                    <div style="width: 38%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="color: var(--gray);">Male/Female Ratio</span>
+                                    <span style="color: var(--secondary); font-weight: 600;">65/35</span>
+                                </div>
+                                <div style="height: 6px; background: var(--dark-lighter); border-radius: var(--radius-full); overflow: hidden;">
+                                    <div style="width: 65%; height: 100%; background: var(--secondary);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <button id="view-analytics" class="btn btn-primary btn-lg">
+                        <i class="fas fa-chart-bar"></i> View Full Analytics Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Submission Form -->
+    <section id="submit" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🚀 Get Listed on AfricanBoy</h2>
+                <p class="section-subtitle">Complete our verification process and start growing your audience today</p>
+            </div>
+            
+            <div class="form-container">
+                <!-- Progress Bar -->
+                <div class="form-progress">
+                    <div class="progress-step active" id="step-1">1</div>
+                    <div class="progress-step" id="step-2">2</div>
+                    <div class="progress-step" id="step-3">3</div>
+                </div>
+                
+                <!-- Step 1: Basic Info -->
+                <div class="form-step active" id="form-step-1">
+                    <h3 style="margin-bottom: 2rem; font-size: 1.75rem;">Basic Information</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-user-circle"></i>
+                            Profile Picture
+                        </label>
+                        <div class="avatar-upload" id="avatar-upload">
+                            <img id="avatar-preview" class="avatar-preview" alt="Preview">
+                            <div id="upload-area">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                                <p style="font-size: 1.125rem; margin-bottom: 0.5rem;">Drag & drop your photo</p>
+                                <p style="color: var(--gray);">or click to browse (Max 10MB)</p>
+                            </div>
+                        </div>
+                        <input type="file" id="avatar-input" accept="image/*" hidden>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-image"></i>
+                            Profile Wallpaper
+                        </label>
+                        <div class="cover-upload" id="cover-upload">
+                            <img id="cover-preview" class="cover-preview" alt="Cover Preview">
+                            <div id="cover-upload-area">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                                <p style="font-size: 1.125rem; margin-bottom: 0.5rem;">Drag & drop your wallpaper</p>
+                                <p style="color: var(--gray);">or click to browse (Max 20MB)</p>
+                            </div>
+                        </div>
+                        <input type="file" id="cover-input" accept="image/*" hidden>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="username" class="form-label">
+                            <i class="fas fa-at"></i>
+                            Username *
+                        </label>
+                        <input type="text" id="username" class="form-control" placeholder="your_unique_username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="display-name" class="form-label">
+                            <i class="fas fa-id-card"></i>
+                            Display Name *
+                        </label>
+                        <input type="text" id="display-name" class="form-control" placeholder="Your Public Name" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <div></div>
+                        <button class="btn btn-primary" onclick="nextStep(2)">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Details -->
+                <div class="form-step" id="form-step-2">
+                    <h3 style="margin-bottom: 2rem; font-size: 1.75rem;">Profile Details</h3>
+                    
+                    <div class="form-group">
+                        <label for="bio" class="form-label">
+                            <i class="fas fa-edit"></i>
+                            About Me *
+                        </label>
+                        <textarea id="bio" class="form-control form-textarea" placeholder="Tell us about yourself, your content, and what makes you unique..." required></textarea>
+                        <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                            <span style="color: var(--gray); font-size: 0.875rem;">
+                                Minimum 50 characters, maximum 500
+                            </span>
+                            <span id="char-count" style="color: var(--gray); font-size: 0.875rem;">0/500</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-tags"></i>
+                            Content Categories *
+                        </label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;" id="categories-container">
+                            <!-- Categories loaded by JS -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn btn-secondary" onclick="prevStep(1)">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-primary" onclick="nextStep(3)">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Social & Submit -->
+                <div class="form-step" id="form-step-3">
+                    <h3 style="margin-bottom: 2rem; font-size: 1.75rem;">Social Links & Verification</h3>
+                    
+                    <div class="form-group">
+                        <label for="twitter-handle" class="form-label">
+                            <i class="fab fa-twitter"></i>
+                            Twitter/X Handle
+                        </label>
+                        <input type="text" id="twitter-handle" class="form-control" placeholder="@yourusername">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-link"></i>
+                            Social Media Links
+                        </label>
+                        <input type="url" id="twitter-link" class="form-control" style="margin-bottom: 1rem;" placeholder="https://twitter.com/yourusername">
+                        <input type="url" id="instagram-link" class="form-control" style="margin-bottom: 1rem;" placeholder="https://instagram.com/yourusername">
+                        <input type="url" id="tiktok-link" class="form-control" style="margin-bottom: 1rem;" placeholder="https://tiktok.com/@yourusername">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-crown"></i>
+                            Premium Platform Links
+                        </label>
+                        <input type="url" id="onlyfans-link" class="form-control" style="margin-bottom: 1rem;" placeholder="https://onlyfans.com/yourname">
+                        <input type="url" id="fansly-link" class="form-control" style="margin-bottom: 1rem;" placeholder="https://fansly.com/yourname">
+                        <input type="url" id="allaccessfans-link" class="form-control" placeholder="https://allaccessfans.com/yourname">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope"></i>
+                            Email Address *
+                        </label>
+                        <input type="email" id="email" class="form-control" placeholder="you@example.com" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn btn-secondary" onclick="prevStep(2)">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-primary" onclick="submitForm()">
+                            <i class="fas fa-paper-plane"></i> Submit for Review
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Showcase Your Profile? 🚀</h2>
+                <p class="cta-subtitle">
+                    Join thousands of creators who've already connected with their audience through our platform.
+                    No fees, no commissions, just pure growth.
+                </p>
+                <a href="#submit" class="cta-button">
+                    <i class="fas fa-rocket"></i> Create Your Profile Now
+                </a>
+                <p style="color: rgba(255, 255, 255, 0.7); margin-top: 2rem; font-size: 0.875rem;">
+                    ⚡ 24-hour approval • 🔒 100% free forever • 📈 Real-time analytics
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#home" class="logo" style="margin-bottom: 1.5rem; font-size: 1.5rem;">
+                        <span>🚀</span>
+                        <span>AfricanBoy</span>
+                    </a>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem; line-height: 1.6;">
+                        Advanced promotion platform for content creators. Real-time analytics, detailed profiles, and audience growth tools.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://twitter.com/africanboyyyyy" target="_blank" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4>Platform</h4>
+                    <ul class="footer-links">
+                        <li><a href="#creators"><i class="fas fa-chevron-right"></i> Browse Creators</a></li>
+                        <li><a href="#twitter"><i class="fas fa-chevron-right"></i> Community</a></li>
+                        <li><a href="#analytics"><i class="fas fa-chevron-right"></i> Analytics</a></li>
+                        <li><a href="#submit"><i class="fas fa-chevron-right"></i> Submit Profile</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#blog"><i class="fas fa-chevron-right"></i> Creator Blog</a></li>
+                        <li><a href="#guides"><i class="fas fa-chevron-right"></i> Growth Guides</a></li>
+                        <li><a href="#tools"><i class="fas fa-chevron-right"></i> Free Tools</a></li>
+                        <li><a href="#api"><i class="fas fa-chevron-right"></i> API Access</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#help"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#status"><i class="fas fa-chevron-right"></i> System Status</a></li>
+                        <li><a href="#report"><i class="fas fa-chevron-right"></i> Report Issues</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 AfricanBoy. All rights reserved. This platform does not host explicit content.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.75rem;">
+                    <i class="fas fa-shield-alt"></i> 100% Secure • <i class="fas fa-bolt"></i> Real-time Updates • <i class="fas fa-server"></i> 99.9% Uptime
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        // ===== PLATFORM DATA =====
+        const PlatformData = {
+            creators: [],
+            tweets: [],
+            categories: [
+                'Cosplay', 'Gaming', 'Fitness', 'Lifestyle', 'ASMR', 'Art',
+                'Music', 'Cooking', 'Education', 'Comedy', 'Dance', 'Fashion',
+                'Beauty', 'Travel', 'Food', 'Technology', 'Business', 'Health',
+                'Photography', 'Writing', 'Podcasting', 'Streaming', 'Modeling'
+            ],
+            currentPage: 1,
+            creatorsPerPage: 12,
+            totalCreators: 48,
+            notifications: [],
+            formData: {}
+        };
+
+        // ===== SAMPLE CREATORS WITH REAL DATA =====
+        const sampleCreators = [
+            {
+                id: 1,
+                name: "Caramel Mocha 🌸",
+                username: "caramellmocha69",
+                bio: "Sexual Misfit 💦 😈..…………. Join my Premium TG (100$)💰..……………. W/A : 0533671193 ❌NO MEETUPs DM for SVC /FT Shows",
+                tags: ["Gaming", "Cosplay", "Modeling"],
+                stats: {
+                    followers: "85.2K",
+                    views: "2.5M",
+                    likes: "45.8K",
+                    growth: "+35%"
+                },
+                isFeatured: true,
+                isVerified: true,
+                isTrending: true,
+                avatar: "https://pbs.twimg.com/profile_images/1929814754635182080/nT_kYY_x_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=large",
+                aboutMe: "Hello! I'm Caramel, a passionate content creator specializing in gaming and cosplay. I've been creating content for over 3 years and have built an amazing community of supporters. My mission is to create authentic, engaging content that inspires and entertains. When I'm not creating content, you can find me exploring new games, connecting with other creators, and constantly learning new skills to improve my craft. I believe in building genuine connections with my audience and creating a positive, inclusive community where everyone feels welcome.",
+                socialLinks: {
+                    twitter: "https://x.com/caramellmocha69?s=20",
+                    instagram: "https://www.finsta.app/caramellmocha69",
+                    onlyfans: "https://www.youfanly.com/caramellmocha69",
+                    fansly: "https://www.fanvue.com/therealcm",
+                    allaccessfans: "https://allaccessfans.co/u/caramellmocha69"
+                }
+            },
+            {
+                id: 2,
+                name: "🦋Main🦋",
+                username: "Main_lifestyle",
+                bio: "🎀MAIN🦋 cultists wife |Ego sexual| |B!| 21+| FINDOM BRAT🎀Your juicy distraction on here🫧💧 |MY ONLY X PAGE|@anastysoul60600|NO COLLABS ✖️✖️SOLO ONLY 🪸🦋||",
+                tags: ["Fitness", "Health", "Lifestyle"],
+                stats: {
+                    followers: "120.5K",
+                    views: "4.2M",
+                    likes: "89.3K",
+                    growth: "+42%"
+                },
+                isFeatured: true,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/2003416528755085312/Qju7_kLn_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/profile_banners/1549515519866376204/1759778242/1500x500",
+                aboutMe: " 🎀MAIN🦋 cultists wife |Ego sexual| |B!| 21+| FINDOM BRAT🎀Your juicy distraction on here🫧💧 |MY ONLY X PAGE|@anastysoul60600|NO COLLABS ✖️✖️SOLO ONLY 🪸🦋|",
+                socialLinks: {
+                    twitter: "https://x.com/Main_lifestyle?s=20",
+                    instagram: "https://www.finsta.app/main_lifestyle",
+                    onlyfans: "https://allaccessfans.co/u/main",
+                    fansly: "https://t.me/+E4GQ6MaQQJpiNjA0",
+                    tiktok: "https://www.tiktok.com/@mssss.main"
+                }
+            },
+            {
+                id: 3,
+                name: "SPICY ✨",
+                username: "sedooterr",
+                bio: "Lala is my new name•Masterpiece•Mastermind•Model• ✉️tulesedooter@yahoo.com IG:sedooter_",
+                tags: ["ASMR", "Relaxation", "Wellness"],
+                stats: {
+                    followers: "95.8K",
+                    views: "3.8M",
+                    likes: "78.4K",
+                    growth: "+28%"
+                },
+                isFeatured: true,
+                isVerified: true,
+                isTrending: true,
+                avatar: "https://pbs.twimg.com/profile_images/1957743760139272192/JsiyHnax_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/profile_banners/1267858401343700992/1748266144/1500x500",
+                aboutMe: " Lala is my new name•Masterpiece•Mastermind•Model• ✉️tulesedooter@yahoo.com IG:sedooter_",
+                socialLinks: {
+                    twitter: "https://x.com/sedooterr",
+                    instagram: "https://www.instagram.com/sedooter_/#",
+                    youtube: "https://www.youtube.com/@sedooter",
+                    onlyfans: "https://allaccessfans.co/SpiceyDD",
+                    fansly: "https://x.com/sedooterr"
+                }
+            },
+            {
+                id: 4,
+                name: "Adeline Thompson 🎨",
+                username: "lingeriegirlie_",
+                bio: "a tribute to Hot weirdos, Lingerie, Bikinis, and SEX APPEAL !♡ How cunty can it get?😛✨IG: adeline._.thompson□ !MY ONLY ACCOUNT!♡¡",
+                tags: ["Art", "Digital Art", "Tutorials"],
+                stats: {
+                    followers: "68.3K",
+                    views: "1.9M",
+                    likes: "32.7K",
+                    growth: "+19%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1984199240940126208/JFEfKI29_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/profile_banners/1390424551964749824/1761904938/1500x500",
+                aboutMe: " a tribute to Hot weirdos, Lingerie, Bikinis, and SEX APPEAL !♡ How cunty can it get?😛✨IG: adeline._.thompson□ !MY ONLY ACCOUNT!♡¡",
+                socialLinks: {
+                    twitter: "https://x.com/lingeriegirlie_?s=20t",
+                    instagram: "https://allaccessfans.co/u/Miss_Pearline",
+                    youtube: "https://allaccessfans.co/u/Miss_Pearline",
+                    fansly: "https://allaccessfans.co/u/Miss_Pearline",
+                    twitch: "https://allaccessfans.co/u/Miss_Pearline"
+                }
+            },
+            {
+                id: 5,
+                name: "Temitope🤍",
+                username: "Temitope_Fire",
+                bio: "solo content creator// voice cum 💦 therapist 💯 tip me: https://youfanly.com/tip/temimabel001//backup acct: @Temitope_Backup",
+                tags: ["Music", "Songwriting", "Performance"],
+                stats: {
+                    followers: "142.7K",
+                    views: "5.6M",
+                    likes: "128.9K",
+                    growth: "+56%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: true,
+                avatar: "https://pbs.twimg.com/profile_images/1873805183257362432/-QopPBAy_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/profile_banners/1509268538862747656/1736695332/1500x500",
+                aboutMe: "solo content creator// voice cum 💦 therapist 💯 tip me: https://youfanly.com/tip/temimabel001//backup acct: @Temitope_Backup",
+                socialLinks: {
+                    twitter: "https://x.com/Temitope_Fire?s=20",
+                    instagram: "https://www.youfanly.com/temimabel001",
+                    youtube: "https://www.youfanly.com/temimabel001",
+                    tiktok: "https://www.youfanly.com/temimabel001",
+                    onlyfans: "https://www.youfanly.com/temimabel001"
+                }
+            },
+            {
+                id: 6,
+                name: "theAsexualSlurt💘",
+                username: "purple_ogbanje",
+                bio: "🔞21+ | ♒️ a naughty afrohemian goddess🐈💘 | (@realpotheadshit) | 🎄🎁 https://glowclub.tv/theAsexualSlurt ☃️ | DM FEE 33$❗️",
+                tags: ["Yoga", "Wellness", "Meditation"],
+                stats: {
+                    followers: "78.4K",
+                    views: "2.3M",
+                    likes: "41.2K",
+                    growth: "+22%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1874800144148832257/J1_VHGk9_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/profile_banners/1650062609901649920/1758031934/1500x500",
+                aboutMe: "Hi there, I’m theAsexualSlurt (a purple ogbanje)🐈Aquarius • Exhibitionist/Voyeur • Pansexual switch • Polyamorous Neurodivergent whore🌚my favorite color isn’t purple but my favorite things to do are kush, create art & behold art💘 (fun fact? I believe sex is art)  and  I stand  for  human rights  🚺🏳️‍⚧️🏳️‍🌈@thePreacherMn’s hotwife/cucqueen, I love watching & being watched. Makes me feel so good💦 kink & fetish friendly too😈Click the link in my main bio for more of me🌶️🔞NO  COLLABS  OR  MEETUPS ‼️and  please don’t text  me  without paying  my  $33 DM  fee cause  you’ll never  get  a  reply  💋",
+                socialLinks: {
+                    instagram: "https://x.com/purple_ogbanje?s=20",
+                    youtube: "https://www.manyvids.com/Profile/1005759305/theasexualslurt/Store/Videos",
+                    tiktok: "https://www.tiktok.com/@theasexualslurt",
+                    fansly: "https://www.youfanly.com/theasexualslurt",
+                    allaccessfans: "https://allaccessfans.co/u/theAsexualSlurt"
+                }
+            },
+            {
+                id: 7,
+                name: "Gray Africana 🔞",
+                username: "gray_africana",
+                bio: "Fashion Model | Adult Entertainer🔞| Video Vixen | My only X account | Email gray.africana@wildlagos.com for Bookings | NO DMs ❌🚫",
+                tags: ["Fashion", "Style", "Beauty"],
+                stats: {
+                    followers: "210.3K",
+                    views: "8.7M",
+                    likes: "198.5K",
+                    growth: "+67%"
+                },
+                isFeatured: true,
+                isVerified: true,
+                isTrending: true,
+                avatar: "https://pbs.twimg.com/profile_images/1966086579962744832/5-adTXmd_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/profile_banners/1672875773416419328/1760447814/1500x500",
+                aboutMe: "Fashion Model | Adult Entertainer🔞| Video Vixen | My only X account | Email gray.africana@wildlagos.com for Bookings | NO DMs ❌🚫",
+                socialLinks: {
+                    twitter: "https://x.com/gray_africana?s=20",
+                    instagram: "https://t.me/+KX9UwfR3g7FlM2Y8",
+                    tiktok: "https://www.tiktok.com/@grayafricana",
+                    onlyfans: "https://www.xvideos.com/channels/sexy_gray2#_tabRed",
+                    fansly: "https://allaccessfans.co/Grayslimzy"
+                }
+            },
+            {
+                id: 8,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "95.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            }
+        ];
+
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 AfricanBoy Premium Platform Initializing...');
+            
+            // Load initial data
+            initializeData();
+            
+            // Initialize all components
+            initializeAgeGate();
+            initializeNavigation();
+            initializeHero();
+            initializeCreators();
+            initializeTwitterFeed();
+            initializeForm();
+            initializeAnalytics();
+            initializeLiveUpdates();
+            initializeTheme();
+            initializeProfileModal();
+            
+            // Start real-time updates
+            startRealTimeUpdates();
+            
+            console.log('✅ AfricanBoy Premium Platform Ready!');
+            
+            // Show welcome notification
+            setTimeout(() => {
+                addNotification('Welcome to AfricanBoy! 🎉', 'Click any creator card to view detailed profiles with "About Me" and social links.', 'welcome');
+            }, 2000);
+        });
+
+        // ===== DATA INITIALIZATION =====
+        function initializeData() {
+            // Add sample creators
+            PlatformData.creators = [...sampleCreators];
+            
+            // Generate additional creators
+            for (let i = 9; i <= 50; i++) {
+                PlatformData.creators.push(generateCreator(i));
+            }
+            
+            // Generate sample tweets
+            for (let i = 0; i < 20; i++) {
+                PlatformData.tweets.push(generateTweet(i + 1));
+            }
+        }
+
+        function generateCreator(id) {
+            const names = [
+                'Real Vun', 'Mia Garcia', 'Chloe Rodriguez', 'Ethan Williams',
+                'Noah Johnson', 'Liam Brown', 'Lucas Miller', 'Mason Davis'
+            ];
+            
+            const bios = [
+                'Content creator exploring digital art and animation techniques',
+                'Fitness enthusiast sharing workout routines and nutrition tips',
+                'Travel vlogger documenting adventures around the world',
+                'Tech reviewer providing honest gadget reviews and tutorials',
+                'Lifestyle influencer sharing daily routines and productivity tips',
+                'Makeup artist creating transformative beauty looks',
+                'Podcast host discussing mental health and personal growth',
+                'Streamer building community through gaming and interaction'
+            ];
+            
+            const avatars = [
+                'https://pbs.twimg.com/profile_images/1849839655992295426/hVLG1Lvf_400x400.jpg',
+                'https://pbs.twimg.com/profile_images/1849839655992295426/hVLG1Lvf_400x400.jpg',
+                'https://pbs.twimg.com/profile_images/1849839655992295426/hVLG1Lvf_400x400.jpg',
+                'https://pbs.twimg.com/profile_images/1849839655992295426/hVLG1Lvf_400x400.jpg'
+            ];
+            
+            const wallpapers = [
+                'https://pbs.twimg.com/community_banner_img/1973315790838665216/K5nufKpd?format=jpg&name=360x360',
+                'https://pbs.twimg.com/community_banner_img/1973315790838665216/K5nufKpd?format=jpg&name=360x360',
+                'https://pbs.twimg.com/community_banner_img/1973315790838665216/K5nufKpd?format=jpg&name=360x360',
+                'https://pbs.twimg.com/community_banner_img/1973315790838665216/K5nufKpd?format=jpg&name=360x360'
+            ];
+            
+            const nameIndex = (id - 9) % names.length;
+            const bioIndex = (id - 9) % bios.length;
+            const avatarIndex = (id - 9) % avatars.length;
+            const wallpaperIndex = (id - 9) % wallpapers.length;
+            
+            const name = names[nameIndex];
+            const username = name.toLowerCase().replace(' ', '_') + '_' + id;
+            
+            return {
+                id: id,
+                name: `${name} ${['🌸', '💪', '✨', '🎨', '🎵', '🧘‍♀️', '👗', '🍳'][nameIndex]}`,
+                username: username,
+                bio: bios[bioIndex],
+                tags: ['Digital Art', 'Fitness', 'Travel', 'Tech', 'Lifestyle', 'Beauty', 'Podcast', 'Gaming'][bioIndex].split(','),
+                stats: {
+                    followers: `${(Math.random() * 200 + 30).toFixed(1)}K`,
+                    views: `${(Math.random() * 5 + 1).toFixed(1)}M`,
+                    likes: `${(Math.random() * 100 + 20).toFixed(1)}K`,
+                    growth: `+${Math.floor(Math.random() * 40 + 10)}%`
+                },
+                isFeatured: id <= 12,
+                isVerified: id <= 20 || Math.random() > 0.5,
+                isTrending: id <= 15 || Math.random() > 0.6,
+                avatar: avatars[avatarIndex],
+                wallpaper: wallpapers[wallpaperIndex],
+                aboutMe: `Hi, I'm ${name.split(' ')[0]}! I'm passionate about creating content that inspires and entertains. With ${Math.floor(Math.random() * 5) + 1} years of experience, I've learned that authenticity is key to building a genuine community. My content focuses on sharing knowledge, experiences, and creative expressions that resonate with people from all walks of life. I believe in continuous growth, learning from challenges, and celebrating every milestone along the way.`,
+                socialLinks: {
+                    twitter: `https://twitter.com/${username}`,
+                    instagram: `https://instagram.com/${username}`,
+                    onlyfans: `https://onlyfans.com/${username}`,
+                    fansly: `https://fansly.com/${username}`,
+                    tiktok: `https://tiktok.com/@${username}`
+                }
+            };
+        }
+
+        function generateTweet(id) {
+            const users = [
+                { name: 'Caramel Mocha', handle: 'caramellmocha69', avatar: 'https://pbs.twimg.com/profile_images/1929814754635182080/nT_kYY_x_400x400.jpg' },
+                { name: 'Caramel Mocha', handle: 'caramellmocha69', avatar: 'https://pbs.twimg.com/profile_images/1929814754635182080/nT_kYY_x_400x400.jpg' },
+                { name: 'Caramel Mocha', handle: 'caramellmocha69', avatar: 'https://pbs.twimg.com/profile_images/1929814754635182080/nT_kYY_x_400x400.jpg' },
+                { name: 'Caramel Mocha', handle: 'caramellmocha69', avatar: 'https://pbs.twimg.com/profile_images/1929814754635182080/nT_kYY_x_400x400.jpg' }
+            ];
+            
+            const contents = [
+                "Too hot for free previews—full video only on her link 🔗🔥",
+                "You deserve this view… and more. 💎",
+                "Tonight she's not holding back. You ready?😋🥰🫣",
+                "💘‼️That smile hides dangerous thoughts 😈‼️💘",
+                "Warning: You won't last 5 minutes watching her newest drop.🥹🐱🥹",
+                "VIP access unlocked—if you dare🤯😋🫣",
+                "Just dropped new content that's breaking the internet! 🔥",
+                "She saves her wildest for AllAccessFans🙏🔗🥰"
+            ];
+            
+            const images = [
+                'https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=large',
+                'https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=large',
+                'https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=large',
+                'https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=large'
+            ];
+            
+            const user = users[id % users.length];
+            const timeAgo = `${Math.floor(Math.random() * 24)}h`;
+            const likes = 100 + Math.floor(Math.random() * 400);
+            const retweets = 20 + Math.floor(Math.random() * 100);
+            const replies = 10 + Math.floor(Math.random() * 50);
+            
+            return {
+                id: id,
+                user: user,
+                content: contents[id % contents.length],
+                image: images[id % images.length],
+                timeAgo: timeAgo,
+                likes: likes,
+                retweets: retweets,
+                replies: replies,
+                isLiked: Math.random() > 0.8,
+                isRetweeted: Math.random() > 0.9
+            };
+        }
+
+        // ===== AGE GATE =====
+        function initializeAgeGate() {
+            const ageVerified = localStorage.getItem('age-verified') === 'true';
+            const ageGate = document.getElementById('age-gate');
+            
+            if (!ageVerified) {
+                ageGate.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            } else {
+                ageGate.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+            
+            document.getElementById('enter-btn').addEventListener('click', () => {
+                localStorage.setItem('age-verified', 'true');
+                ageGate.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                
+                showToast('🎉 Welcome to AfricanBoy Premium! Click any creator card to view detailed profiles.', 'success');
+            });
+            
+            document.getElementById('exit-btn').addEventListener('click', () => {
+                window.location.href = 'https://www.google.com';
+            });
+        }
+
+        // ===== NAVIGATION =====
+        function initializeNavigation() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const navMenu = document.getElementById('nav-menu');
+            const navbar = document.getElementById('navbar');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navMenu.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // Theme toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // ===== HERO =====
+        function initializeHero() {
+            // Demo button
+            document.getElementById('demo-btn').addEventListener('click', () => {
+                showToast('🎬 Platform demo coming soon! In the meantime, check out our amazing creators.', 'info');
+            });
+            
+            // Animate stats
+            animateStats();
+        }
+
+        function animateStats() {
+            const stats = ['live-creators', 'live-views', 'live-growth'];
+            stats.forEach(statId => {
+                const element = document.getElementById(statId);
+                if (element) {
+                    const target = parseInt(element.textContent.replace(/[^0-9]/g, ''));
+                    animateCounter(element, target);
+                }
+            });
+        }
+
+        // ===== CREATORS =====
+        function initializeCreators() {
+            renderCreators();
+            
+            // Load more button
+            document.getElementById('load-more').addEventListener('click', loadMoreCreators);
+        }
+
+        function renderCreators() {
+            const grid = document.getElementById('creators-grid');
+            const startIndex = (PlatformData.currentPage - 1) * PlatformData.creatorsPerPage;
+            const endIndex = startIndex + PlatformData.creatorsPerPage;
+            const currentCreators = PlatformData.creators.slice(startIndex, endIndex);
+            
+            if (PlatformData.currentPage === 1) {
+                grid.innerHTML = '';
+            }
+            
+            currentCreators.forEach(creator => {
+                const badges = [];
+                if (creator.isFeatured) badges.push('<span class="badge badge-featured">Featured</span>');
+                if (creator.isVerified) badges.push('<span class="badge badge-verified">Verified</span>');
+                if (creator.isTrending) badges.push('<span class="badge badge-trending">Trending</span>');
+                if (creator.id <= 8) badges.push('<span class="badge badge-new">New</span>');
+                
+                const card = document.createElement('div');
+                card.className = 'creator-card';
+                card.innerHTML = `
+                    <div class="creator-cover">
+                        <img src="${creator.wallpaper}" alt="${creator.name}" class="creator-cover-img">
+                        <div class="creator-badges">
+                            ${badges.join('')}
+                        </div>
+                        <img src="${creator.avatar}" alt="${creator.name}" class="creator-avatar">
+                    </div>
+                    <div class="creator-info">
+                        <div class="creator-name">
+                            <h3 style="font-size: 1.25rem; margin: 0;">${creator.name}</h3>
+                            <span class="creator-username">@${creator.username}</span>
+                        </div>
+                        <p class="creator-bio">${creator.bio}</p>
+                        
+                        <div class="creator-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Followers</span>
+                                <span class="stat-value">${creator.stats.followers}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Views</span>
+                                <span class="stat-value">${creator.stats.views}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Growth</span>
+                                <span class="stat-value" style="color: var(--success);">${creator.stats.growth}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="creator-tags">
+                            ${creator.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        
+                        <div class="creator-actions">
+                            <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="viewCreatorProfile(${creator.id})">
+                                <i class="fas fa-eye"></i> View Profile
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="followCreator(${creator.id})">
+                                <i class="fas fa-plus"></i> Follow
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function loadMoreCreators() {
+            const button = document.getElementById('load-more');
+            const spinner = button.querySelector('.load-more-spinner');
+            const text = button.querySelector('.btn-text');
+            
+            text.style.opacity = '0.5';
+            spinner.style.opacity = '1';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                PlatformData.currentPage++;
+                const hasMoreCreators = (PlatformData.currentPage * PlatformData.creatorsPerPage) < PlatformData.totalCreators;
+                
+                if (hasMoreCreators) {
+                    renderCreators();
+                    showToast(`Loaded ${PlatformData.creatorsPerPage} more creators!`, 'success');
+                    
+                    // Scroll to show new content
+                    const grid = document.getElementById('creators-grid');
+                    const lastCard = grid.lastElementChild;
+                    if (lastCard) {
+                        lastCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                } else {
+                    showToast('🎉 All creators loaded!', 'success');
+                    button.style.display = 'none';
+                }
+                
+                text.style.opacity = '1';
+                spinner.style.opacity = '0';
+                button.disabled = false;
+            }, 1000);
+        }
+
+        // ===== TWITTER FEED =====
+        function initializeTwitterFeed() {
+            renderTweets();
+            
+            // Refresh button
+            document.getElementById('refresh-tweets').addEventListener('click', refreshTweets);
+            
+            // Auto-refresh every 30 seconds
+            setInterval(refreshTweets, 30000);
+        }
+
+        function renderTweets() {
+            const container = document.getElementById('twitter-feed');
+            container.innerHTML = '';
+            
+            PlatformData.tweets.forEach(tweet => {
+                const tweetElement = document.createElement('div');
+                tweetElement.className = 'tweet-card';
+                
+                const likeClass = tweet.isLiked ? 'liked' : '';
+                const retweetClass = tweet.isRetweeted ? 'retweeted' : '';
+                
+                tweetElement.innerHTML = `
+                    <div class="tweet-header">
+                        <img src="${tweet.user.avatar}" alt="${tweet.user.name}" class="tweet-avatar">
+                        <div class="tweet-user">
+                            <div class="tweet-name">${tweet.user.name}</div>
+                            <div class="tweet-handle">@${tweet.user.handle}</div>
+                        </div>
+                        <div class="tweet-time">${tweet.timeAgo}</div>
+                    </div>
+                    <div class="tweet-content">
+                        ${tweet.content}
+                    </div>
+                    <img src="${tweet.image}" alt="Tweet image" class="tweet-image" onclick="viewImage('${tweet.image}')">
+                    <div class="tweet-stats">
+                        <div class="tweet-stat ${likeClass}" onclick="toggleLike(${tweet.id})">
+                            <i class="${tweet.isLiked ? 'fas' : 'far'} fa-heart"></i>
+                            <span>${tweet.likes}</span>
+                        </div>
+                        <div class="tweet-stat ${retweetClass}" onclick="toggleRetweet(${tweet.id})">
+                            <i class="fas fa-retweet"></i>
+                            <span>${tweet.retweets}</span>
+                        </div>
+                        <div class="tweet-stat" onclick="replyToTweet(${tweet.id})">
+                            <i class="far fa-comment"></i>
+                            <span>${tweet.replies}</span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(tweetElement);
+            });
+        }
+
+        function refreshTweets() {
+            const button = document.getElementById('refresh-tweets');
+            const originalHtml = button.innerHTML;
+            
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                // Add new tweets
+                for (let i = 0; i < 3; i++) {
+                    const newTweet = generateTweet(PlatformData.tweets.length + 1);
+                    PlatformData.tweets.unshift(newTweet);
+                }
+                
+                // Keep only last 20 tweets
+                if (PlatformData.tweets.length > 20) {
+                    PlatformData.tweets = PlatformData.tweets.slice(0, 20);
+                }
+                
+                renderTweets();
+                
+                button.innerHTML = originalHtml;
+                button.disabled = false;
+                
+                showToast('🔄 Twitter feed refreshed!', 'info');
+                addNotification('Feed Updated 📰', 'New tweets from the community have been loaded.', 'twitter');
+            }, 1500);
+        }
+
+        // ===== FORM =====
+        function initializeForm() {
+            // Initialize categories
+            const categoriesContainer = document.getElementById('categories-container');
+            PlatformData.categories.forEach(category => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'btn btn-secondary btn-sm';
+                button.textContent = category;
+                button.style.margin = '0.25rem';
+                button.addEventListener('click', () => {
+                    button.classList.toggle('btn-primary');
+                    button.classList.toggle('btn-secondary');
+                });
+                categoriesContainer.appendChild(button);
+            });
+            
+            // Avatar upload
+            const avatarUpload = document.getElementById('avatar-upload');
+            const avatarInput = document.getElementById('avatar-input');
+            const avatarPreview = document.getElementById('avatar-preview');
+            const uploadArea = document.getElementById('upload-area');
+            
+            avatarUpload.addEventListener('click', () => avatarInput.click());
+            avatarInput.addEventListener('change', () => handleImageUpload(avatarInput, avatarPreview, uploadArea, 10));
+            
+            // Cover upload
+            const coverUpload = document.getElementById('cover-upload');
+            const coverInput = document.getElementById('cover-input');
+            const coverPreview = document.getElementById('cover-preview');
+            const coverUploadArea = document.getElementById('cover-upload-area');
+            
+            coverUpload.addEventListener('click', () => coverInput.click());
+            coverInput.addEventListener('change', () => handleImageUpload(coverInput, coverPreview, coverUploadArea, 20));
+            
+            // Drag and drop
+            [avatarUpload, coverUpload].forEach(uploadEl => {
+                uploadEl.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadEl.classList.add('dragover');
+                });
+                
+                uploadEl.addEventListener('dragleave', () => {
+                    uploadEl.classList.remove('dragover');
+                });
+                
+                uploadEl.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadEl.classList.remove('dragover');
+                    
+                    if (e.dataTransfer.files.length) {
+                        if (uploadEl === avatarUpload) {
+                            avatarInput.files = e.dataTransfer.files;
+                            handleImageUpload(avatarInput, avatarPreview, uploadArea, 10);
+                        } else {
+                            coverInput.files = e.dataTransfer.files;
+                            handleImageUpload(coverInput, coverPreview, coverUploadArea, 20);
+                        }
+                    }
+                });
+            });
+            
+            // Bio character counter
+            const bioTextarea = document.getElementById('bio');
+            const charCount = document.getElementById('char-count');
+            
+            bioTextarea.addEventListener('input', () => {
+                const length = bioTextarea.value.length;
+                charCount.textContent = `${length}/500`;
+                
+                if (length > 500) {
+                    bioTextarea.value = bioTextarea.value.substring(0, 500);
+                    charCount.textContent = '500/500';
+                }
+            });
+        }
+
+        function handleImageUpload(input, preview, uploadArea, maxSizeMB) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                if (file.size > maxSizeMB * 1024 * 1024) {
+                    showToast(`⚠️ File must be less than ${maxSizeMB}MB`, 'warning');
+                    return;
+                }
+                
+                if (!file.type.startsWith('image/')) {
+                    showToast('⚠️ Please select an image file', 'warning');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    preview.classList.add('show');
+                    if (uploadArea) uploadArea.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+                
+                showToast('✅ Image uploaded successfully!', 'success');
+            }
+        }
+
+        let currentStep = 1;
+
+        function nextStep(step) {
+            // Validate current step
+            if (step === 2) {
+                const username = document.getElementById('username').value.trim();
+                const displayName = document.getElementById('display-name').value.trim();
+                
+                if (!username || !displayName) {
+                    showToast('⚠️ Please fill in all required fields', 'warning');
+                    return;
+                }
+                
+                if (username.length < 3) {
+                    showToast('⚠️ Username must be at least 3 characters', 'warning');
+                    return;
+                }
+            }
+            
+            if (step === 3) {
+                const bio = document.getElementById('bio').value.trim();
+                const selectedCategories = document.querySelectorAll('#categories-container .btn-primary');
+                
+                if (!bio || bio.length < 50) {
+                    showToast('⚠️ Bio must be at least 50 characters', 'warning');
+                    return;
+                }
+                
+                if (selectedCategories.length === 0) {
+                    showToast('⚠️ Please select at least one category', 'warning');
+                    return;
+                }
+            }
+            
+            // Update steps
+            document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.progress-step').forEach(el => el.classList.remove('active', 'completed'));
+            
+            document.getElementById(`form-step-${step}`).classList.add('active');
+            document.getElementById(`step-${step}`).classList.add('active');
+            
+            // Mark previous steps as completed
+            for (let i = 1; i < step; i++) {
+                document.getElementById(`step-${i}`).classList.add('completed');
+            }
+            
+            currentStep = step;
+        }
+
+        function prevStep(step) {
+            nextStep(step);
+        }
+
+        function submitForm() {
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!email || !emailRegex.test(email)) {
+                showToast('⚠️ Please enter a valid email address', 'warning');
+                return;
+            }
+            
+            // Validate social links
+            const twitterLink = document.getElementById('twitter-link').value.trim();
+            const onlyfansLink = document.getElementById('onlyfans-link').value.trim();
+            const fanslyLink = document.getElementById('fansly-link').value.trim();
+            
+            if (!twitterLink && !onlyfansLink && !fanslyLink) {
+                showToast('⚠️ Please add at least one social or premium link', 'warning');
+                return;
+            }
+            
+            const submitBtn = document.querySelector('#form-step-3 .btn-primary');
+            const originalHtml = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                showToast('🎉 Profile submitted successfully! We\'ll review it within 24 hours.', 'success');
+                addNotification('Submission Received 📝', 'Your profile is being reviewed. We\'ll notify you via email.', 'success');
+                
+                // Reset form
+                document.querySelectorAll('.form-control').forEach(input => input.value = '');
+                document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.progress-step').forEach(el => el.classList.remove('active', 'completed'));
+                
+                document.getElementById('form-step-1').classList.add('active');
+                document.getElementById('step-1').classList.add('active');
+                
+                // Reset image previews
+                const avatarPreview = document.getElementById('avatar-preview');
+                const coverPreview = document.getElementById('cover-preview');
+                avatarPreview.classList.remove('show');
+                coverPreview.classList.remove('show');
+                document.getElementById('upload-area').style.display = 'block';
+                document.getElementById('cover-upload-area').style.display = 'block';
+                
+                // Reset category buttons
+                document.querySelectorAll('#categories-container button').forEach(btn => {
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-secondary');
+                });
+                
+                // Reset file inputs
+                document.getElementById('avatar-input').value = '';
+                document.getElementById('cover-input').value = '';
+                
+                // Restore button
+                submitBtn.innerHTML = originalHtml;
+                submitBtn.disabled = false;
+                
+            }, 2000);
+        }
+
+        // ===== ANALYTICS =====
+        function initializeAnalytics() {
+            document.getElementById('view-analytics').addEventListener('click', () => {
+                showToast('📊 Loading advanced analytics dashboard...', 'info');
+                // In a real app, this would navigate to analytics page
+            });
+        }
+
+        // ===== LIVE UPDATES =====
+        function initializeLiveUpdates() {
+            // Start periodic notifications
+            setInterval(() => {
+                if (Math.random() > 0.6) {
+                    const notifications = [
+                        {
+                            title: 'New Creator Joined',
+                            message: `@creator_${Date.now().toString().slice(-4)} just signed up!`,
+                            type: 'user'
+                        },
+                        {
+                            title: 'Trending Alert',
+                            message: 'Your profile is trending in the Cosplay category!',
+                            type: 'trending'
+                        },
+                        {
+                            title: 'Milestone Reached',
+                            message: 'Platform just hit 8.5M monthly views! 🎉',
+                            type: 'milestone'
+                        }
+                    ];
+                    
+                    const notification = notifications[Math.floor(Math.random() * notifications.length)];
+                    addNotification(notification.title, notification.message, notification.type);
+                }
+            }, 10000);
+        }
+
+        function addNotification(title, message, type) {
+            const updatesContainer = document.getElementById('live-updates');
+            const notificationId = `notification-${Date.now()}`;
+            
+            const icons = {
+                welcome: 'fas fa-party-horn',
+                twitter: 'fab fa-twitter',
+                success: 'fas fa-check-circle',
+                info: 'fas fa-info-circle',
+                user: 'fas fa-user-plus',
+                trending: 'fas fa-fire',
+                milestone: 'fas fa-trophy'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = 'live-notification';
+            notification.id = notificationId;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="${icons[type] || 'fas fa-bell'}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                    <div class="notification-time">Just now</div>
+                </div>
+                <button class="notification-close" onclick="removeNotification('${notificationId}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            updatesContainer.appendChild(notification);
+            
+            // Auto-remove after 8 seconds
+            setTimeout(() => {
+                removeNotification(notificationId);
+            }, 8000);
+            
+            // Limit to 5 notifications
+            const notifications = updatesContainer.querySelectorAll('.live-notification');
+            if (notifications.length > 5) {
+                notifications[0].remove();
+            }
+        }
+
+        // ===== PROFILE MODAL =====
+        function initializeProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeProfileModal();
+                }
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeProfileModal();
+                }
+            });
+        }
+
+        function viewCreatorProfile(creatorId) {
+            const creator = PlatformData.creators.find(c => c.id === creatorId);
+            if (!creator) return;
+            
+            const modalContent = document.querySelector('.profile-modal-content');
+            const badges = [];
+            if (creator.isFeatured) badges.push('<span class="badge badge-featured"><i class="fas fa-star"></i> Featured</span>');
+            if (creator.isVerified) badges.push('<span class="badge badge-verified"><i class="fas fa-check"></i> Verified</span>');
+            if (creator.isTrending) badges.push('<span class="badge badge-trending"><i class="fas fa-fire"></i> Trending</span>');
+            if (creator.id <= 8) badges.push('<span class="badge badge-new"><i class="fas fa-bolt"></i> New</span>');
+            
+            // Build social links array
+            const socialLinks = [];
+            if (creator.socialLinks.twitter) {
+                socialLinks.push({
+                    platform: 'Twitter',
+                    handle: `@${creator.username}`,
+                    icon: 'twitter',
+                    url: creator.socialLinks.twitter
+                });
+            }
+            if (creator.socialLinks.instagram) {
+                socialLinks.push({
+                    platform: 'Instagram',
+                    handle: `@${creator.username}`,
+                    icon: 'instagram',
+                    url: creator.socialLinks.instagram
+                });
+            }
+            if (creator.socialLinks.tiktok) {
+                socialLinks.push({
+                    platform: 'TikTok',
+                    handle: `@${creator.username}`,
+                    icon: 'tiktok',
+                    url: creator.socialLinks.tiktok
+                });
+            }
+            if (creator.socialLinks.youtube) {
+                socialLinks.push({
+                    platform: 'YouTube',
+                    handle: `${creator.name.split(' ')[0]}'s Channel`,
+                    icon: 'youtube',
+                    url: creator.socialLinks.youtube
+                });
+            }
+            if (creator.socialLinks.onlyfans) {
+                socialLinks.push({
+                    platform: 'OnlyFans',
+                    handle: creator.name.split(' ')[0],
+                    icon: 'onlyfans',
+                    url: creator.socialLinks.onlyfans
+                });
+            }
+            if (creator.socialLinks.fansly) {
+                socialLinks.push({
+                    platform: 'Fansly',
+                    handle: creator.name.split(' ')[0],
+                    icon: 'fansly',
+                    url: creator.socialLinks.fansly
+                });
+            }
+            if (creator.socialLinks.allaccessfans) {
+                socialLinks.push({
+                    platform: 'AllAccessFans',
+                    handle: creator.name.split(' ')[0],
+                    icon: 'allaccessfans',
+                    url: creator.socialLinks.allaccessfans
+                });
+            }
+            if (creator.socialLinks.twitch) {
+                socialLinks.push({
+                    platform: 'Twitch',
+                    handle: creator.username,
+                    icon: 'twitch',
+                    url: creator.socialLinks.twitch
+                });
+            }
+            
+            modalContent.innerHTML = `
+                <div class="profile-header">
+                    <img src="${creator.wallpaper}" alt="Wallpaper" class="profile-wallpaper">
+                    <button class="profile-close" onclick="closeProfileModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <div class="container">
+                        <div class="profile-header-content">
+                            <div class="profile-avatar-container">
+                                <img src="${creator.avatar}" alt="${creator.name}" class="profile-avatar">
+                                <div class="profile-badges">
+                                    ${badges.join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="profile-info">
+                                <h1 class="profile-name">${creator.name}</h1>
+                                <div class="profile-username">@${creator.username}</div>
+                                <p class="profile-bio-short">${creator.bio}</p>
+                                
+                                <div class="profile-stats">
+                                    <div class="profile-stat">
+                                        <span class="profile-stat-value">${creator.stats.followers}</span>
+                                        <span class="profile-stat-label">Followers</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <span class="profile-stat-value">${creator.stats.views}</span>
+                                        <span class="profile-stat-label">Total Views</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <span class="profile-stat-value">${creator.stats.likes}</span>
+                                        <span class="profile-stat-label">Likes</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <span class="profile-stat-value" style="color: var(--success);">${creator.stats.growth}</span>
+                                        <span class="profile-stat-label">Growth</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-actions">
+                                    <button class="btn btn-primary" onclick="followCreator(${creator.id})">
+                                        <i class="fas fa-plus"></i> Follow Creator
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="shareCreatorProfile('${creator.username}')">
+                                        <i class="fas fa-share"></i> Share Profile
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-body">
+                    <div class="container">
+                        <div class="profile-grid">
+                            <div>
+                                <!-- About Me Section -->
+                                <div class="profile-section">
+                                    <h2 class="profile-section-title">
+                                        <i class="fas fa-user"></i>
+                                        About Me
+                                    </h2>
+                                    <div class="about-me-content">
+                                        ${creator.aboutMe}
+                                    </div>
+                                    
+                                    <div class="content-types">
+                                        ${creator.tags.map(tag => `<span class="content-type">${tag}</span>`).join('')}
+                                    </div>
+                                </div>
+                                
+                                <!-- Social Links Section -->
+                                <div class="profile-section">
+                                    <h2 class="profile-section-title">
+                                        <i class="fas fa-link"></i>
+                                        Connect With Me
+                                    </h2>
+                                    <div class="social-links-grid">
+                                        ${socialLinks.map(social => `
+                                            <a href="${social.url}" target="_blank" rel="noopener noreferrer" class="social-link-card">
+                                                <div class="social-icon ${social.icon}">
+                                                    <i class="fab fa-${social.icon}"></i>
+                                                </div>
+                                                <div class="social-info">
+                                                    <div class="social-platform">${social.platform}</div>
+                                                    <div class="social-handle">${social.handle}</div>
+                                                    <div class="social-cta">Click to visit →</div>
+                                                </div>
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <!-- Premium Links Section -->
+                                <div class="profile-section">
+                                    <h2 class="profile-section-title">
+                                        <i class="fas fa-crown"></i>
+                                        Premium Content
+                                    </h2>
+                                    <div class="premium-links">
+                                        <h3 class="premium-links-title">
+                                            <i class="fas fa-lock"></i>
+                                            Exclusive Platforms
+                                        </h3>
+                                        <div class="premium-grid">
+                                            ${creator.socialLinks.onlyfans ? `
+                                            <div class="premium-card">
+                                                <div class="premium-icon onlyfans">
+                                                    <i class="fab fa-onlyfans"></i>
+                                                </div>
+                                                <div class="premium-name">OnlyFans</div>
+                                                <div class="premium-desc">Exclusive content and behind-the-scenes</div>
+                                                <div class="premium-price">$12.99/month</div>
+                                                <a href="${creator.socialLinks.onlyfans}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                                    <i class="fas fa-external-link-alt"></i> Visit
+                                                </a>
+                                            </div>
+                                            ` : ''}
+                                            
+                                            ${creator.socialLinks.fansly ? `
+                                            <div class="premium-card">
+                                                <div class="premium-icon fansly">
+                                                    <i class="fas fa-heart"></i>
+                                                </div>
+                                                <div class="premium-name">Fansly</div>
+                                                <div class="premium-desc">Premium content and community</div>
+                                                <div class="premium-price">$9.99/month</div>
+                                                <a href="${creator.socialLinks.fansly}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                                    <i class="fas fa-external-link-alt"></i> Visit
+                                                </a>
+                                            </div>
+                                            ` : ''}
+                                            
+                                            ${creator.socialLinks.allaccessfans ? `
+                                            <div class="premium-card">
+                                                <div class="premium-icon allaccessfans">
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <div class="premium-name">AllAccessFans</div>
+                                                <div class="premium-desc">VIP access to all content</div>
+                                                <div class="premium-price">$24.99/month</div>
+                                                <a href="${creator.socialLinks.allaccessfans}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                                    <i class="fas fa-external-link-alt"></i> Visit
+                                                </a>
+                                            </div>
+                                            ` : ''}
+                                            
+                                            ${!creator.socialLinks.onlyfans && !creator.socialLinks.fansly && !creator.socialLinks.allaccessfans ? `
+                                            <div class="premium-card" style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                                                <i class="fas fa-lock" style="font-size: 3rem; color: var(--gray); margin-bottom: 1rem;"></i>
+                                                <div class="premium-name">Premium Links Coming Soon</div>
+                                                <div class="premium-desc">This creator will be adding premium links soon!</div>
+                                            </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Show modal
+            const modal = document.getElementById('profile-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            showToast(`Viewing ${creator.name}'s profile`, 'info');
+        }
+
+        function closeProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ===== THEME =====
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        }
+
+        // ===== REAL-TIME UPDATES =====
+        function startRealTimeUpdates() {
+            // Update stats every 5 seconds
+            setInterval(() => {
+                const creatorsEl = document.getElementById('live-creators');
+                const viewsEl = document.getElementById('live-views');
+                const growthEl = document.getElementById('live-growth');
+                
+                if (creatorsEl && viewsEl && growthEl) {
+                    // Increment creators
+                    let creators = parseInt(creatorsEl.textContent.replace(/[^0-9]/g, '')) || 3847;
+                    creators += Math.floor(Math.random() * 3);
+                    creatorsEl.textContent = creators;
+                    
+                    // Increment views
+                    let views = parseFloat(viewsEl.textContent.replace(/[^0-9.]/g, '')) || 8.2;
+                    views += Math.random() * 0.1;
+                    viewsEl.textContent = views.toFixed(1) + 'M';
+                    
+                    // Update growth
+                    let growth = parseInt(growthEl.textContent.replace(/[^0-9]/g, '')) || 289;
+                    growthEl.textContent = `${Math.min(500, growth + Math.floor(Math.random() * 5))}%`;
+                }
+                
+                // Randomly update creator stats
+                PlatformData.creators.forEach(creator => {
+                    if (Math.random() > 0.7) {
+                        creator.stats.followers = `${(parseFloat(creator.stats.followers) + Math.random() * 0.5).toFixed(1)}K`;
+                    }
+                });
+                
+            }, 5000);
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function showToast(message, type = 'info') {
+            const colors = {
+                success: 'linear-gradient(135deg, #10b981, #059669)',
+                warning: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                info: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                error: 'linear-gradient(135deg, #ef4444, #dc2626)'
+            };
+            
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: colors[type] || colors.info,
+                stopOnFocus: true,
+                style: {
+                    borderRadius: 'var(--radius-md)',
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '0.9375rem',
+                    padding: '1rem 1.5rem',
+                    boxShadow: 'var(--shadow-lg)'
+                }
+            }).showToast();
+        }
+
+        function animateCounter(element, target) {
+            const current = parseInt(element.textContent.replace(/[^0-9]/g, '')) || 0;
+            const increment = target > current ? 1 : -1;
+            let currentValue = current;
+            
+            const timer = setInterval(() => {
+                currentValue += increment;
+                element.textContent = currentValue.toLocaleString() + (element.id === 'live-views' ? 'M' : '');
+                
+                if (currentValue === target) {
+                    clearInterval(timer);
+                }
+            }, 20);
+        }
+
+        // ===== EXPORTED FUNCTIONS =====
+        window.viewCreatorProfile = viewCreatorProfile;
+        window.closeProfileModal = closeProfileModal;
+        window.followCreator = function(creatorId) {
+            const creator = PlatformData.creators.find(c => c.id === creatorId);
+            if (!creator) return;
+            
+            showToast(`✅ Now following ${creator.name}!`, 'success');
+        };
+
+        window.shareCreatorProfile = function(username) {
+            const url = `${window.location.origin}/creator/${username}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: `Check out ${username} on AfricanBoy!`,
+                    text: `Discover amazing content from ${username} on AfricanBoy.`,
+                    url: url
+                });
+            } else {
+                navigator.clipboard.writeText(url);
+                showToast('🔗 Profile link copied to clipboard!', 'info');
+            }
+        };
+
+        window.viewImage = function(src) {
+            showToast('🖼️ Image view coming soon!', 'info');
+        };
+
+        window.toggleLike = function(tweetId) {
+            const tweet = PlatformData.tweets.find(t => t.id === tweetId);
+            if (!tweet) return;
+            
+            tweet.isLiked = !tweet.isLiked;
+            tweet.likes += tweet.isLiked ? 1 : -1;
+            
+            showToast(tweet.isLiked ? '❤️ Liked!' : '💔 Unliked', tweet.isLiked ? 'success' : 'info');
+        };
+
+        window.toggleRetweet = function(tweetId) {
+            const tweet = PlatformData.tweets.find(t => t.id === tweetId);
+            if (!tweet) return;
+            
+            tweet.isRetweeted = !tweet.isRetweeted;
+            tweet.retweets += tweet.isRetweeted ? 1 : -1;
+            
+            showToast(tweet.isRetweeted ? '🔄 Retweeted!' : 'Retweet removed', tweet.isRetweeted ? 'success' : 'info');
+        };
+
+        window.replyToTweet = function(tweetId) {
+            showToast('💬 Reply feature coming soon!', 'info');
+        };
+
+        window.removeNotification = function(id) {
+            const notification = document.getElementById(id);
+            if (notification) {
+                notification.style.animation = 'slideInRight 0.3s ease reverse';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }
+        };
+
+        window.nextStep = nextStep;
+        window.prevStep = prevStep;
+        window.submitForm = submitForm;
+    </script>
+</body>
+</html>
