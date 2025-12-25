@@ -2061,6 +2061,24 @@
         #gallery-modal .gallery-modal-nav {
             z-index: 9999 !important;
         }
+        /* SIMPLE FIX FOR IPHONE SCROLL ISSUE */
+        .gallery-modal {
+            position: fixed;
+            overflow: hidden;
+            -webkit-overflow-scrolling: auto;
+            touch-action: none;
+        }
+
+        .gallery-modal.active ~ * {
+            display: none;
+        }
+
+        html.gallery-open, body.gallery-open {
+            position: fixed;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
