@@ -1823,6 +1823,210 @@
         .hidden {
             display: none !important;
         }
+        /* ===== INSTAGRAM-STYLE GALLERY ===== */
+        .creator-gallery {
+            margin-top: 2rem;
+        }
+
+        .gallery-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .gallery-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .gallery-title i {
+            color: var(--primary);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--dark-lighter);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-stats {
+            color: white;
+            text-align: center;
+            transform: translateY(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-stats {
+            transform: translateY(0);
+        }
+
+        .gallery-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            font-size: 0.875rem;
+        }
+
+        /* Gallery Modal */
+        .gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-modal.active {
+            display: flex;
+            opacity: 1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .gallery-modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-modal-img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .gallery-modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .gallery-modal-close:hover {
+            background: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .gallery-modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .gallery-modal-nav:hover {
+            background: var(--primary);
+        }
+
+        .gallery-modal-nav.prev {
+            left: 20px;
+        }
+
+        .gallery-modal-nav.next {
+            right: 20px;
+        }
+
+        .gallery-count {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 <body>
@@ -2333,7 +2537,7 @@
                         <li><a href="#guides"><i class="fas fa-chevron-right"></i> Growth Guides</a></li>
                         <li><a href="#tools"><i class="fas fa-chevron-right"></i> Free Tools</a></li>
                         <li><a href="#api"><i class="fas fa-chevron-right"></i> API Access</a></li>
-                    </ul>
+                    </ul>  
                 </div>
                 
                 <div>
@@ -2396,6 +2600,14 @@
                 avatar: "https://pbs.twimg.com/profile_images/1929814754635182080/nT_kYY_x_400x400.jpg",
                 wallpaper: "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=large",
                 aboutMe: "Sexual Misfit 💦 😈..…………. Join my Premium TG (100$)💰..……………. W/A : 0533671193 ❌NO MEETUPs DM for SVC /FT Shows",
+                gallery: [
+                    "https://pbs.twimg.com/media/Gz8l2wnXkAAJMY7?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GzIAiNFWIAAtyyK?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G1tU5SBWAAA7m3S?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G6m-xnBXEAAKBdU?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G7_FMvgXwAQyLbC?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G1UWO0tW4AAln8V?format=jpg&name=large"
+            ],
                 socialLinks: {
                     twitter: "https://x.com/caramellmocha69?s=20",
                     instagram: "https://www.finsta.app/caramellmocha69",
@@ -2422,6 +2634,14 @@
                 avatar: "https://pbs.twimg.com/profile_images/2003416528755085312/Qju7_kLn_400x400.jpg",
                 wallpaper: "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium",
                 aboutMe: " 🎀MAIN🦋 cultists wife |Ego sexual| |B!| 21+| FINDOM BRAT🎀Your juicy distraction on here🫧💧 |MY ONLY X PAGE|@anastysoul60600|NO COLLABS ✖️✖️SOLO ONLY 🪸🦋|",
+                gallery: [
+                    "https://pbs.twimg.com/media/G7uqy_BXwAAT219?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G7G7fiTWEAAS41P?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G662Fw-WoAAHRBM?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G555u06WgAAe9qP?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G4hjM50XAAAgx_t?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G4VmYyZWYAEAqxE?format=jpg&name=large"
+            ],
                 socialLinks: {
                     twitter: "https://x.com/Main_lifestyle?s=20",
                     instagram: "https://www.finsta.app/main_lifestyle",
@@ -2448,6 +2668,14 @@
                 avatar: "https://pbs.twimg.com/profile_images/1957743760139272192/JsiyHnax_400x400.jpg",
                 wallpaper: "https://pbs.twimg.com/media/G1Y8k6nXIAEpX1l?format=jpg&name=large",
                 aboutMe: " Lala is my new name•Masterpiece•Mastermind•Model• ✉️tulesedooter@yahoo.com IG:sedooter_",
+                gallery: [
+                    "https://pbs.twimg.com/media/G70AouLXIAAl8x8?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G4wjSTTWIAAbphg?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/Gz1hdIPWQAA8we0?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/Gy4f0QUWcAAcdPl?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/Gx1gGA3XkAA5UVx?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GtF9uOeWcAAJwf2?format=jpg&name=large"
+            ],
                 socialLinks: {
                     twitter: "https://x.com/sedooterr",
                     instagram: "https://www.instagram.com/sedooter_/#",
@@ -2474,6 +2702,14 @@
                 avatar: "https://pbs.twimg.com/profile_images/1984199240940126208/JFEfKI29_400x400.jpg",
                 wallpaper: "https://pbs.twimg.com/media/G4WWIzZWUAAgqoB?format=jpg&name=large",
                 aboutMe: " a tribute to Hot weirdos, Lingerie, Bikinis, and SEX APPEAL !♡ How cunty can it get?😛✨IG: adeline._.thompson□ !MY ONLY ACCOUNT!♡¡",
+                gallery: [
+                    "https://pbs.twimg.com/media/G8ipl-BXAAAN7Yh?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G3OV2FhWMAAqyn6?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GzwKgX9XwAAtzBN?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GxmfDK7WgAA9gKm?format=jpg&name=4096x4096",
+                    "https://pbs.twimg.com/media/GuR09RtX0AAxt0W?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GuH5fuwXoAANOYA?format=jpg&name=large"
+            ],
                 socialLinks: {
                     twitter: "https://x.com/lingeriegirlie_?s=20t",
                     instagram: "https://allaccessfans.co/u/Miss_Pearline",
@@ -2500,6 +2736,14 @@
                 avatar: "https://pbs.twimg.com/profile_images/1873805183257362432/-QopPBAy_400x400.jpg",
                 wallpaper: "https://pbs.twimg.com/media/GzvdPAnXsAA36aK?format=jpg&name=large",
                 aboutMe: "solo content creator// voice cum 💦 therapist 💯 tip me: https://youfanly.com/tip/temimabel001//backup acct: @Temitope_Backup",
+                gallery: [
+                    "https://pbs.twimg.com/media/GxGbQ6hWwAAdF8f?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GxGbQ6LWcAAhID-?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/Gv2OBznXYAAm1kJ?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/Gv0aLmMXgAAjpng?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GuodrBfXcAAUQhp?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GiNCNEcXAAA4XmQ?format=jpg&name=large"
+            ],
                 socialLinks: {
                     twitter: "https://x.com/Temitope_Fire?s=20",
                     instagram: "https://www.youfanly.com/temimabel001",
@@ -2525,7 +2769,15 @@
                 isTrending: false,
                 avatar: "https://pbs.twimg.com/profile_images/1874800144148832257/J1_VHGk9_400x400.jpg",
                 wallpaper: "https://pbs.twimg.com/media/G38wA0zWUAANx4U?format=jpg&name=medium",
-                aboutMe: "Hi there, I’m theAsexualSlurt (a purple ogbanje)🐈Aquarius • Exhibitionist/Voyeur • Pansexual switch • Polyamorous Neurodivergent whore🌚my favorite color isn’t purple but my favorite things to do are kush, create art & behold art💘 (fun fact? I believe sex is art)  and  I stand  for  human rights  🚺🏳️‍⚧️🏳️‍🌈@thePreacherMn’s hotwife/cucqueen, I love watching & being watched. Makes me feel so good💦 kink & fetish friendly too😈Click the link in my main bio for more of me🌶️🔞NO  COLLABS  OR  MEETUPS ‼️and  please don’t text  me  without paying  my  $33 DM  fee cause  you’ll never  get  a  reply  💋",
+                aboutMe: "🔞21+ | ♒️ a naughty afrohemian goddess🐈💘 | (@realpotheadshit) | 🎄🎁 https://glowclub.tv/theAsexualSlurt ☃️ | DM FEE 33$❗️",
+                gallery: [
+                    "https://pbs.twimg.com/media/G82b3OjX0AAe0B4?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G7vJbozXwAAzRRJ?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G8Ir5jEXgAUwCnO?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G6NaLlLXQAAZnVQ?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G3yHv3zXkAA7zd5?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G34g08DWkAA2Gd3?format=jpg&name=large"
+            ],
                 socialLinks: {
                     instagram: "https://x.com/purple_ogbanje?s=20",
                     youtube: "https://www.manyvids.com/Profile/1005759305/theasexualslurt/Store/Videos",
@@ -2552,6 +2804,14 @@
                 avatar: "https://pbs.twimg.com/profile_images/1966086579962744832/5-adTXmd_400x400.jpg",
                 wallpaper: "https://pbs.twimg.com/media/G7leP4YXQAEKHMM?format=jpg&name=large",
                 aboutMe: "Fashion Model | Adult Entertainer🔞| Video Vixen | My only X account | Email gray.africana@wildlagos.com for Bookings | NO DMs ❌🚫",
+                gallery: [
+                    "https://pbs.twimg.com/media/G8DkzrrW0AQCS6h?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G74a2wjW0AA1jLG?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G7BSX1XW8AEpWeK?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G6GZ2y6WEAAE416?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G6ML4icWQAAwPtG?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G58DNP5XsAA3U7n?format=jpg&name=large"
+            ],
                 socialLinks: {
                     twitter: "https://x.com/gray_africana?s=20",
                     instagram: "https://t.me/+KX9UwfR3g7FlM2Y8",
@@ -2578,6 +2838,422 @@
                 avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
                 wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
                 aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/G1MZeFAXEAAuumn?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GraNBCvWQAA-7TJ?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/G0R6YJJXYAE51LF?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GtWiRodWEAAai4n?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GpJioUfX0AALg63?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GpUxHEhXIAANzwZ?format=jpg&name=large"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 9,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 10,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 11,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 12,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 13,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 14,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 15,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 16,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 17,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 18,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 19,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
+                socialLinks: {
+                    instagram: "https://x.com/bubblebuttqutie?s=20",
+                    youtube: "https://allaccessfans.co/u/bubblebuttqutie",
+                    tiktok: "https://allaccessfans.co/u/bubblebuttqutie",
+                    fansly: "https://allaccessfans.co/u/bubblebuttqutie",
+                    allaccessfans: "https://allaccessfans.co/u/bubblebuttqutie"
+                }
+            },
+            {
+                id: 20,
+                name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
+                username: "bubblebuttqutie",
+                bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                tags: ["Food", "Cooking", "Recipes"],
+                stats: {
+                    followers: "895.2K",
+                    views: "3.4M",
+                    likes: "56.8K",
+                    growth: "+31%"
+                },
+                isFeatured: false,
+                isVerified: true,
+                isTrending: false,
+                avatar: "https://pbs.twimg.com/profile_images/1943832461252681728/yjfFAHAe_400x400.jpg",
+                wallpaper: "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
+                aboutMe: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
+                gallery: [
+                    "https://pbs.twimg.com/media/GtRJjqbXMAAVoy2?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GsslfDoWYAAYjTo?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/GyKQHVvWkAEM2dZ?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5fJFcPWIAI4wcw?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=medium",
+                    "https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium"
+            ],
                 socialLinks: {
                     instagram: "https://x.com/bubblebuttqutie?s=20",
                     youtube: "https://allaccessfans.co/u/bubblebuttqutie",
@@ -2772,6 +3448,94 @@
                 window.location.href = 'https://www.google.com';
             });
         }
+
+        // Gallery Modal Functions
+        let currentGallery = {
+            creatorId: null,
+            images: [],
+            currentIndex: 0
+        };
+
+        function openGalleryModal(creatorId, imageIndex) {
+            const creator = PlatformData.creators.find(c => c.id === creatorId);
+            if (!creator || !creator.gallery || creator.gallery.length === 0) return;
+            
+            currentGallery.creatorId = creatorId;
+            currentGallery.images = creator.gallery;
+            currentGallery.currentIndex = imageIndex;
+            
+            const modal = document.getElementById('gallery-modal');
+            const img = document.getElementById('gallery-modal-img');
+            const current = document.getElementById('gallery-current');
+            const total = document.getElementById('gallery-total');
+            
+            img.src = currentGallery.images[currentGallery.currentIndex];
+            current.textContent = currentGallery.currentIndex + 1;
+            total.textContent = currentGallery.images.length;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', handleGalleryKeyboard);
+        }
+
+        function closeGalleryModal() {
+            const modal = document.getElementById('gallery-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Remove keyboard event listener
+            document.removeEventListener('keydown', handleGalleryKeyboard);
+        }
+
+        function prevGalleryImage() {
+            if (currentGallery.images.length === 0) return;
+            
+            currentGallery.currentIndex = currentGallery.currentIndex > 0 
+                ? currentGallery.currentIndex - 1 
+                : currentGallery.images.length - 1;
+            
+            updateGalleryModal();
+        }
+
+        function nextGalleryImage() {
+            if (currentGallery.images.length === 0) return;
+            
+            currentGallery.currentIndex = currentGallery.currentIndex < currentGallery.images.length - 1 
+                ? currentGallery.currentIndex + 1 
+                : 0;
+            
+            updateGalleryModal();
+        }
+
+        function updateGalleryModal() {
+            const img = document.getElementById('gallery-modal-img');
+            const current = document.getElementById('gallery-current');
+            
+            img.style.opacity = '0.7';
+            setTimeout(() => {
+                img.src = currentGallery.images[currentGallery.currentIndex];
+                current.textContent = currentGallery.currentIndex + 1;
+                img.style.opacity = '1';
+            }, 200);
+        }
+
+        function handleGalleryKeyboard(e) {
+            if (e.key === 'Escape') {
+                closeGalleryModal();
+            } else if (e.key === 'ArrowLeft') {
+                prevGalleryImage();
+            } else if (e.key === 'ArrowRight') {
+                nextGalleryImage();
+            }
+        }
+
+        // Add these to your window object
+        window.openGalleryModal = openGalleryModal;
+        window.closeGalleryModal = closeGalleryModal;
+        window.prevGalleryImage = prevGalleryImage;
+        window.nextGalleryImage = nextGalleryImage;
 
         // ===== NAVIGATION =====
         function initializeNavigation() {
@@ -3500,6 +4264,39 @@
                                         ${creator.tags.map(tag => `<span class="content-type">${tag}</span>`).join('')}
                                     </div>
                                 </div>
+
+                                <!-- INSTAGRAM-STYLE GALLERY SECTION -->
+                                <div class="profile-section creator-gallery">
+                                    <div class="gallery-header">
+                                        <h2 class="gallery-title">
+                                            <i class="fas fa-images"></i>
+                                            Photo Gallery
+                                        </h2>
+                                        <div style="color: var(--gray); font-size: 0.875rem;">
+                                            ${creator.gallery ? creator.gallery.length : 0} posts
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="gallery-grid">
+                                        ${creator.gallery ? creator.gallery.map((img, index) => `
+                                            <div class="gallery-item" onclick="openGalleryModal(${creator.id}, ${index})">
+                                                <img src="${img}" alt="Gallery image ${index + 1}" class="gallery-img">
+                                                <div class="gallery-overlay">
+                                                    <div class="gallery-stats">
+                                                        <div class="gallery-stat">
+                                                            <i class="fas fa-heart"></i>
+                                                            <span>${Math.floor(Math.random() * 1000) + 100}</span>
+                                                        </div>
+                                                        <div class="gallery-stat">
+                                                            <i class="fas fa-comment"></i>
+                                                            <span>${Math.floor(Math.random() * 100) + 10}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('') : '<div style="text-align: center; color: var(--gray); padding: 2rem;">No photos yet</div>'}
+                                    </div>
+                                </div>
                                 
                                 <!-- Social Links Section -->
                                 <div class="profile-section">
@@ -3520,6 +4317,28 @@
                                                 </div>
                                             </a>
                                         `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Gallery Modal -->
+                            <div id="gallery-modal" class="gallery-modal">
+                                <button class="gallery-modal-close" onclick="closeGalleryModal()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                
+                                <button class="gallery-modal-nav prev" onclick="prevGalleryImage()">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                
+                                <button class="gallery-modal-nav next" onclick="nextGalleryImage()">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                                
+                                <div class="gallery-modal-content">
+                                    <img id="gallery-modal-img" class="gallery-modal-img" alt="Gallery image">
+                                    <div class="gallery-count">
+                                        <span id="gallery-current">1</span> / <span id="gallery-total">6</span>
                                     </div>
                                 </div>
                             </div>
