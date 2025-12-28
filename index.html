@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>VelvetSignals 🚀 - Premium Creator Promotion Platform</title>
     
     <!-- SEO -->
@@ -2246,6 +2246,120 @@
             font-size: 0.7rem;
         }
     }
+    /* ===== FIX PROFILE MODAL FOR MOBILE ===== */
+    @media (max-width: 768px) {
+    .profile-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        -webkit-overflow-scrolling: auto;
+    }
+    
+    .profile-modal-content {
+        width: 100vw;
+        height: 100vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+    
+    .profile-header {
+        padding: 5rem 0 1.5rem;
+        min-height: auto;
+    }
+    
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-width: 3px;
+    }
+    
+    .profile-name {
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .profile-username {
+        font-size: 1rem;
+    }
+    
+    .profile-bio-short {
+        font-size: 0.875rem;
+        line-height: 1.4;
+    }
+    
+    .profile-stats {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .profile-stat-value {
+        font-size: 1.5rem;
+    }
+    
+    .profile-stat-label {
+        font-size: 0.75rem;
+    }
+    
+    .profile-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .profile-actions .btn {
+        flex: 1;
+        min-width: 140px;
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    .profile-body {
+        padding: 2rem 0;
+    }
+    
+    .profile-section {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .profile-section-title {
+        font-size: 1.25rem;
+    }
+    
+    /* Fix gallery on mobile */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    /* Fix social links grid */
+    .social-links-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Make close button more accessible */
+    .profile-close {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+    
+    /* Prevent body scroll when modal is open */
+    body.profile-modal-open {
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
+}
     </style>
 </head>
 <body>
@@ -4735,6 +4849,7 @@
             const modal = document.getElementById('profile-modal');
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            document.body.classList.add('profile-modal-open');
             
             showToast(`Viewing ${creator.name}'s profile`, 'info');
         }
@@ -4743,6 +4858,7 @@
             const modal = document.getElementById('profile-modal');
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
+            document.body.classList.remove('profile-modal-open');
         }
 
         // ===== THEME =====
