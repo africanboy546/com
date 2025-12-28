@@ -2079,6 +2079,173 @@
             width: 100%;
             height: 100%;
         }
+        /* MOBILE ONLY - Desktop stays exactly the same! */
+@media (max-width: 768px) {
+    .creators-grid {
+        /* Show 3 columns but make them smaller */
+        grid-template-columns: repeat(3, minmax(120px, 1fr));
+        gap: 0.75rem;
+    }
+    
+    /* Keep cards compact on mobile */
+    .creator-card {
+        height: auto;
+        min-height: unset;
+    }
+    
+    .creator-cover {
+        height: 100px;
+    }
+    
+    .creator-avatar {
+        width: 50px;
+        height: 50px;
+        bottom: -25px;
+        left: 0.75rem;
+        border-width: 2px;
+    }
+    
+    .creator-info {
+        padding: calc(1.25rem + 25px) 0.75rem 0.75rem;
+    }
+    
+    .creator-name {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .creator-name h3 {
+        font-size: 0.85rem;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+    }
+    
+    .creator-username {
+        font-size: 0.7rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+    }
+    
+    .creator-bio {
+        font-size: 0.7rem;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        margin-bottom: 0.75rem;
+        line-height: 1.3;
+    }
+    
+    .creator-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.25rem;
+        padding: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .stat-label {
+        font-size: 0.6rem;
+        margin-bottom: 0.125rem;
+    }
+    
+    .stat-value {
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    
+    .creator-tags {
+        display: none; /* Hide tags on mobile to save space */
+    }
+    
+    .creator-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .creator-actions .btn {
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 0.7rem;
+        justify-content: center;
+        min-height: unset;
+        height: auto;
+    }
+    
+    .creator-badges {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        top: 0.25rem;
+        right: 0.25rem;
+        gap: 0.25rem;
+    }
+    
+    .badge {
+        padding: 0.125rem 0.375rem;
+        font-size: 0.55rem;
+        margin-bottom: 0.125rem;
+    }
+}
+
+/* For very small phones */
+@media (max-width: 480px) {
+    .creators-grid {
+        /* Show 2 columns on very small phones */
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
+        gap: 0.75rem;
+    }
+    
+    .creator-cover {
+        height: 110px;
+    }
+    
+    .creator-avatar {
+        width: 55px;
+        height: 55px;
+        bottom: -27px;
+    }
+    
+    .creator-name h3 {
+        font-size: 0.9rem;
+    }
+    
+    .creator-bio {
+        font-size: 0.75rem;
+    }
+    /* For extra small phones (like iPhone 5/SE) */
+    @media (max-width: 360px) {
+        .creators-grid {
+            grid-template-columns: repeat(2, minmax(120px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .creator-cover {
+            height: 90px;
+        }
+        
+        .creator-avatar {
+            width: 45px;
+            height: 45px;
+            bottom: -22px;
+            left: 0.5rem;
+        }
+        
+        .creator-info {
+            padding: calc(1rem + 22px) 0.5rem 0.5rem;
+        }
+        
+        .creator-name h3 {
+            font-size: 0.8rem;
+        }
+        
+        .creator-bio {
+            font-size: 0.7rem;
+        }
+    }
     </style>
 </head>
 <body>
@@ -4733,4 +4900,3 @@
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
-
