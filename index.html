@@ -2079,7 +2079,7 @@
             width: 100%;
             height: 100%;
         }
-       /* MOBILE ONLY - Desktop stays exactly the same! */
+        /* MOBILE ONLY - Desktop stays exactly the same! */
 @media (max-width: 768px) {
     .creators-grid {
         /* Show 3 columns but make them smaller */
@@ -2216,38 +2216,36 @@
     .creator-bio {
         font-size: 0.75rem;
     }
-}
-
-/* For extra small phones (like iPhone 5/SE) */
-@media (max-width: 360px) {
-    .creators-grid {
-        grid-template-columns: repeat(2, minmax(120px, 1fr));
-        gap: 0.5rem;
+    /* For extra small phones (like iPhone 5/SE) */
+    @media (max-width: 360px) {
+        .creators-grid {
+            grid-template-columns: repeat(2, minmax(120px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .creator-cover {
+            height: 90px;
+        }
+        
+        .creator-avatar {
+            width: 45px;
+            height: 45px;
+            bottom: -22px;
+            left: 0.5rem;
+        }
+        
+        .creator-info {
+            padding: calc(1rem + 22px) 0.5rem 0.5rem;
+        }
+        
+        .creator-name h3 {
+            font-size: 0.8rem;
+        }
+        
+        .creator-bio {
+            font-size: 0.7rem;
+        }
     }
-    
-    .creator-cover {
-        height: 90px;
-    }
-    
-    .creator-avatar {
-        width: 45px;
-        height: 45px;
-        bottom: -22px;
-        left: 0.5rem;
-    }
-    
-    .creator-info {
-        padding: calc(1rem + 22px) 0.5rem 0.5rem;
-    }
-    
-    .creator-name h3 {
-        font-size: 0.8rem;
-    }
-    
-    .creator-bio {
-        font-size: 0.7rem;
-    }
-}
     /* ===== FIX PROFILE MODAL FOR MOBILE ===== */
     @media (max-width: 768px) {
     .profile-modal {
@@ -2361,129 +2359,6 @@
         width: 100%;
         height: 100%;
     }
-}
-/* Video Gallery Styles */
-.video-item {
-    position: relative;
-}
-
-.video-placeholder {
-    width: 100%;
-    height: 100%;
-    background: var(--gradient-primary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1rem;
-    gap: 0.5rem;
-}
-
-.video-placeholder i {
-    font-size: 2.5rem;
-}
-
-.video-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 32px;
-    height: 32px;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 0.875rem;
-}
-
-/* Video Modal */
-.video-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 4000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.video-modal.active {
-    display: flex;
-    opacity: 1;
-    animation: fadeIn 0.3s ease;
-}
-
-.video-modal-content {
-    position: relative;
-    width: 90%;
-    max-width: 800px;
-    max-height: 90vh;
-}
-
-.video-player {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: #000;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-}
-
-.video-player iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-.video-modal-close {
-    position: absolute;
-    top: -50px;
-    right: 0;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-full);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-    cursor: pointer;
-    transition: var(--transition);
-    backdrop-filter: blur(10px);
-}
-
-.video-modal-close:hover {
-    background: var(--primary);
-    transform: rotate(90deg);
-}
-
-.video-info {
-    margin-top: 1rem;
-    color: white;
-    text-align: center;
-}
-
-.video-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.video-stats {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    color: var(--gray);
-    font-size: 0.875rem;
 }
     </style>
 </head>
@@ -3071,56 +2946,6 @@
                     "https://pbs.twimg.com/media/Gv_YccwWcAAnF6P?format=jpg&name=large",
                     "https://pbs.twimg.com/media/GvbeJ8FXYAAecN_?format=jpg&name=large",
                     "https://pbs.twimg.com/media/Gs8f4pqWYAElmw4?format=jpg&name=large"
-            ],
-                videos: [
-                {
-                    url: "https://x.com/i/status/2004201037264228615",
-                    thumbnail: "https://pbs.twimg.com/amplify_video_thumb/2004200744413458432/img/ducHEVbnlL5BwQgR?format=jpg&name=360x360",
-                    title: "Merry Bluntmas 💨",
-                    views: "125K",
-                    duration: "0:37",
-                    date: "2 weeks ago"
-                },
-                {
-                    url: "https://x.com/i/status/2000650744345866369",
-                    thumbnail: "https://pbs.twimg.com/amplify_video_thumb/2000650641375469573/img/lJyeW5mus0lz8fNV?format=jpg&name=360x360",
-                    title: "Behind the Scenes",
-                    views: "45K",
-                    duration: "0:07",
-                    date: "1 month ago"
-                },
-                {
-                    url: "https://x.com/i/status/2004674625134104987",
-                    thumbnail: "https://pbs.twimg.com/amplify_video_thumb/2004674529356873728/img/NU5I-eb81f5KzojE?format=jpg&name=360x360",
-                    title: "My Introduction Video",
-                    views: "125K",
-                    duration: "0:09",
-                    date: "2 weeks ago"
-                },
-                {
-                    url: "https://x.com/i/status/2001048019437793751",
-                    thumbnail: "https://pbs.twimg.com/amplify_video_thumb/2001047793268322306/img/6qHLFvnMfl5J-gKt?format=jpg&name=360x360",
-                    title: "Behind the Scenes",
-                    views: "45K",
-                    duration: "4:20",
-                    date: "1 month ago"
-                },
-                {
-                    url: "https://x.com/i/status/2001401334960996547",
-                    thumbnail: "https://pbs.twimg.com/amplify_video_thumb/2001401262995107840/img/fUbpxckt4ajAqtjT?format=jpg&name=360x360",
-                    title: "My Introduction Video",
-                    views: "125K",
-                    duration: "2:45",
-                    date: "2 weeks ago"
-                },
-                {
-                    url: "https://x.com/i/status/2000571497979535504",
-                    thumbnail: "https://pbs.twimg.com/amplify_video_thumb/2000571326898094084/img/uMzHksGQb_3q24nT?format=jpg&name=360x360",
-                    title: "Behind the Scenes",
-                    views: "45K",
-                    duration: "4:20",
-                    date: "1 month ago"
-                }
             ],
                 socialLinks: {
                     twitter: "https://x.com/caramellmocha69?s=20",
@@ -4143,96 +3968,6 @@
         window.prevGalleryImage = prevGalleryImage;
         window.nextGalleryImage = nextGalleryImage;
 
-        // Video Modal Functions
-        let currentVideo = null;
-
-        function playVideo(videoUrl, thumbnail, videoIndex) {
-            const modal = document.getElementById('video-modal');
-            const player = document.getElementById('video-player');
-            const title = document.getElementById('video-title');
-            const views = document.getElementById('video-views');
-            const duration = document.getElementById('video-duration');
-            const date = document.getElementById('video-date');
-            
-            // Get creator and video data
-            const creator = PlatformData.creators.find(c => c.videos && c.videos[videoIndex]);
-            const video = creator.videos[videoIndex];
-            
-            // Set video info
-            title.textContent = video.title || 'Creator Video';
-            views.textContent = video.views || '0';
-            duration.textContent = video.duration || '0:00';
-            date.textContent = video.date || 'Just now';
-            
-            // Create embed iframe
-            let embedCode = '';
-            
-            if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
-                // Extract YouTube video ID
-                const videoId = extractYouTubeId(videoUrl);
-                embedCode = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            } else if (videoUrl.includes('vimeo.com')) {
-                // Extract Vimeo video ID
-                const videoId = extractVimeoId(videoUrl);
-                embedCode = `<iframe src="https://player.vimeo.com/video/${videoId}?autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-            } else if (videoUrl.includes('twitter.com') || videoUrl.includes('x.com')) {
-                // For Twitter/X videos, you'll need to use their embed API
-                embedCode = `<div style="text-align: center; padding: 2rem;">
-                    <p><i class="fab fa-twitter" style="font-size: 2rem; color: var(--twitter); margin-bottom: 1rem;"></i></p>
-                    <p>Twitter videos must be viewed on their platform.</p>
-                    <a href="${videoUrl}" target="_blank" class="btn btn-twitter" style="margin-top: 1rem;">
-                        <i class="fab fa-twitter"></i> Watch on Twitter
-                    </a>
-                </div>`;
-            } else if (videoUrl.includes('t.me')) {
-                // Telegram videos can't be embedded directly
-                embedCode = `<div style="text-align: center; padding: 2rem;">
-                    <p><i class="fab fa-telegram" style="font-size: 2rem; color: #0088cc; margin-bottom: 1rem;"></i></p>
-                    <p>Telegram videos must be viewed in the app.</p>
-                    <a href="${videoUrl}" target="_blank" class="btn btn-primary" style="margin-top: 1rem; background: #0088cc;">
-                        <i class="fab fa-telegram"></i> Open in Telegram
-                    </a>
-                </div>`;
-            } else {
-                // Direct video file (MP4, WebM, etc.)
-                embedCode = `<video controls autoplay style="width: 100%; height: 100%;">
-                    <source src="${videoUrl}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>`;
-            }
-            
-            player.innerHTML = embedCode;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeVideoModal() {
-            const modal = document.getElementById('video-modal');
-            const player = document.getElementById('video-player');
-            
-            // Stop video playback
-            player.innerHTML = '';
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Helper functions to extract video IDs
-        function extractYouTubeId(url) {
-            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[7].length === 11) ? match[7] : null;
-        }
-
-        function extractVimeoId(url) {
-            const regExp = /(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)/;
-            const match = url.match(regExp);
-            return match ? match[1] : null;
-        }
-
-        // Add these to window object
-        window.playVideo = playVideo;
-        window.closeVideoModal = closeVideoModal;
-
         // ===== NAVIGATION =====
         function initializeNavigation() {
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -4993,48 +4728,6 @@
                                         `).join('') : '<div style="text-align: center; color: var(--gray); padding: 2rem;">No photos yet</div>'}
                                     </div>
                                 </div>
-                                <!-- Video Gallery Section -->
-                                <div class="profile-section creator-gallery">
-                                    <div class="gallery-header">
-                                        <h2 class="gallery-title">
-                                            <i class="fas fa-video"></i>
-                                            Video Gallery
-                                        </h2>
-                                        <div style="color: var(--gray); font-size: 0.875rem;">
-                                            ${creator.videos ? creator.videos.length : 0} videos
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="gallery-grid">
-                                        ${creator.videos ? creator.videos.map((video, index) => `
-                                            <div class="gallery-item video-item" onclick="playVideo('${video.url}', '${video.thumbnail}', ${index})">
-                                                ${video.thumbnail ? `
-                                                    <img src="${video.thumbnail}" alt="Video thumbnail ${index + 1}" class="gallery-img">
-                                                ` : `
-                                                    <div class="video-placeholder">
-                                                        <i class="fas fa-play-circle"></i>
-                                                        <span>Play Video</span>
-                                                    </div>
-                                                `}
-                                                <div class="gallery-overlay">
-                                                    <div class="gallery-stats">
-                                                        <div class="gallery-stat">
-                                                            <i class="fas fa-play-circle"></i>
-                                                            <span>${video.views || Math.floor(Math.random() * 5000) + 100}</span>
-                                                        </div>
-                                                        <div class="gallery-stat">
-                                                            <i class="fas fa-clock"></i>
-                                                            <span>${video.duration || '2:30'}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="video-badge">
-                                                    <i class="fas fa-play"></i>
-                                                </div>
-                                            </div>
-                                        `).join('') : '<div style="text-align: center; color: var(--gray); padding: 2rem;">No videos yet</div>'}
-                                    </div>
-                                </div>
                                 
                                 <!-- Social Links Section -->
                                 <div class="profile-section">
@@ -5077,26 +4770,6 @@
                                     <img id="gallery-modal-img" class="gallery-modal-img" alt="Gallery image">
                                     <div class="gallery-count">
                                         <span id="gallery-current">1</span> / <span id="gallery-total">6</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Video Modal -->
-                            <div id="video-modal" class="video-modal">
-                                <button class="video-modal-close" onclick="closeVideoModal()">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                                
-                                <div class="video-modal-content">
-                                    <div class="video-player" id="video-player">
-                                        <!-- Video will be loaded here -->
-                                    </div>
-                                    <div class="video-info">
-                                        <div class="video-title" id="video-title">Video Title</div>
-                                        <div class="video-stats">
-                                            <span><i class="fas fa-eye"></i> <span id="video-views">0</span> views</span>
-                                            <span><i class="fas fa-clock"></i> <span id="video-duration">0:00</span></span>
-                                            <span><i class="fas fa-calendar"></i> <span id="video-date">Just now</span></span>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -5343,4 +5016,3 @@
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
-
