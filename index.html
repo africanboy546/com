@@ -1733,6 +1733,55 @@
             to { transform: rotate(360deg); }
         }
 
+        /* WhatsApp Pulse Animation */
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Contact Info Styling */
+        .contact-info {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .contact-info:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* Floating Button Responsive */
+        @media (max-width: 768px) {
+            #whatsapp-float {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+            }
+            
+            #whatsapp-float > div {
+                justify-content: center;
+                padding: 0.75rem 1rem;
+            }
+            
+            #whatsapp-float span {
+                display: none;
+            }
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .hero-title {
@@ -2541,6 +2590,7 @@
                 <li><a href="#twitter" class="nav-link">Community</a></li>
                 <li><a href="#analytics" class="nav-link">Analytics</a></li>
                 <li><a href="#submit" class="nav-link">Get Listed</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
                 <div class="nav-actions">
                     <button id="theme-toggle" class="btn btn-sm btn-secondary">
                         <i class="fas fa-moon"></i>
@@ -2842,6 +2892,110 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- WhatsApp Contact Section -->
+                <section id="contact" class="section" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2 class="section-title">💬 Direct Creator Support</h2>
+                            <p class="section-subtitle">Need help getting listed? Contact us directly via WhatsApp for quick assistance</p>
+                        </div>
+                        
+                        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                            <!-- WhatsApp Card -->
+                            <div class="stat-card animate__animated animate__fadeInUp" style="text-align: center; cursor: pointer;" 
+                                onclick="openWhatsApp()">
+                                <div class="stat-icon" style="background: linear-gradient(135deg, #25D366, #128C7E);">
+                                    <i class="fab fa-whatsapp" style="font-size: 2rem;"></i>
+                                </div>
+                                <div class="stat-value" style="font-size: 2.5rem; margin-bottom: 0.5rem;">WhatsApp</div>
+                                <p style="font-size: 1.125rem; margin-bottom: 1.5rem;">Direct Creator Support</p>
+                                
+                                <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+                                    <div class="contact-info">
+                                        <i class="fas fa-clock" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                                        <span>Response Time: 1-2 hours</span>
+                                    </div>
+                                    <div class="contact-info">
+                                        <i class="fas fa-check-circle" style="color: var(--success); margin-right: 0.5rem;"></i>
+                                        <span>Verified Support</span>
+                                    </div>
+                                    <div class="contact-info">
+                                        <i class="fas fa-shield-alt" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                                        <span>Secure & Private</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn btn-primary" style="margin-top: 2rem; width: 100%; background: linear-gradient(135deg, #25D366, #128C7E);">
+                                    <i class="fab fa-whatsapp"></i> Message on WhatsApp
+                                </button>
+                            </div>
+                            
+                            <!-- Quick Approval Card -->
+                            <div class="stat-card animate__animated animate__fadeInUp animate-delay-1">
+                                <div class="stat-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="stat-value">24-Hour</div>
+                                <p>Profile Approval</p>
+                                <ul style="text-align: left; margin-top: 1.5rem; padding-left: 1rem;">
+                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                                        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                                        <span>Quick verification</span>
+                                    </li>
+                                    <li style="margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+                                        <i class="fas fa-chart-line" style="color: var(--primary);"></i>
+                                        <span>Immediate promotion</span>
+                                    </li>
+                                    <li style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <i class="fas fa-headset" style="color: var(--secondary);"></i>
+                                        <span>Priority support</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Stats Card -->
+                            <div class="stat-card animate__animated animate__fadeInUp animate-delay-2">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-value">98%</div>
+                                <p>Satisfaction Rate</p>
+                                <div style="margin-top: 1.5rem;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span>Support Quality</span>
+                                        <span>4.9/5</span>
+                                    </div>
+                                    <div style="height: 6px; background: var(--dark-lighter); border-radius: var(--radius-full); overflow: hidden;">
+                                        <div style="width: 98%; height: 100%; background: var(--success);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Info -->
+                        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(139, 92, 246, 0.1); border-radius: var(--radius-lg);">
+                            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">Why WhatsApp Support?</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                                <div>
+                                    <i class="fas fa-comment-dots" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                                    <h4 style="margin-bottom: 0.5rem;">Real-time Chat</h4>
+                                    <p style="color: var(--gray);">Get instant answers to your questions</p>
+                                </div>
+                                <div>
+                                    <i class="fas fa-mobile-alt" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                                    <h4 style="margin-bottom: 0.5rem;">Mobile Friendly</h4>
+                                    <p style="color: var(--gray);">Contact us from anywhere, anytime</p>
+                                </div>
+                                <div>
+                                    <i class="fas fa-lock" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                                    <h4 style="margin-bottom: 0.5rem;">End-to-End Encrypted</h4>
+                                    <p style="color: var(--gray);">Your conversations are private and secure</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 
                 <!-- Step 2: Details -->
                 <div class="form-step" id="form-step-2">
@@ -6302,10 +6456,41 @@
             }
         };
 
+        window.openWhatsApp = function() {
+            // Replace with your WhatsApp number (format: 1234567890)
+            const phoneNumber = '233502469601'; // Example Nigerian number
+            
+            // Message template
+            const message = encodeURIComponent(
+                "Hello VelvetSignals! 👋\n\n" +
+                "I'm interested in getting my creator profile listed on your platform.\n" +
+                "Can you help me with:\n" +
+                "• Profile submission process\n" +
+                "• Verification requirements\n" +
+                "• Promotion opportunities\n\n" +
+                "Looking forward to your response!"
+            );
+            
+            // Open WhatsApp
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+            window.open(whatsappURL, '_blank');
+            
+            // Track the click
+            addNotification('WhatsApp Opened 📱', 'Opening WhatsApp to contact support...', 'info');
+        };
+
         window.nextStep = nextStep;
         window.prevStep = prevStep;
         window.submitForm = submitForm;
     </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
+     <!-- Floating WhatsApp Button -->
+<div id="whatsapp-float" style="position: fixed; bottom: 2rem; left: 2rem; z-index: 999;">
+    <div onclick="openWhatsApp()" style="display: flex; align-items: center; gap: 1rem; background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 1rem 1.5rem; border-radius: var(--radius-full); cursor: pointer; box-shadow: var(--shadow-xl); transition: var(--transition);">
+        <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
+        <span style="font-weight: 600;">Contact Support</span>
+        <div class="pulse-ring" style="position: absolute; width: 100%; height: 100%; border: 2px solid #25D366; border-radius: 50%; animation: pulse 2s infinite; top: 0; left: 0;"></div>
+    </div>
+</div>
 </body>
 </html>
