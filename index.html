@@ -4799,13 +4799,20 @@
 
         // ===== DATA INITIALIZATION =====
         function initializeData() {
-            // Add sample creators
-            PlatformData.creators = [...sampleCreators];
+            // Step 1: Get your 20 real creators
+            const realCreators = [...sampleCreators];
             
-            // Generate additional creators
+            // Step 2: Shuffle only the first 20 real creators
+            const shuffledRealCreators = shuffleArray(realCreators);
+            
+            // Step 3: Generate auto-creators (21-50)
+            const autoCreators = [];
             for (let i = 9; i <= 50; i++) {
-                PlatformData.creators.push(generateCreator(i));
+                autoCreators.push(generateCreator(i));
             }
+            
+            // Step 4: Combine shuffled real creators with auto-creators
+            PlatformData.creators = [...shuffledRealCreators, ...autoCreators];
             
             // Generate sample tweets
             for (let i = 0; i < 20; i++) {
@@ -4813,6 +4820,15 @@
             }
         }
 
+        // ===== SHUFFLE FUNCTION =====
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
         function generateCreator(id) {
             const names = [
                 'Real Vun', 'Mia Garcia', 'Chloe Rodriguez', 'Ethan Williams',
