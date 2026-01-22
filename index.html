@@ -618,6 +618,7 @@
             margin-bottom: 3rem;
         }
 
+
         .creator-card {
             background: var(--dark-light);
             border-radius: var(--radius-xl);
@@ -2059,6 +2060,28 @@
             box-shadow: var(--shadow-soft);
         }
 
+        @media (max-width: 768px) {
+            .creator-cover {
+                height: 160px;
+            }
+
+            .creator-avatar {
+                width: 80px;
+                height: 80px;
+                bottom: -40px;
+                left: 1.25rem;
+            }
+
+            .creator-info {
+                padding: calc(2.5rem + 40px) 1.25rem 1.25rem;
+            }
+
+            .creator-bio {
+                -webkit-line-clamp: 3;
+            }
+            }
+
+
         /* Enhanced Mobile Media Queries */
         @media (max-width: 768px) {
             /* Improved Touch Targets */
@@ -3165,6 +3188,28 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
     }
+
+    /* Mobile scroll performance fix */
+    @media (max-width: 768px) {
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    @media (max-width: 768px) {
+  
+    @media (max-width: 768px) {
+    .creator-card:hover {
+        transform: none !important;
+    }
+    }
+        
+
+    * {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+    }
+
     
     /* Fix social links grid */
     .social-links-grid {
@@ -4612,7 +4657,7 @@
                     "https://pbs.twimg.com/media/G4sKbNDXAAAlx30?format=jpg&name=large",
                     "https://pbs.twimg.com/media/GuodsWNWYAEFK3i?format=jpg&name=large",
                     "https://pbs.twimg.com/media/GsXr2QTWQAAKkuS?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GrzthzdW4AAPblU?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/Gu9A77SWUAAslKl?format=jpg&name=large",
                     "https://pbs.twimg.com/media/GqcuedWXwAADXkW?format=jpg&name=large"
                     ],
                 videos: [
@@ -5383,7 +5428,7 @@
                 videos: [
                 {
                     url: "https://x.com/i/status/2013317931627597866",
-                    thumbnail: "https://pbs.twimg.com/amplify_video_thumb/2003773663024152576/img/uDnqDPEwNCAcy4pB?format=jpg&name=360x360",
+                    thumbnail: "https://pbs.twimg.com/amplify_video_thumb/2013317864321622016/img/0gKtUyzc6e9blGCB?format=jpg&name=360x360",
                     title: "tits tuesday but make it sweet🍭",
                     views: "125K",
                     duration: "0:37",
