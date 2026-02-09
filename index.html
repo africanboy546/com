@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, viewport-fit=cover">
     <title>VelvetSignals 🚀 - Premium Creator Promotion Platform</title>
     
     <!-- SEO -->
@@ -756,7 +756,7 @@
             font-size: 0.9375rem;
             line-height: 1.6;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -3172,7 +3172,7 @@
     body {
         -webkit-overflow-scrolling: touch;
     }
-
+}
     @media (max-width: 768px) {
   
   
@@ -3189,6 +3189,7 @@
         height: 40px;
         font-size: 1.25rem;
     }
+}
     
     /* Prevent body scroll when modal is open */
     body.profile-modal-open {
@@ -3320,6 +3321,146 @@
     gap: 1.5rem;
     color: var(--gray);
     font-size: 0.875rem;
+}
+/* FIX 1: Prevent horizontal overflow */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* FIX 2: Improve mobile scrolling performance */
+.creators-grid, .twitter-feed-container, .profile-modal-content {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* FIX 3: Reduce animations on mobile */
+@media (max-width: 768px) {
+    .creator-card, .creator-avatar, .creator-cover-img {
+        transition: none !important;
+        transform: none !important;
+    }
+    
+    .hover-scale:hover {
+        transform: none !important;
+    }
+    
+    /* Disable heavy effects */
+    .glass, .glass-light, .glass-dark {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+}
+
+/* FIX 4: Optimize image rendering */
+.creator-cover-img, .creator-avatar, .gallery-img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* FIX 5: Prevent text size adjustment */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* FIX 6: Fix tap targets for mobile */
+@media (max-width: 768px) {
+    .creator-card, .btn, .nav-link {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* FIX 1: Prevent horizontal overflow */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* FIX 2: Improve mobile scrolling performance */
+.creators-grid, .twitter-feed-container, .profile-modal-content {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* FIX 3: Reduce animations on mobile */
+@media (max-width: 768px) {
+    .creator-card, .creator-avatar, .creator-cover-img {
+        transition: none !important;
+        transform: none !important;
+    }
+    
+    .hover-scale:hover {
+        transform: none !important;
+    }
+    
+    /* Disable heavy effects */
+    .glass, .glass-light, .glass-dark {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+}
+
+/* FIX 4: Optimize image rendering */
+.creator-cover-img, .creator-avatar, .gallery-img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* FIX 5: Prevent text size adjustment */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* FIX 6: Fix tap targets for mobile */
+@media (max-width: 768px) {
+    .creator-card, .btn, .nav-link {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* FIX 7: Ensure grid layout doesn't overflow */
+@media (max-width: 768px) {
+    .creators-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+        margin: 0 auto !important;
+        padding: 0 0.5rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .creator-card {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+}
+
+/* FIX 8: Prevent horizontal scroll */
+.container {
+    padding-left: max(1rem, env(safe-area-inset-left)) !important;
+    padding-right: max(1rem, env(safe-area-inset-right)) !important;
+}
+
+/* FIX 9: Smooth scrolling fix */
+@media (max-width: 768px) {
+    html {
+        scroll-behavior: auto !important;
+    }
+    
+    body {
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
 }
     </style>
 </head>
@@ -6237,6 +6378,63 @@
                 }
             });
         }
+
+        function fixMobileScrolling() {
+    // Prevent rubber-band effect on iOS
+    document.addEventListener('touchmove', function(e) {
+        if(e.target.classList.contains('twitter-feed-container') || 
+           e.target.classList.contains('profile-modal-content')) {
+            return;
+        }
+        
+        if(document.querySelector('.profile-modal.active')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+    
+    // Fix iOS 100vh issue
+    function setVh() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    setVh();
+    window.addEventListener('resize', setVh);
+}
+
+        // Add to DOMContentLoaded
+function optimizeForMobile() {
+    if (window.innerWidth <= 768) {
+        // Lazy load images
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                        imageObserver.unobserve(img);
+                    }
+                }
+            });
+        });
+        
+        // Convert images to use data-src
+        document.querySelectorAll('.creator-cover-img, .creator-avatar, .gallery-img').forEach(img => {
+            if (!img.dataset.src) {
+                img.dataset.src = img.src;
+                img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWUyOTNiIi8+PC9zdmc+';
+                imageObserver.observe(img);
+            }
+        });
+        
+        // Reduce creator cards to 6 initially on mobile
+        PlatformData.creatorsPerPage = 6;
+    }
+}
+
+// Call this after initializeData()
+optimizeForMobile();
 
         // Add to your existing JavaScript
         function enhanceMobileUX() {
