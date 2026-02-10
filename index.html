@@ -24,7 +24,312 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     
     <style>
-        /* ===== VARIABLES ===== */
+        /* ===== NEW: SEARCH BOX STYLES ===== */
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto 3rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            padding-left: 3.5rem;
+            background: var(--dark-light);
+            border: 2px solid var(--dark-lighter);
+            border-radius: var(--radius-full);
+            color: var(--light);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 1.25rem;
+            pointer-events: none;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--dark-light);
+            border-radius: var(--radius-lg);
+            margin-top: 0.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+            border: 1px solid var(--dark-lighter);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .search-results.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .search-result-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--dark-lighter);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-result-item:hover {
+            background: var(--dark-lighter);
+        }
+
+        .search-result-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        .search-result-info {
+            flex: 1;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            color: var(--light);
+            margin-bottom: 0.25rem;
+        }
+
+        .search-result-username {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .search-result-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            margin-top: 0.25rem;
+        }
+
+        .search-result-tag {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--primary);
+            border-radius: var(--radius-full);
+        }
+
+        .no-results {
+            padding: 2rem;
+            text-align: center;
+            color: var(--gray);
+        }
+
+        /* ===== NEW: ADMIN CONTACT SECTION ===== */
+        .admin-contact-section {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            margin-top: 4rem;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+        }
+
+        .admin-contact-header {
+            background: var(--gradient-primary);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .admin-contact-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-contact-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.125rem;
+        }
+
+        .admin-contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+        }
+
+        .admin-contact-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-contact-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .admin-contact-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .admin-contact-icon.whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            animation: pulse 2s infinite;
+        }
+
+        .admin-contact-icon.instagram {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        }
+
+        .admin-contact-icon.support {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .admin-contact-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-contact-role {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .admin-contact-desc {
+            color: var(--gray);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        /* ===== UPDATED: CREATOR PROFILE CSS ARRANGEMENT ===== */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .profile-left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .profile-right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Updated About Me Section */
+        .profile-section.about-section {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .about-me-content {
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            color: var(--light);
+        }
+
+        .about-me-content p {
+            margin-bottom: 1.25rem;
+        }
+
+        .about-me-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Updated Gallery Section */
+        .creator-gallery {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .gallery-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Updated Social Links Section */
+        .social-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Updated Premium Section */
+        .premium-links {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: var(--radius-xl);
+        }
+
+        .premium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .premium-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* ===== EXISTING CSS (KEEPING ALL YOUR ORIGINAL STYLES) ===== */
         :root {
             --primary: #8b5cf6;
             --primary-dark: #7c3aed;
@@ -65,17 +370,14 @@
             --radius-full: 9999px;
             
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            /* New Glassmorphism Variables */
             --glass-bg: rgba(15, 23, 42, 0.7);
             --glass-border: rgba(255, 255, 255, 0.1);
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
             
-            /* Enhanced Gradients */
             --gradient-primary-soft: linear-gradient(135deg, 
                 rgba(139, 92, 246, 0.9), 
                 rgba(236, 72, 153, 0.9));
             
-            /* New Typography Scale */
             --text-xs: 0.75rem;
             --text-sm: 0.875rem;
             --text-base: 1rem;
@@ -88,13 +390,11 @@
             --text-6xl: 3.75rem;
             --text-7xl: 4.5rem;
             
-            /* Enhanced Shadows */
             --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.2);
             --shadow-soft: 0 4px 20px rgba(139, 92, 246, 0.15);
             --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.3);
         }
 
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -119,7 +419,6 @@
             color: white;
         }
 
-        /* ===== CONTAINERS ===== */
         .container {
             width: 100%;
             max-width: 1400px;
@@ -131,7 +430,6 @@
             padding: 6rem 0;
         }
 
-        /* ===== BUTTONS ===== */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -3462,6 +3760,11 @@ html {
         -webkit-overflow-scrolling: touch !important;
     }
 }
+
+        /* ... Rest of your existing CSS remains exactly the same ... */
+
+        /* Age Gate, Navigation, Hero, Stats, Creators Grid, Twitter, Analytics, Form, CTA, Footer, Profile Modal styles remain unchanged */
+        /* Only showing the added/updated sections above */
     </style>
 </head>
 <body>
@@ -3537,7 +3840,7 @@ html {
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title animate__animated animate__fadeInUp">
-                    browse through to discover your favorite African Adult ccreator 🚀
+                    browse through to discover your favorite African Adult creator 🚀
                 </h1>
                 <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
                     Join thousands of content creators getting <span class="gradient-text">real-time promotion</span>, 
@@ -3606,12 +3909,21 @@ html {
         </div>
     </section>
 
-    <!-- Featured Creators -->
+    <!-- Featured Creators with Search -->
     <section id="creators" class="section" style="background: linear-gradient(180deg, var(--dark) 0%, var(--dark-light) 100%);">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">🔥 Top Featured Creators</h2>
-                <p class="section-subtitle">Click any creator to view their detailed profile with "About Me" and social links</p>
+                <h2 class="section-title">🔍 Find Your Favorite Creators</h2>
+                <p class="section-subtitle">Search by name, username, or tags. Click any creator to view detailed profile</p>
+                
+                <!-- NEW: Search Box -->
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-box" class="search-box" placeholder="Search creators by name, username, or tags...">
+                    <div id="search-results" class="search-results">
+                        <!-- Search results will appear here -->
+                    </div>
+                </div>
             </div>
             
             <div class="creators-grid" id="creators-grid">
@@ -3625,6 +3937,91 @@ html {
                     </span>
                     <div class="load-more-spinner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 24px; height: 24px; border: 3px solid rgba(255, 255, 255, 0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; opacity: 0; transition: opacity 0.3s ease;"></div>
                 </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Admin & Support Center -->
+    <section id="admin-support" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">👑 Admin & Support Center</h2>
+                <p class="section-subtitle">Contact the VelvetSignals team directly for assistance, verification, or support</p>
+            </div>
+            
+            <div class="admin-contact-section">
+                <div class="admin-contact-header">
+                    <h3 class="admin-contact-title">Direct Contact Channels</h3>
+                    <p class="admin-contact-subtitle">Reach out to us 24/7 for creator verification, profile assistance, or platform support</p>
+                </div>
+                
+                <div class="admin-contact-grid">
+                    <!-- WhatsApp Admin -->
+                    <div class="admin-contact-card" onclick="openWhatsAppAdmin()">
+                        <div class="admin-contact-icon whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h4 class="admin-contact-name">WhatsApp Admin</h4>
+                        <div class="admin-contact-role">Primary Contact</div>
+                        <p class="admin-contact-desc">
+                            Fastest response time. Contact for profile verification, urgent issues, or quick questions.
+                        </p>
+                        <button class="btn btn-primary" style="background: linear-gradient(135deg, #25D366, #128C7E);">
+                            <i class="fab fa-whatsapp"></i> Message on WhatsApp
+                        </button>
+                    </div>
+                    
+                    <!-- Instagram Admin -->
+                    <div class="admin-contact-card" onclick="openInstagramAdmin()">
+                        <div class="admin-contact-icon instagram">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <h4 class="admin-contact-name">Instagram</h4>
+                        <div class="admin-contact-role">Social Media Manager</div>
+                        <p class="admin-contact-desc">
+                            Connect with us on Instagram for updates, promotions, and community engagement.
+                        </p>
+                        <button class="btn btn-primary" style="background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);">
+                            <i class="fab fa-instagram"></i> Follow on Instagram
+                        </button>
+                    </div>
+                    
+                    <!-- Support Center -->
+                    <div class="admin-contact-card" onclick="openSupportCenter()">
+                        <div class="admin-contact-icon support">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4 class="admin-contact-name">Support Center</h4>
+                        <div class="admin-contact-role">Technical & Account Support</div>
+                        <p class="admin-contact-desc">
+                            Get help with platform issues, account management, or feature requests.
+                        </p>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-headset"></i> Contact Support
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="padding: 2rem; text-align: center; background: rgba(0, 0, 0, 0.2);">
+                    <h4 style="margin-bottom: 1rem; color: var(--light);">Response Time & Support Hours</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                        <div>
+                            <i class="fas fa-clock" style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <h5 style="color: var(--light); margin-bottom: 0.25rem;">Response Time</h5>
+                            <p style="color: var(--gray); font-size: 0.875rem;">1-2 hours (WhatsApp)</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-calendar" style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <h5 style="color: var(--light); margin-bottom: 0.25rem;">Support Hours</h5>
+                            <p style="color: var(--gray); font-size: 0.875rem;">24/7 Availability</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-shield-alt" style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <h5 style="color: var(--light); margin-bottom: 0.25rem;">Verification Time</h5>
+                            <p style="color: var(--gray); font-size: 0.875rem;">Within 24 hours</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -4084,7 +4481,7 @@ html {
                     <h4>Support</h4>
                     <ul class="footer-links">
                         <li><a href="#help"><i class="fas fa-chevron-right"></i> Help Center</a></li>
-                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#admin-support"><i class="fas fa-chevron-right"></i> Admin Contact</a></li>
                         <li><a href="#status"><i class="fas fa-chevron-right"></i> System Status</a></li>
                         <li><a href="#report"><i class="fas fa-chevron-right"></i> Report Issues</a></li>
                     </ul>
@@ -4103,7 +4500,481 @@ html {
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
-        // ===== PLATFORM DATA =====
+        // ===== NEW: SEARCH FUNCTIONALITY =====
+        function initializeSearch() {
+            const searchBox = document.getElementById('search-box');
+            const searchResults = document.getElementById('search-results');
+            
+            searchBox.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                
+                if (query.length < 2) {
+                    searchResults.classList.remove('active');
+                    return;
+                }
+                
+                // Filter creators based on search query
+                const filteredCreators = PlatformData.creators.filter(creator => {
+                    return (
+                        creator.name.toLowerCase().includes(query) ||
+                        creator.username.toLowerCase().includes(query) ||
+                        creator.bio.toLowerCase().includes(query) ||
+                        creator.tags.some(tag => tag.toLowerCase().includes(query))
+                    );
+                });
+                
+                displaySearchResults(filteredCreators);
+            });
+            
+            // Close search results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchBox.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.remove('active');
+                }
+            });
+            
+            // Show all creators when search box is focused and empty
+            searchBox.addEventListener('focus', function() {
+                if (this.value.trim() === '') {
+                    displaySearchResults(PlatformData.creators.slice(0, 10));
+                }
+            });
+        }
+        
+        function displaySearchResults(creators) {
+            const searchResults = document.getElementById('search-results');
+            
+            if (creators.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; color: var(--gray);"></i>
+                        <p>No creators found. Try different keywords.</p>
+                    </div>
+                `;
+                searchResults.classList.add('active');
+                return;
+            }
+            
+            let resultsHTML = '';
+            
+            creators.slice(0, 10).forEach(creator => {
+                resultsHTML += `
+                    <div class="search-result-item" onclick="viewCreatorProfile(${creator.id}); document.getElementById('search-results').classList.remove('active');">
+                        <img src="${creator.avatar}" alt="${creator.name}" class="search-result-avatar">
+                        <div class="search-result-info">
+                            <div class="search-result-name">${creator.name}</div>
+                            <div class="search-result-username">@${creator.username}</div>
+                            <div class="search-result-tags">
+                                ${creator.tags.slice(0, 3).map(tag => `<span class="search-result-tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div style="color: var(--primary);">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            if (creators.length > 10) {
+                resultsHTML += `
+                    <div style="padding: 1rem; text-align: center; color: var(--gray); font-size: 0.875rem;">
+                        Showing 10 of ${creators.length} results
+                    </div>
+                `;
+            }
+            
+            searchResults.innerHTML = resultsHTML;
+            searchResults.classList.add('active');
+        }
+        
+        // ===== NEW: ADMIN CONTACT FUNCTIONS =====
+        function openWhatsAppAdmin() {
+            const phoneNumber = '233502469601'; // Your WhatsApp number
+            const message = encodeURIComponent(
+                "Hello VelvetSignals Admin! 👑\n\n" +
+                "I need assistance with:\n" +
+                "• Creator profile verification\n" +
+                "• Platform features\n" +
+                "• Account support\n\n" +
+                "Please help me get started!"
+            );
+            
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+            addNotification('WhatsApp Admin 📱', 'Opening WhatsApp to contact admin...', 'info');
+        }
+        
+        function openInstagramAdmin() {
+            const instagramURL = 'https://instagram.com/velvetsignals_'; // Your Instagram URL
+            window.open(instagramURL, '_blank');
+            addNotification('Instagram Admin 📸', 'Opening Instagram profile...', 'info');
+        }
+        
+        function openSupportCenter() {
+            showToast('🎫 Support center coming soon! Use WhatsApp for immediate assistance.', 'info');
+        }
+        
+        // ===== UPDATED: PROFILE MODAL ARRANGEMENT =====
+        // The viewCreatorProfile function has been updated in the JavaScript below
+        // to use the new CSS arrangement with left and right columns
+        
+        // ===== MODIFIED: INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 VelvetSignals Premium Platform Initializing...');
+            
+            // Load initial data
+            initializeData();
+            
+            // Initialize all components
+            initializeAgeGate();
+            initializeNavigation();
+            initializeHero();
+            initializeCreators();
+            initializeTwitterFeed();
+            initializeForm();
+            initializeAnalytics();
+            initializeLiveUpdates();
+            initializeTheme();
+            initializeProfileModal();
+            initializeSearch(); // NEW: Initialize search functionality
+            
+            // Start real-time updates
+            startRealTimeUpdates();
+            
+            console.log('✅ VelvetSignals Premium Platform Ready!');
+            
+            // Show welcome notification
+            setTimeout(() => {
+                addNotification('Welcome to VelvetSignals! 🎉', 'Search for creators or click any card to view detailed profiles.', 'welcome');
+            }, 2000);
+        });
+
+        // ===== UPDATED: PROFILE MODAL GENERATION =====
+        // The viewCreatorProfile function will now generate HTML that uses
+        // the new profile-grid with left-column and right-column layout
+        
+        // ===== EXISTING JAVASCRIPT FUNCTIONS =====
+        // All your existing JavaScript functions remain here
+        // Only showing the modified viewCreatorProfile function
+        
+        function viewCreatorProfile(creatorId) {
+            const creator = PlatformData.creators.find(c => c.id === creatorId);
+            if (!creator) return;
+            
+            const modalContent = document.querySelector('.profile-modal-content');
+            const badges = [];
+            if (creator.isFeatured) badges.push('<span class="badge badge-featured"><i class="fas fa-star"></i> Featured</span>');
+            if (creator.isVerified) badges.push('<span class="badge badge-verified"><i class="fas fa-check"></i> Verified</span>');
+            if (creator.isTrending) badges.push('<span class="badge badge-trending"><i class="fas fa-fire"></i> Trending</span>');
+            if (creator.id <= 8) badges.push('<span class="badge badge-new"><i class="fas fa-bolt"></i> New</span>');
+            
+            // Build social links array
+            const socialLinks = [];
+            if (creator.socialLinks.twitter) {
+                socialLinks.push({
+                    platform: 'Twitter',
+                    handle: `@${creator.username}`,
+                    icon: 'twitter',
+                    url: creator.socialLinks.twitter
+                });
+            }
+            if (creator.socialLinks.instagram) {
+                socialLinks.push({
+                    platform: 'Instagram',
+                    handle: `@${creator.username}`,
+                    icon: 'instagram',
+                    url: creator.socialLinks.instagram
+                });
+            }
+            if (creator.socialLinks.tiktok) {
+                socialLinks.push({
+                    platform: 'TikTok',
+                    handle: `@${creator.username}`,
+                    icon: 'tiktok',
+                    url: creator.socialLinks.tiktok
+                });
+            }
+            if (creator.socialLinks.youtube) {
+                socialLinks.push({
+                    platform: 'YouTube',
+                    handle: `${creator.name.split(' ')[0]}'s Channel`,
+                    icon: 'youtube',
+                    url: creator.socialLinks.youtube
+                });
+            }
+            if (creator.socialLinks.onlyfans) {
+                socialLinks.push({
+                    platform: 'OnlyFans',
+                    handle: creator.name.split(' ')[0],
+                    icon: 'onlyfans',
+                    url: creator.socialLinks.onlyfans
+                });
+            }
+            if (creator.socialLinks.fansly) {
+                socialLinks.push({
+                    platform: 'Fansly',
+                    handle: creator.name.split(' ')[0],
+                    icon: 'fansly',
+                    url: creator.socialLinks.fansly
+                });
+            }
+            if (creator.socialLinks.allaccessfans) {
+                socialLinks.push({
+                    platform: 'AllAccessFans',
+                    handle: creator.name.split(' ')[0],
+                    icon: 'allaccessfans',
+                    url: creator.socialLinks.allaccessfans
+                });
+            }
+            
+            modalContent.innerHTML = `
+                <div class="profile-header">
+                    <img src="${creator.wallpaper}" alt="Wallpaper" class="profile-wallpaper">
+                    <button class="profile-close" onclick="closeProfileModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <div class="container">
+                        <div class="profile-header-content">
+                            <div class="profile-avatar-container">
+                                <img src="${creator.avatar}" alt="${creator.name}" class="profile-avatar">
+                                <div class="profile-badges">
+                                    ${badges.join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="profile-info">
+                                <h1 class="profile-name">${creator.name}</h1>
+                                <div class="profile-username">@${creator.username}</div>
+                                <p class="profile-bio-short">${creator.bio}</p>
+                                
+                                <div class="profile-stats">
+                                    <div class="profile-stat">
+                                        <span class="profile-stat-value">${creator.stats.followers}</span>
+                                        <span class="profile-stat-label">Followers</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <span class="profile-stat-value">${creator.stats.views}</span>
+                                        <span class="profile-stat-label">Total Views</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <span class="profile-stat-value">${creator.stats.likes}</span>
+                                        <span class="profile-stat-label">Likes</span>
+                                    </div>
+                                    <div class="profile-stat">
+                                        <span class="profile-stat-value" style="color: var(--success);">${creator.stats.growth}</span>
+                                        <span class="profile-stat-label">Growth</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-actions">
+                                    <button class="btn btn-primary" onclick="followCreator(${creator.id})">
+                                        <i class="fas fa-plus"></i> Follow Creator
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="shareCreatorProfile('${creator.username}')">
+                                        <i class="fas fa-share"></i> Share Profile
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-body">
+                    <div class="container">
+                        <!-- UPDATED: New grid layout with left and right columns -->
+                        <div class="profile-grid">
+                            <div class="profile-left-column">
+                                <!-- About Me Section -->
+                                <div class="profile-section about-section">
+                                    <h2 class="profile-section-title">
+                                        <i class="fas fa-user"></i>
+                                        About Me
+                                    </h2>
+                                    <div class="about-me-content">
+                                        ${creator.aboutMe.split('\n').map(para => `<p>${para}</p>`).join('')}
+                                    </div>
+                                    
+                                    <div class="content-types">
+                                        ${creator.tags.map(tag => `<span class="content-type">${tag}</span>`).join('')}
+                                    </div>
+                                </div>
+
+                                <!-- Photo Gallery -->
+                                <div class="profile-section creator-gallery">
+                                    <div class="gallery-header">
+                                        <h2 class="gallery-title">
+                                            <i class="fas fa-images"></i>
+                                            Photo Gallery
+                                        </h2>
+                                        <div style="color: var(--gray); font-size: 0.875rem;">
+                                            ${creator.gallery ? creator.gallery.length : 0} posts
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="gallery-grid">
+                                        ${creator.gallery ? creator.gallery.map((img, index) => `
+                                            <div class="gallery-item" onclick="openGalleryModal(${creator.id}, ${index})">
+                                                <img src="${img}" alt="Gallery image ${index + 1}" class="gallery-img">
+                                                <div class="gallery-overlay">
+                                                    <div class="gallery-stats">
+                                                        <div class="gallery-stat">
+                                                            <i class="fas fa-heart"></i>
+                                                            <span>${Math.floor(Math.random() * 1000) + 100}</span>
+                                                        </div>
+                                                        <div class="gallery-stat">
+                                                            <i class="fas fa-comment"></i>
+                                                            <span>${Math.floor(Math.random() * 100) + 10}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('') : '<div style="text-align: center; color: var(--gray); padding: 2rem;">No photos yet</div>'}
+                                    </div>
+                                </div>
+                                
+                                <!-- Video Gallery -->
+                                <div class="profile-section creator-gallery">
+                                    <div class="gallery-header">
+                                        <h2 class="gallery-title">
+                                            <i class="fas fa-video"></i>
+                                            Video Gallery
+                                        </h2>
+                                        <div style="color: var(--gray); font-size: 0.875rem;">
+                                            ${creator.videos ? creator.videos.length : 0} videos
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="gallery-grid">
+                                        ${creator.videos ? creator.videos.map((video, index) => `
+                                            <div class="gallery-item video-item" onclick="playVideo('${video.url}', '${video.thumbnail}', ${index})">
+                                                ${video.thumbnail ? `
+                                                    <img src="${video.thumbnail}" alt="Video thumbnail ${index + 1}" class="gallery-img">
+                                                ` : `
+                                                    <div class="video-placeholder">
+                                                        <i class="fas fa-play-circle"></i>
+                                                        <span>Play Video</span>
+                                                    </div>
+                                                `}
+                                                <div class="gallery-overlay">
+                                                    <div class="gallery-stats">
+                                                        <div class="gallery-stat">
+                                                            <i class="fas fa-play-circle"></i>
+                                                            <span>${video.views || Math.floor(Math.random() * 5000) + 100}</span>
+                                                        </div>
+                                                        <div class="gallery-stat">
+                                                            <i class="fas fa-clock"></i>
+                                                            <span>${video.duration || '2:30'}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="video-badge">
+                                                    <i class="fas fa-play"></i>
+                                                </div>
+                                            </div>
+                                        `).join('') : '<div style="text-align: center; color: var(--gray); padding: 2rem;">No videos yet</div>'}
+                                    </div>
+                                </div>
+                                
+                                <!-- Social Links -->
+                                <div class="profile-section">
+                                    <h2 class="profile-section-title">
+                                        <i class="fas fa-link"></i>
+                                        Connect With Me
+                                    </h2>
+                                    <div class="social-links-grid">
+                                        ${socialLinks.map(social => `
+                                            <a href="${social.url}" target="_blank" rel="noopener noreferrer" class="social-link-card">
+                                                <div class="social-icon ${social.icon}">
+                                                    <i class="fab fa-${social.icon}"></i>
+                                                </div>
+                                                <div class="social-info">
+                                                    <div class="social-platform">${social.platform}</div>
+                                                    <div class="social-handle">${social.handle}</div>
+                                                    <div class="social-cta">Click to visit →</div>
+                                                </div>
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-right-column">
+                                <!-- Premium Links -->
+                                <div class="profile-section">
+                                    <h2 class="profile-section-title">
+                                        <i class="fas fa-crown"></i>
+                                        Premium Content
+                                    </h2>
+                                    <div class="premium-links">
+                                        <h3 class="premium-links-title">
+                                            <i class="fas fa-lock"></i>
+                                            Exclusive Platforms
+                                        </h3>
+                                        <div class="premium-grid">
+                                            ${creator.socialLinks.onlyfans ? `
+                                            <div class="premium-card">
+                                                <div class="premium-icon onlyfans">
+                                                    <i class="fab fa-onlyfans"></i>
+                                                </div>
+                                                <div class="premium-name">OnlyFans</div>
+                                                <div class="premium-desc">Exclusive content and behind-the-scenes</div>
+                                                <div class="premium-price">$12.99/month</div>
+                                                <a href="${creator.socialLinks.onlyfans}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                                    <i class="fas fa-external-link-alt"></i> Visit
+                                                </a>
+                                            </div>
+                                            ` : ''}
+                                            
+                                            ${creator.socialLinks.fansly ? `
+                                            <div class="premium-card">
+                                                <div class="premium-icon fansly">
+                                                    <i class="fas fa-heart"></i>
+                                                </div>
+                                                <div class="premium-name">Fansly</div>
+                                                <div class="premium-desc">Premium content and community</div>
+                                                <div class="premium-price">$9.99/month</div>
+                                                <a href="${creator.socialLinks.fansly}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                                    <i class="fas fa-external-link-alt"></i> Visit
+                                                </a>
+                                            </div>
+                                            ` : ''}
+                                            
+                                            ${creator.socialLinks.allaccessfans ? `
+                                            <div class="premium-card">
+                                                <div class="premium-icon allaccessfans">
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                                <div class="premium-name">AllAccessFans</div>
+                                                <div class="premium-desc">VIP access to all content</div>
+                                                <div class="premium-price">$24.99/month</div>
+                                                <a href="${creator.socialLinks.allaccessfans}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                                    <i class="fas fa-external-link-alt"></i> Visit
+                                                </a>
+                                            </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Show modal
+            const modal = document.getElementById('profile-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.body.classList.add('profile-modal-open');
+            
+            showToast(`Viewing ${creator.name}'s profile`, 'info');
+        }
+        
+        // ===== EXISTING FUNCTIONS CONTINUE BELOW =====
+        // All your existing PlatformData, sampleCreators, and other functions
+        // remain exactly the same as in your original code
+        // I'm showing the structure but keeping them as-is
+        
         const PlatformData = {
             creators: [],
             tweets: [],
@@ -4119,15 +4990,14 @@ html {
             notifications: [],
             formData: {}
         };
-
-        // ===== SAMPLE CREATORS WITH REAL DATA =====
+        
         const sampleCreators = [
             {
                 id: 1,
                 name: "Caramel Mocha 🌸",
                 username: "caramellmocha69",
                 bio: "Sexual Misfit 💦 😈..…………. Join my Premium TG (100$)💰..……………. W/A : 0533671193 ❌NO MEETUPs DM for SVC /FT Shows",
-                tags: ["Gaming", "Cosplay", "Modeling"],
+                tags: ["Squirting", "Big Boobs", "Juicy", "Premium TG", "No Meetups"],
                 stats: {
                     followers: "885.2K",
                     views: "2.5M",
@@ -4217,7 +5087,7 @@ html {
                 name: "🦋Main🦋",
                 username: "Main_lifestyle",
                 bio: "🎀MAIN🦋 cultists wife |Ego sexual| |B!| 21+| FINDOM BRAT🎀Your juicy distraction on here🫧💧 |MY ONLY X PAGE|@anastysoul60600|NO COLLABS ✖️✖️SOLO ONLY 🪸🦋||",
-                tags: ["Fitness", "Health", "Lifestyle"],
+                tags: ["Fitness", "Fat Ass", "Lifestyle", "Premium TG", "Solo Only"],
                 stats: {
                     followers: "720.5K",
                     views: "4.2M",
@@ -4307,7 +5177,7 @@ html {
                 name: "SPICY ✨",
                 username: "sedooterr",
                 bio: "Lala is my new name•Masterpiece•Mastermind•Model• ✉️tulesedooter@yahoo.com IG:sedooter_",
-                tags: ["ASMR", "Relaxation", "Wellness"],
+                tags: ["Pretty Melons", "Juicy", "Modeling", "Solo Only"],
                 stats: {
                     followers: "985.8K",
                     views: "3.8M",
@@ -4397,7 +5267,7 @@ html {
                 name: "Miss Pearline♡",
                 username: "lingeriegirlie_",
                 bio: "a tribute to Hot weirdos, Lingerie, Bikinis, and SEX APPEAL !♡ How cunty can it get?😛✨IG: adeline._.thompson□ !MY ONLY ACCOUNT!♡¡",
-                tags: ["Art", "Digital Art", "Tutorials"],
+                tags: ["pretty boobs", "sexy", "juicy", "Lingerie", "Bikinis"],
                 stats: {
                     followers: "668.3K",
                     views: "1.9M",
@@ -4487,7 +5357,7 @@ html {
                 name: "theAsexualSlurt💘",
                 username: "purple_ogbanje",
                 bio: "🔞21+ | ♒️ a naughty afrohemian goddess🐈💘 | (@realpotheadshit) | 🎄🎁 https://glowclub.tv/theAsexualSlurt ☃️ | DM FEE 33$❗️",
-                tags: ["Yoga", "Wellness", "Meditation"],
+                tags: ["naughty", "sexy", "Squirting", "Juicy"],
                 stats: {
                     followers: "778.4K",
                     views: "2.3M",
@@ -4571,7 +5441,7 @@ html {
                 name: "Gray Africana 🔞",
                 username: "gray_africana",
                 bio: "Fashion Model | Adult Entertainer🔞| Video Vixen | My only X account | Email gray.africana@wildlagos.com for Bookings | NO DMs ❌🚫",
-                tags: ["Fashion", "Style", "Beauty"],
+                tags: ["Pretty pussy", "juicy", "sexy", "Modeling", "Adult Entertainment"],
                 stats: {
                     followers: "710.3K",
                     views: "8.7M",
@@ -4655,7 +5525,7 @@ html {
                 name: "𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི",
                 username: "bubblebuttqutie",
                 bio: "20|₊˚ʚ ₊˚✧ 𝒜𝓁𝓁 𝓃𝒶𝓉𝓊𝓇𝒶𝓁 🌷𝔖𝔢𝔩𝔩𝔦𝔫𝔤 𝔠𝔬𝔫𝔱𝔢𝔫𝔱𝔰🐙 ⠀⠀⠀⠀⠀⠀𝒟𝓂 𝒻𝑜𝓇 𝓂𝑒𝓃𝓊 @bbq_archives",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["fat ass", "naugthy", "Premuim links", "Lifestyle", "sexy"],
                 stats: {
                     followers: "895.2K",
                     views: "3.4M",
@@ -4745,7 +5615,7 @@ html {
                 name: "Queen Diva",
                 username: "realqueendiva",
                 bio: "Well_CUM… Click the link to watch all my videos… NO MEET UPS!!!  😈",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["No Meetups", "naughty", "fat boobs", "Sexy"],
                 stats: {
                     followers: "565.2K",
                     views: "3.4M",
@@ -4835,7 +5705,7 @@ html {
                 name: "Miss Big Melons🍉🍉",
                 username: "yourseductress_",
                 bio: "pothead bisexual🍃 obsessed with showing off my body🥰 I got an ocean🐱💦DM fee 15$ or hmu for squirt video calls. Yes,I sell🎥",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["sexy", "fat melons", "naugthy", "Juicy"],
                 stats: {
                     followers: "792.2K",
                     views: "3.4M",
@@ -4919,7 +5789,7 @@ html {
                 name: "Topbitch🍑",
                 username: "Topbitch234",
                 bio: "Africa's baddest bitch giving the slutty vibe. 🥵before sending a dm Tips https://youfanly.com/tip/topbitch23 more videos sub https://youfanly.com/topbitch23",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["fat ass", "choco-sexy", "juicy", "Premium TG", "No Meetups"],
                 stats: {
                     followers: "795.2K",
                     views: "3.4M",
@@ -5003,7 +5873,7 @@ html {
                 name: "Queen Nerri 👑🌹",
                 username: "Queen_Nerri",
                 bio: "Multifaceted 🤯• Happy Girl😂• Foodie😋 • Baddie 🥶• Real Life Barbie🧸",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["juicy", "twerk", "Lifestyle", "sexy"],
                 stats: {
                     followers: "756.2K",
                     views: "3.4M",
@@ -5090,7 +5960,7 @@ html {
                 name: "Big Noor🧧",
                 username: "Bignoor_",
                 bio: "STRAIGHT MALE CONTENT CREATOR 🔞NSFW. Milf Lover• Check out Big Noor on https://allaccessfans.co/u/Blacknoor• https://linktr.ee/Bignoor backup @Kingnoor___",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["big dick", "healthy", "stroker"],
                 stats: {
                     followers: "615.2K",
                     views: "3.4M",
@@ -5174,7 +6044,7 @@ html {
                 name: "20% Dicount🎄 ⛄️",
                 username: "hot_saucc",
                 bio: "🍑A treat you’ve been craving for😈 😍 Subscribe to my youfanly 🫦😌(Tip) me❤️➡️https://youfanly.com/tip/hot_saucc ⬅️",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["fat ass", "Juicy", "sexy"],
                 stats: {
                     followers: "545.2K",
                     views: "3.4M",
@@ -5258,7 +6128,7 @@ html {
                 name: "Softpeach 🍑",
                 username: "softpeach03",
                 bio: "Slutty Peach 🍑 | dm for menu| no collabs",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["sexy", "juicy", "naughty"],
                 stats: {
                     followers: "795.2K",
                     views: "3.4M",
@@ -5342,7 +6212,7 @@ html {
                 name: "Blue_bubblesྀི",
                 username: "Bluebubble65094",
                 bio: "||Adult content creator ||No collabs /https://instagram.com/setteblue/ https://youfanly.com/rosetteblue. https://t.me/Rosettespa.",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["sexy", "naughty", "juicy"],
                 stats: {
                     followers: "495.2K",
                     views: "3.4M",
@@ -5426,7 +6296,7 @@ html {
                 name: "Temptress ♊️",
                 username: "Ssmartypantsss",
                 bio: "AV on premium chat | 18+|Findomme| $50 tribute| Snapchat $25| unblock fee $100|Empty your wallet for me💴 https://allmylinks.com/tempttress",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["Pretty Melons", "Juicy", "Solo Only"],
                 stats: {
                     followers: "595.2K",
                     views: "3.4M",
@@ -5510,7 +6380,7 @@ html {
                 name: "Pretty Melons📱🔞",
                 username: "prettymelonsgh",
                 bio: "🇬🇭🎄❤️🔁 Like & Repost My Posts To See My Wet Pussy 💦 🌈 Bisexual Squirter With Big Boobs| http://sheer.com/PrettyMelonsOfficial | Click Link For More ⤵️",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["Faat boobs", "sexy", "naughty"],
                 stats: {
                     followers: "825.2K",
                     views: "3.4M",
@@ -5594,7 +6464,7 @@ html {
                 name: "ozi😩😩",
                 username: "blondbaldy",
                 bio: "Pole dancer 🍑 I like books😩 techie ❤️🥹",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["sexy", "juicy", "Lingerie", "Bikinis"],
                 stats: {
                     followers: "765.2K",
                     views: "3.4M",
@@ -5684,7 +6554,7 @@ html {
                 name: "Obsessedwithmytitties🍒",
                 username: "The6_2sharkkk",
                 bio: "I break vows, break egos, and break your bank",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["pretty boobs", "sexy", "naughty"],
                 stats: {
                     followers: "695.2K",
                     views: "3.4M",
@@ -5768,7 +6638,7 @@ html {
                 name: "👅𝓟𝓻𝓲𝓷𝓬𝓮𝓼𝓼𝓛𝓲𝓵𝓵𝓲𝓮 𐙚",
                 username: "_Cesslillie",
                 bio: "🎀Slutoutprincess | Doesn’tMoneyMakeYouHorny? 💸",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["Pretty pussy", "juicy", "sexy", "Adult Entertainment"],
                 stats: {
                     followers: "695.2K",
                     views: "3.4M",
@@ -5850,7 +6720,7 @@ html {
                 name: "Bigivy23",
                 username: "bigivy23",
                 bio: "🦋FEMINIST 🦋MOBILE MASSAGE THERAPIST.",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["Sexy", "Juicy", "Premium Links"],
                 stats: {
                     followers: "695.2K",
                     views: "3.4M",
@@ -5931,7 +6801,7 @@ html {
                 name: "Di_a_na._💝",
                 username: "di_a_na7",
                 bio: "🦋Gemini ♊️ lover of fashion || HER 🤭 ||hotter offline",
-                tags: ["Food", "Cooking", "Recipes"],
+                tags: ["Sexy", "Juicy", "Fat boobs", "naughty"],
                 stats: {
                     followers: "695.2K",
                     views: "3.4M",
@@ -6014,6 +6884,8 @@ html {
                 }
             }
         ];
+
+
 
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', () => {
@@ -7841,13 +8713,19 @@ optimizeForMobile();
         window.nextStep = nextStep;
         window.prevStep = prevStep;
         window.submitForm = submitForm;
+
+        // All other existing functions remain the same
+        // initializeData, generateCreator, generateTweet, etc.
+        
+        // ... (rest of your existing JavaScript code)
+
     </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
      <!-- Floating WhatsApp Button -->
 <div id="whatsapp-float" style="position: fixed; bottom: 2rem; left: 2rem; z-index: 999;">
-    <div onclick="openWhatsApp()" style="display: flex; align-items: center; gap: 1rem; background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 1rem 1.5rem; border-radius: var(--radius-full); cursor: pointer; box-shadow: var(--shadow-xl); transition: var(--transition);">
+    <div onclick="openWhatsAppAdmin()" style="display: flex; align-items: center; gap: 1rem; background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 1rem 1.5rem; border-radius: var(--radius-full); cursor: pointer; box-shadow: var(--shadow-xl); transition: var(--transition);">
         <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
-        <span style="font-weight: 600;">Contact Support</span>
+        <span style="font-weight: 600;">Contact Admin</span>
         <div class="pulse-ring" style="position: absolute; width: 100%; height: 100%; border: 2px solid #25D366; border-radius: 50%; animation: pulse 2s infinite; top: 0; left: 0;"></div>
     </div>
 </div>
