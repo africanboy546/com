@@ -8077,21 +8077,7 @@ optimizeForMobile();
             setInterval(() => {
                 if (Math.random() > 0.6) {
                     const notifications = [
-                        {
-                            title: 'New Creator Joined',
-                            message: `@creator_${Date.now().toString().slice(-4)} just signed up!`,
-                            type: 'user'
-                        },
-                        {
-                            title: 'Trending Alert',
-                            message: 'Your profile is trending in the Cosplay category!',
-                            type: 'trending'
-                        },
-                        {
-                            title: 'Milestone Reached',
-                            message: 'Platform just hit 8.5M monthly views! 🎉',
-                            type: 'milestone'
-                        }
+                        // Live updates here
                     ];
                     
                     const notification = notifications[Math.floor(Math.random() * notifications.length)];
