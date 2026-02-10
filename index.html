@@ -4644,7 +4644,7 @@ html {
             
             // Show welcome notification
             setTimeout(() => {
-                addNotification('Welcome to VelvetSignals! 🎉', 'Search for creators or click any card to view detailed profiles.', 'welcome');
+                addNotification('');
             }, 2000);
         });
 
@@ -7087,7 +7087,7 @@ html {
             
             // Show welcome notification
             setTimeout(() => {
-                addNotification('Welcome to VelvetSignals! 🎉', 'Click any creator card to view detailed profiles with "About Me" and social links.', 'welcome');
+                addNotification('');
             }, 2000);
         });
 
@@ -8014,7 +8014,7 @@ optimizeForMobile();
                 button.disabled = false;
                 
                 showToast('🔄 Twitter feed refreshed!', 'info');
-                addNotification('Feed Updated 📰', 'New tweets from the community have been loaded.', 'twitter');
+                addNotification('');
             }, 1500);
         }
 
@@ -8275,21 +8275,9 @@ optimizeForMobile();
             };
             
             const notification = document.createElement('div');
-            notification.className = 'live-notification';
+            notification.className = '';
             notification.id = notificationId;
-            notification.innerHTML = `
-                <div class="notification-icon">
-                    <i class="${icons[type] || 'fas fa-bell'}"></i>
-                </div>
-                <div class="notification-content">
-                    <div class="notification-title">${title}</div>
-                    <div class="notification-message">${message}</div>
-                    <div class="notification-time">Just now</div>
-                </div>
-                <button class="notification-close" onclick="removeNotification('${notificationId}')">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
+            notification.innerHTML = "";
             
             updatesContainer.appendChild(notification);
             
