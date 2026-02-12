@@ -3808,6 +3808,183 @@
     border-radius: 0.5rem !important;
 }
 
+/* ===== FIX MOBILE SCROLLING PERFORMANCE ===== */
+@media (max-width: 768px) {
+    /* Fix shaky scrolling - disable smooth scroll on mobile */
+    html {
+        scroll-behavior: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        overflow-scrolling: touch !important;
+    }
+    
+    body {
+        -webkit-overflow-scrolling: touch !important;
+        overflow-scrolling: touch !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative !important;
+    }
+    
+    /* Disable problematic CSS properties that cause jank */
+    * {
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+        -webkit-backface-visibility: hidden !important;
+        backface-visibility: hidden !important;
+        -webkit-perspective: 1000 !important;
+        perspective: 1000 !important;
+    }
+    
+    /* Fix container overflow */
+    .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Disable parallax and heavy animations on scroll */
+    .creator-card {
+        transform: none !important;
+        transition: none !important;
+        will-change: auto !important;
+    }
+    
+    .creator-card:hover {
+        transform: none !important;
+    }
+    
+    /* Disable all hover effects on mobile */
+    .creator-card:hover::before,
+    .creator-card:hover .creator-cover-img,
+    .creator-card:hover .creator-avatar {
+        transform: none !important;
+    }
+    
+    /* Remove sticky/fixed positioning issues */
+    .navbar {
+        position: sticky !important;
+        position: -webkit-sticky !important;
+        top: 0 !important;
+        transform: translateZ(0) !important;
+    }
+    
+    /* Fix scroll chaining */
+    .profile-modal,
+    .gallery-modal,
+    .video-modal {
+        -webkit-overflow-scrolling: touch !important;
+        overflow-y: auto !important;
+    }
+    
+    /* Optimize images for scrolling */
+    .creator-cover-img,
+    .creator-avatar,
+    .gallery-img {
+        image-rendering: -webkit-optimize-contrast !important;
+        image-rendering: crisp-edges !important;
+    }
+    
+    /* Reduce repaints */
+    .creator-stats,
+    .creator-info,
+    .creator-actions {
+        will-change: auto !important;
+    }
+    
+    /* Fix momentum scrolling */
+    .creators-grid {
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Disable any transform animations on scroll */
+    [class*="animate__"] {
+        animation: none !important;
+    }
+    
+    /* Fix scroll lag on iOS */
+    .profile-modal-content,
+    .twitter-feed-container {
+        -webkit-overflow-scrolling: touch !important;
+        overflow-y: auto !important;
+    }
+}
+
+/* ===== ADDITIONAL FIX FOR CHROME/ANDROID ===== */
+@media (max-width: 768px) {
+    /* Force hardware acceleration */
+    .navbar,
+    .creator-card,
+    .profile-header {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    /* Disable smooth scrolling for all anchor links */
+    a[href^="#"] {
+        scroll-behavior: auto !important;
+    }
+    
+    /* Fix white flash during scroll */
+    body {
+        background-color: var(--dark) !important;
+    }
+    
+    /* Reduce scroll complexity */
+    .section {
+        scroll-margin-top: 70px !important;
+    }
+    
+    /* Optimize scroll performance */
+    ::-webkit-scrollbar {
+        width: 0 !important;
+        background: transparent !important;
+    }
+    
+    /* Disable sticky hover on mobile */
+    .nav-link.active::after {
+        display: none !important;
+    }
+    
+    /* Fix scroll event flooding */
+    .creator-card {
+        pointer-events: auto !important;
+    }
+}
+
+/* ===== FIX IOS SPECIFIC SCROLL ISSUES ===== */
+@supports (-webkit-touch-callout: none) {
+    @media (max-width: 768px) {
+        /* iOS specific fixes */
+        html, body {
+            -webkit-overflow-scrolling: touch !important;
+            overflow-scrolling: touch !important;
+            height: 100% !important;
+        }
+        
+        body {
+            position: fixed !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow-y: auto !important;
+        }
+        
+        /* Fix 100vh issue on iOS */
+        .hero,
+        .section,
+        .profile-modal-content {
+            height: auto !important;
+            min-height: auto !important;
+        }
+        
+        /* Fix rubber-band effect */
+        body {
+            overscroll-behavior: none !important;
+            -webkit-overscroll-behavior: none !important;
+        }
+    }
+}
+
 
     </style>
 </head>
@@ -9049,6 +9226,50 @@ optimizeForMobile();
             
             ticker.innerHTML = names + names;
         }
+
+        // ===== FIX MOBILE SCROLLING PERFORMANCE =====
+function fixMobileScrolling() {
+    if (window.innerWidth <= 768) {
+        // Disable smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Use instant scroll instead of smooth
+                    window.scrollTo({
+                        top: target.offsetTop - 70,
+                        behavior: 'auto'
+                    });
+                }
+            });
+        });
+        
+        // Remove all scroll event listeners that cause jank
+        let scrollEvents = window.getEventListeners ? window.getEventListeners(window).scroll : [];
+        if (scrollEvents.length > 0) {
+            scrollEvents.forEach(event => {
+                window.removeEventListener('scroll', event.listener);
+            });
+        }
+        
+        // Optimize scroll handler
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    // Do minimal work here
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+    }
+}
+
+// Call on load and resize
+document.addEventListener('DOMContentLoaded', fixMobileScrolling);
+window.addEventListener('resize', fixMobileScrolling);
 
     </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
