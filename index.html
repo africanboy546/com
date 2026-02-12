@@ -4523,13 +4523,6 @@
                 displaySearchResults(filteredCreators);
             });
             
-            // Close search results when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!searchBox.contains(e.target) && !searchResults.contains(e.target)) {
-                    searchResults.classList.remove('active');
-                }
-            });
-            
             // Show all creators when search box is focused and empty
             searchBox.addEventListener('focus', function() {
                 if (this.value.trim() === '') {
@@ -7762,29 +7755,6 @@
             });
         }
 
-        function fixMobileScrolling() {
-    // Prevent rubber-band effect on iOS
-    document.addEventListener('touchmove', function(e) {
-        if(e.target.classList.contains('twitter-feed-container') || 
-           e.target.classList.contains('profile-modal-content')) {
-            return;
-        }
-        
-        if(document.querySelector('.profile-modal.active')) {
-            e.preventDefault();
-        }
-    }, { passive: false });
-    
-    // Fix iOS 100vh issue
-    function setVh() {
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-    
-    setVh();
-    window.addEventListener('resize', setVh);
-}
-
         // Add to DOMContentLoaded
 function optimizeForMobile() {
     if (window.innerWidth <= 768) {
@@ -7818,71 +7788,6 @@ function optimizeForMobile() {
 
 // Call this after initializeData()
 optimizeForMobile();
-
-        // Add to your existing JavaScript
-        function enhanceMobileUX() {
-            // Better touch handling
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            // Add swipe to close for modals
-            document.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            });
-            
-            document.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipeGesture();
-            });
-            
-            function handleSwipeGesture() {
-                const swipeThreshold = 100;
-                const swipeDistance = touchEndX - touchStartX;
-                
-                // Swipe right to close modal
-                if (swipeDistance > swipeThreshold && document.querySelector('.profile-modal.active')) {
-                    closeProfileModal();
-                }
-            }
-            
-            // Prevent zoom on double-tap
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', (e) => {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                    e.preventDefault();
-                }
-                lastTouchEnd = now;
-            });
-            
-            // Better tap feedback
-            document.querySelectorAll('.creator-card, .btn, .social-link-card').forEach(el => {
-                el.addEventListener('touchstart', () => {
-                    el.style.transform = 'scale(0.98)';
-                });
-                
-                el.addEventListener('touchend', () => {
-                    el.style.transform = '';
-                });
-            });
-            
-            // Optimize scroll performance
-            let ticking = false;
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    window.requestAnimationFrame(() => {
-                        // Add smooth parallax effects
-                        document.querySelectorAll('.creator-card').forEach((card, index) => {
-                            const scrolled = window.pageYOffset;
-                            const rate = scrolled * -0.2 + (index * 0.1);
-                            card.style.transform = `translateY(${rate}px)`;
-                        });
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
-        }
 
         // Initialize mobile enhancements
         if ('ontouchstart' in window || navigator.maxTouchPoints) {
