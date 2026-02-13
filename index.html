@@ -9780,8 +9780,33 @@ document.addEventListener('visibilitychange', () => {
 window.slideNext = slideNext;
 window.slidePrev = slidePrev;
 
-   
-
+// ===== GUARANTEED MOBILE AUTO-SLIDE =====
+if (window.innerWidth <= 768) {
+    // Start auto-slide on first touch
+    const startMobileSlide = () => {
+        console.log('📱 Mobile auto-slide ACTIVATED');
+        setInterval(() => {
+            if (typeof slideNext === 'function') {
+                slideNext();
+            }
+        }, 2500);
+        document.removeEventListener('touchstart', startMobileSlide);
+        document.removeEventListener('click', startMobileSlide);
+    };
+    
+    document.addEventListener('touchstart', startMobileSlide, { once: true });
+    document.addEventListener('click', startMobileSlide, { once: true });
+    
+    // Fallback - start after 3 seconds anyway
+    setTimeout(() => {
+        console.log('⏰ Fallback: starting mobile auto-slide');
+        setInterval(() => {
+            if (typeof slideNext === 'function') {
+                slideNext();
+            }
+        }, 2500);
+    }, 3000);
+}
     </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
      <!-- Floating WhatsApp Button -->
