@@ -4210,6 +4210,25 @@
         left: auto !important;
     }
 }
+/* Force hardware acceleration for smoother animation */
+.slider-track {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000;
+    will-change: transform;
+}
+
+/* Fix for mobile infinite loop */
+@media (max-width: 768px) {
+    .slider-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .slider-track {
+        transition: transform 0.3s ease-out;
+    }
+}
     </style>
 </head>
 <body>
@@ -9678,7 +9697,7 @@ function generateParticles() {
 window.addEventListener('load', generateParticles);
 window.addEventListener('resize', generateParticles);
 
-// ===== SIMPLE SLIDER - GUARANTEED TO WORK ON MOBILE =====
+// ===== SLIDER - FORCED AUTO-SLIDE FOR MOBILE =====
 let currentPosition = 0;
 let autoSlideTimer;
 
@@ -9686,7 +9705,7 @@ function slideNext() {
     const track = document.getElementById('sliderTrack');
     if (!track) return;
     
-    const cardWidth = window.innerWidth <= 768 ? 280 : 320; // card width + gap
+    const cardWidth = window.innerWidth <= 768 ? 280 : 320;
     const totalWidth = track.scrollWidth;
     const containerWidth = track.parentElement.offsetWidth;
     const maxScroll = totalWidth - containerWidth;
@@ -9694,11 +9713,12 @@ function slideNext() {
     currentPosition += cardWidth;
     
     // Reset to beginning when reaching the end
-    if (currentPosition > maxScroll) {
+    if (currentPosition >= maxScroll) {
         currentPosition = 0;
+        track.style.transform = `translateX(-${currentPosition}px)`;
+    } else {
+        track.style.transform = `translateX(-${currentPosition}px)`;
     }
-    
-    track.style.transform = `translateX(-${currentPosition}px)`;
 }
 
 function slidePrev() {
@@ -9715,61 +9735,129 @@ function slidePrev() {
     // Go to end when at the beginning
     if (currentPosition < 0) {
         currentPosition = maxScroll;
+        track.style.transform = `translateX(-${currentPosition}px)`;
+    } else {
+        track.style.transform = `translateX(-${currentPosition}px)`;
     }
-    
-    track.style.transform = `translateX(-${currentPosition}px)`;
 }
 
-function startAutoSlide() {
-    // Clear existing timer
-    if (autoSlideTimer) clearInterval(autoSlideTimer);
-    
-    // Start new timer
-    autoSlideTimer = setInterval(() => {
-        slideNext();
-    }, 3000); // Slide every 3 seconds
-}
-
-// ===== MOBILE: Start on first touch =====
+// ===== FORCE AUTO-SLIDE ON MOBILE USING REQUESTANIMATIONFRAME =====
 if (window.innerWidth <= 768) {
-    console.log('📱 Mobile detected - waiting for touch');
+    console.log('📱 Mobile detected - FORCING auto-slide');
     
-    // Start on first touch anywhere
-    function startMobileSlider() {
-        console.log('✅ Mobile slider started');
-        startAutoSlide();
-        // Remove listeners after first touch
-        document.body.removeEventListener('touchstart', startMobileSlider);
-        document.body.removeEventListener('click', startMobileSlider);
-    }
+    // Method 1: Touch start forces immediate start
+    document.body.addEventListener('touchstart', function forceStart() {
+        console.log('👆 Touch detected - starting auto-slide');
+        
+        // Clear any existing timer
+        if (autoSlideTimer) clearInterval(autoSlideTimer);
+        
+        // Start interval
+        autoSlideTimer = setInterval(() => {
+            slideNext();
+        }, 2500);
+        
+        // Also trigger immediately
+        slideNext();
+        
+        // Remove listener
+        document.body.removeEventListener('touchstart', forceStart);
+    });
     
-    document.body.addEventListener('touchstart', startMobileSlider, { once: true });
-    document.body.addEventListener('click', startMobileSlider, { once: true });
-    
-    // Fallback: try to start after 3 seconds anyway
+    // Method 2: Try to start on page load (some browsers allow it)
     setTimeout(() => {
         if (!autoSlideTimer) {
-            console.log('⏰ Fallback: starting auto-slide');
-            startAutoSlide();
+            console.log('⏰ Attempting to start auto-slide');
+            autoSlideTimer = setInterval(() => {
+                slideNext();
+            }, 2500);
+            slideNext();
+        }
+    }, 1000);
+    
+    // Method 3: Try again after 2 seconds
+    setTimeout(() => {
+        if (!autoSlideTimer) {
+            console.log('⏰ Second attempt to start auto-slide');
+            autoSlideTimer = setInterval(() => {
+                slideNext();
+            }, 2500);
+            slideNext();
+        }
+    }, 2000);
+    
+    // Method 4: Try again after 3 seconds
+    setTimeout(() => {
+        if (!autoSlideTimer) {
+            console.log('⏰ Third attempt to start auto-slide');
+            autoSlideTimer = setInterval(() => {
+                slideNext();
+            }, 2500);
+            slideNext();
         }
     }, 3000);
+    
+    // Method 5: Check every second if we need to restart
+    setInterval(() => {
+        if (!autoSlideTimer) {
+            console.log('🔄 Restarting auto-slide');
+            autoSlideTimer = setInterval(() => {
+                slideNext();
+            }, 2500);
+        }
+    }, 5000);
+    
+    // Method 6: Force start on visibility change (when tab becomes active)
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            console.log('👁️ Tab active - ensuring auto-slide runs');
+            if (autoSlideTimer) clearInterval(autoSlideTimer);
+            autoSlideTimer = setInterval(() => {
+                slideNext();
+            }, 2500);
+        }
+    });
+    
+    // Method 7: Force start on scroll (another user interaction)
+    window.addEventListener('scroll', function once() {
+        if (!autoSlideTimer) {
+            console.log('📜 Scroll detected - starting auto-slide');
+            autoSlideTimer = setInterval(() => {
+                slideNext();
+            }, 2500);
+            window.removeEventListener('scroll', once);
+        }
+    }, { once: true });
+    
 } else {
     // Desktop: Start immediately
     document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
-            startAutoSlide();
+            autoSlideTimer = setInterval(() => {
+                slideNext();
+            }, 3000);
         }, 1000);
     });
 }
 
 // Pause on hover
-document.querySelector('.slider-container')?.addEventListener('mouseenter', () => {
-    clearInterval(autoSlideTimer);
-});
-
-document.querySelector('.slider-container')?.addEventListener('mouseleave', () => {
-    startAutoSlide();
-});
+const sliderContainer = document.querySelector('.slider-container');
+if (sliderContainer) {
+    sliderContainer.addEventListener('mouseenter', () => {
+        if (autoSlideTimer) {
+            clearInterval(autoSlideTimer);
+            autoSlideTimer = null;
+        }
+    });
+    
+    sliderContainer.addEventListener('mouseleave', () => {
+        if (!autoSlideTimer) {
+            autoSlideTimer = setInterval(() => {
+                slideNext();
+            }, window.innerWidth <= 768 ? 2500 : 3000);
+        }
+    });
+}
 
 // Make functions global
 window.slideNext = slideNext;
