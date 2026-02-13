@@ -4234,18 +4234,6 @@
             </div>
         </div>
     </section>
-
-    <!-- ---------- DECORATIVE FEATURED SLIDER · HOMEPAGE ---------- -->
-<div class="container">
-                    <div style="display: flex; gap: 12px;">
-            <button class="slider-btn prev" onclick="slidePrev()">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="slider-btn next" onclick="slideNext()">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-    </div>
     
     <div class="featured-slider">
         <div class="slider-container">
@@ -9481,14 +9469,6 @@ function initializeInfiniteSlider() {
     }, 1000);
 }
 
-// Force auto-slide on first user interaction (mobile fix)
-document.addEventListener('touchstart', function once() {
-    if (window.innerWidth <= 768) {
-        startAutoSlide();
-    }
-    document.removeEventListener('touchstart', once);
-}, { once: true });
-
 function getCardWidth() {
     const card = document.querySelector('.slider-card');
     if (!card) return isMobile ? 260 : 300;
@@ -9785,6 +9765,28 @@ document.addEventListener('visibilitychange', () => {
 // Attach functions to window
 window.slideNext = slideNext;
 window.slidePrev = slidePrev;
+
+// ===== SIMPLE MOBILE AUTO-SLIDE FIX =====
+if (window.innerWidth <= 768) {
+    console.log('📱 Mobile detected - starting auto-slide');
+    
+    // Start auto-slide immediately and every 2.5 seconds
+    function startMobileAutoSlide() {
+        if (typeof slideNext === 'function') {
+            slideNext();
+            setTimeout(slideNext, 2500);
+            setInterval(slideNext, 2500);
+            console.log('✅ Mobile auto-slide ACTIVE');
+        }
+    }
+    
+    // Start after page load
+    window.addEventListener('load', startMobileAutoSlide);
+    
+    // Also start immediately
+    setTimeout(startMobileAutoSlide, 500);
+    setTimeout(startMobileAutoSlide, 1000);
+}
     </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
      <!-- Floating WhatsApp Button -->
