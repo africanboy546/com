@@ -1574,85 +1574,140 @@
             color: #17bf63;
         }
 
-        /* ---------- HOMEPAGE DECORATIVE SLIDER ---------- */
-        .featured-slider {
-            margin: 60px 0;
-            position: relative;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-        
-        .slider-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 28px;
-        }
-        
-        .slider-wrapper {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .slider-card {
-            flex: 0 0 300px;
-            margin-right: 20px;
-            background: rgba(26, 30, 36, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            transition: all 0.3s;
-        }
-        
-        .slider-card:hover {
-            transform: translateY(-8px);
-            border-color: #8b5cf6;
-            box-shadow: 0 20px 40px rgba(139,92,246,0.3);
-        }
-        
-        .slider-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .slider-card-content {
-            padding: 20px;
-        }
-        
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(26,30,36,0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(139,92,246,0.5);
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .slider-btn:hover {
-            background: linear-gradient(45deg, #8b5cf6, #ec4899);
-            border-color: transparent;
-            box-shadow: 0 0 30px rgba(139,92,246,0.5);
-        }
-        
-        .slider-btn.prev {
-            left: 20px;
-        }
-        
-        .slider-btn.next {
-            right: 20px;
-        }
+        /* ===== SLIDER - COMPLETELY REWRITTEN ===== */
+.featured-slider {
+    margin: 40px 0;
+    position: relative;
+    width: 100%;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.slider-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.slider-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(26,30,36,0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(139,92,246,0.5);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-btn:hover {
+    background: linear-gradient(45deg, #8b5cf6, #ec4899);
+    border-color: transparent;
+    box-shadow: 0 0 30px rgba(139,92,246,0.5);
+}
+
+.slider-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-radius: 28px;
+}
+
+.slider-container::-webkit-scrollbar {
+    display: none;
+}
+
+.slider-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    transition: transform 0.5s ease;
+}
+
+.slider-card {
+    flex: 0 0 300px;
+    background: rgba(26, 30, 36, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    transition: all 0.3s;
+}
+
+.slider-card:hover {
+    transform: translateY(-8px);
+    border-color: #8b5cf6;
+    box-shadow: 0 20px 40px rgba(139,92,246,0.3);
+}
+
+.slider-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.slider-card-content {
+    padding: 20px;
+}
+
+.slider-card-content h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.slider-username {
+    color: #8b5cf6;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.slider-followers {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* ===== MOBILE STYLES ===== */
+@media (max-width: 768px) {
+    .slider-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .slider-controls {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .slider-btn {
+        width: 48px !important;
+        height: 48px !important;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
+        border: 2px solid white !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+    }
+    
+    .slider-card {
+        flex: 0 0 260px;
+    }
+    
+    .slider-card img {
+        height: 160px;
+    }
+}
 
 
         /* ===== SUBMISSION FORM ===== */
@@ -4266,83 +4321,121 @@
     </section>
     
     <div class="featured-slider">
-        <div class="slider-container">
-            <div id="sliderWrapper" class="slider-wrapper">
-                <div class="slider-card">
-                    <img src="https://pbs.twimg.com/media/G_RwcQnWgAEVn_2?format=jpg&name=large" alt="creator">
-                    <div class="slider-card-content">
-                        <h3 style="font-size: 20px; font-weight: 800;">Miss Pearline 🍒</h3>
-                        <p style="color: #8b5cf6;">@Miss_Pearline</p>
-                        <p style="color: #94a3b8; margin-top: 10px;">1.2M followers</p>
-                    </div>
+    <div class="slider-header">
+        <h2 style="font-size: 28px; font-weight: 800; letter-spacing: -1px;">🔥 TRENDING COMMANDERS</h2>
+        <div class="slider-controls">
+            <button class="slider-btn prev" onclick="slidePrev()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-btn next" onclick="slideNext()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="slider-container">
+        <div class="slider-track" id="sliderTrack">
+            <!-- Card 1 -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/G_RwcQnWgAEVn_2?format=jpg&name=large" alt="creator">
+                <div class="slider-card-content">
+                    <h3>Miss Pearline 🍒</h3>
+                    <p class="slider-username">@Miss_Pearline</p>
+                    <p class="slider-followers">1.2M followers</p>
                 </div>
-                <div class="slider-card">
-                    <img src="https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=large" alt="creator">
-                    <div class="slider-card-content">
-                        <h3 style="font-size: 20px; font-weight: 800;">Caramel Mocha 🌸</h3>
-                        <p style="color: #8b5cf6;">@caramellmocha69</p>
-                        <p style="color: #94a3b8; margin-top: 10px;">885K followers</p>
-                    </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=large" alt="creator">
+                <div class="slider-card-content">
+                    <h3>Caramel Mocha 🌸</h3>
+                    <p class="slider-username">@caramellmocha69</p>
+                    <p class="slider-followers">885K followers</p>
                 </div>
-                <div class="slider-card">
-                    <img src="https://pbs.twimg.com/media/GyJf5TMXYAAmiKQ?format=jpg&name=large" alt="creator">
-                    <div class="slider-card-content">
-                        <h3 style="font-size: 20px; font-weight: 800;">Seductress💦🍭</h3>
-                        <p style="color: #8b5cf6;">@Passionstars_</p>
-                        <p style="color: #94a3b8; margin-top: 10px;">1.2M followers</p>
-                    </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/GyJf5TMXYAAmiKQ?format=jpg&name=large" alt="creator">
+                <div class="slider-card-content">
+                    <h3>Seductress💦🍭</h3>
+                    <p class="slider-username">@Passionstars_</p>
+                    <p class="slider-followers">1.2M followers</p>
                 </div>
-                <div class="slider-card">
-                    <img src="https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium" alt="creator">
-                    <div class="slider-card-content">
-                        <h3 style="font-size: 20px; font-weight: 800;">🦋Main🦋</h3>
-                        <p style="color: #8b5cf6;">@Main_lifestyle</p>
-                        <p style="color: #94a3b8; margin-top: 10px;">523K followers</p>
-                    </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium" alt="creator">
+                <div class="slider-card-content">
+                    <h3>🦋Main🦋</h3>
+                    <p class="slider-username">@Main_lifestyle</p>
+                    <p class="slider-followers">523K followers</p>
                 </div>
-                <div class="slider-card">
-                    <img src="https://pbs.twimg.com/media/G0R6YJJXYAE51LF?format=jpg&name=large" alt="creator">
-                    <div class="slider-card-content">
-                        <h3 style="font-size: 20px; font-weight: 800;">𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི</h3>
-                        <p style="color: #8b5cf6;">@bubblebuttqutie</p>
-                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
-                    </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/G0R6YJJXYAE51LF?format=jpg&name=large" alt="creator">
+                <div class="slider-card-content">
+                    <h3>𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི</h3>
+                    <p class="slider-username">@bubblebuttqutie</p>
+                    <p class="slider-followers">678K followers</p>
                 </div>
-                <div class="slider-card">
-                    <img src="https://pbs.twimg.com/media/HAx_G3tWgAEnIeH?format=jpg&name=large" alt="creator">
-                    <div class="slider-card-content">
-                        <h3 style="font-size: 20px; font-weight: 800;">Gray Africana 🔞</h3>
-                        <p style="color: #8b5cf6;">@gray_africana</p>
-                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
-                    </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/HAx_G3tWgAEnIeH?format=jpg&name=large" alt="creator">
+                <div class="slider-card-content">
+                    <h3>Gray Africana 🔞</h3>
+                    <p class="slider-username">@gray_africana</p>
+                    <p class="slider-followers">678K followers</p>
                 </div>
-                <div class="slider-card">
-                    <img src="https://pbs.twimg.com/media/G48ogypXIAAmfPy?format=jpg&name=medium" alt="creator">
-                    <div class="slider-card-content">
-                        <h3 style="font-size: 20px; font-weight: 800;">Autumn’s Secret🍒</h3>
-                        <p style="color: #8b5cf6;">@callherautumn</p>
-                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
-                    </div>
+            </div>
+            <!-- Card 7 -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/G48ogypXIAAmfPy?format=jpg&name=medium" alt="creator">
+                <div class="slider-card-content">
+                    <h3>Autumn’s Secret🍒</h3>
+                    <p class="slider-username">@callherautumn</p>
+                    <p class="slider-followers">678K followers</p>
                 </div>
-                <div class="slider-card">
-                    <img src="https://pbs.twimg.com/media/G_nDnMGWkAAcOc6?format=jpg&name=4096x4096" alt="creator">
-                    <div class="slider-card-content">
-                        <h3 style="font-size: 20px; font-weight: 800;">Di_a_na._💝</h3>
-                        <p style="color: #8b5cf6;">@di_a_na7</p>
-                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
-                    </div>
+            </div>
+            <!-- Card 8 -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/G_nDnMGWkAAcOc6?format=jpg&name=4096x4096" alt="creator">
+                <div class="slider-card-content">
+                    <h3>Di_a_na._💝</h3>
+                    <p class="slider-username">@di_a_na7</p>
+                    <p class="slider-followers">678K followers</p>
                 </div>
-                <div class="slider-card">
-                    <img src="https://pbs.twimg.com/media/G7uYGasW8AAs0Km?format=jpg&name=4096x4096" alt="creator">
-                    <div class="slider-card-content">
-                        <h3 style="font-size: 20px; font-weight: 800;">Queen Diva</h3>
-                        <p style="color: #8b5cf6;">@realqueendiva</p>
-                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
-                    </div>
+            </div>
+            <!-- Card 9 -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/G7uYGasW8AAs0Km?format=jpg&name=4096x4096" alt="creator">
+                <div class="slider-card-content">
+                    <h3>Queen Diva</h3>
+                    <p class="slider-username">@realqueendiva</p>
+                    <p class="slider-followers">678K followers</p>
+                </div>
+            </div>
+            <!-- DUPLICATE CARDS FOR INFINITE LOOP -->
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/G_RwcQnWgAEVn_2?format=jpg&name=large" alt="creator">
+                <div class="slider-card-content">
+                    <h3>Miss Pearline 🍒</h3>
+                    <p class="slider-username">@Miss_Pearline</p>
+                    <p class="slider-followers">1.2M followers</p>
+                </div>
+            </div>
+            <div class="slider-card">
+                <img src="https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=large" alt="creator">
+                <div class="slider-card-content">
+                    <h3>Caramel Mocha 🌸</h3>
+                    <p class="slider-username">@caramellmocha69</p>
+                    <p class="slider-followers">885K followers</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
             
@@ -9439,80 +9532,98 @@ function generateParticles() {
 window.addEventListener('load', generateParticles);
 window.addEventListener('resize', generateParticles);
 
-// ===== SIMPLE SLIDER - FORCED FOR MOBILE =====
-let sliderPosition = 0;
+// ===== SIMPLE SLIDER - GUARANTEED TO WORK ON MOBILE =====
+let currentPosition = 0;
+let autoSlideTimer;
 
 function slideNext() {
-    const wrapper = document.getElementById('sliderWrapper');
-    if (!wrapper) return;
+    const track = document.getElementById('sliderTrack');
+    if (!track) return;
     
-    const cardWidth = 300;
-    const gap = 20;
-    const totalWidth = (cardWidth + gap) * 9;
-    const maxPosition = totalWidth - (wrapper.parentElement?.offsetWidth || 1200);
+    const cardWidth = window.innerWidth <= 768 ? 280 : 320; // card width + gap
+    const totalWidth = track.scrollWidth;
+    const containerWidth = track.parentElement.offsetWidth;
+    const maxScroll = totalWidth - containerWidth;
     
-    sliderPosition += (cardWidth + gap);
-    if (sliderPosition > maxPosition) sliderPosition = 0;
+    currentPosition += cardWidth;
     
-    wrapper.style.transform = `translateX(-${sliderPosition}px)`;
+    // Reset to beginning when reaching the end
+    if (currentPosition > maxScroll) {
+        currentPosition = 0;
+    }
+    
+    track.style.transform = `translateX(-${currentPosition}px)`;
 }
 
 function slidePrev() {
-    const wrapper = document.getElementById('sliderWrapper');
-    if (!wrapper) return;
+    const track = document.getElementById('sliderTrack');
+    if (!track) return;
     
-    const cardWidth = 300;
-    const gap = 20;
-    const totalWidth = (cardWidth + gap) * 9;
-    const maxPosition = totalWidth - (wrapper.parentElement?.offsetWidth || 1200);
+    const cardWidth = window.innerWidth <= 768 ? 280 : 320;
+    const totalWidth = track.scrollWidth;
+    const containerWidth = track.parentElement.offsetWidth;
+    const maxScroll = totalWidth - containerWidth;
     
-    sliderPosition -= (cardWidth + gap);
-    if (sliderPosition < 0) sliderPosition = maxPosition;
+    currentPosition -= cardWidth;
     
-    wrapper.style.transform = `translateX(-${sliderPosition}px)`;
-}
-
-// ===== MOBILE FIX: Start on ANY touch =====
-if (window.innerWidth <= 768) {
-    console.log('📱 Mobile mode - waiting for touch');
-    
-    function startMobileSlider() {
-        console.log('✅ Mobile slider ACTIVATED');
-        // Clear any existing intervals
-        if (window.slideInterval) clearInterval(window.slideInterval);
-        // Start sliding every 2.5 seconds
-        window.slideInterval = setInterval(slideNext, 2500);
-        // Also trigger immediately
-        slideNext();
+    // Go to end when at the beginning
+    if (currentPosition < 0) {
+        currentPosition = maxScroll;
     }
     
-    // Start on first touch anywhere on screen
-    document.body.addEventListener('touchstart', function once() {
-        startMobileSlider();
-        document.body.removeEventListener('touchstart', once);
-    }, { once: true });
+    track.style.transform = `translateX(-${currentPosition}px)`;
+}
+
+function startAutoSlide() {
+    // Clear existing timer
+    if (autoSlideTimer) clearInterval(autoSlideTimer);
     
-    // Also start on first click (for testing)
-    document.body.addEventListener('click', function once() {
-        startMobileSlider();
-        document.body.removeEventListener('click', once);
-    }, { once: true });
+    // Start new timer
+    autoSlideTimer = setInterval(() => {
+        slideNext();
+    }, 3000); // Slide every 3 seconds
+}
+
+// ===== MOBILE: Start on first touch =====
+if (window.innerWidth <= 768) {
+    console.log('📱 Mobile detected - waiting for touch');
     
-    // FALLBACK: Try to start after 2 seconds anyway (some mobile browsers allow it)
+    // Start on first touch anywhere
+    function startMobileSlider() {
+        console.log('✅ Mobile slider started');
+        startAutoSlide();
+        // Remove listeners after first touch
+        document.body.removeEventListener('touchstart', startMobileSlider);
+        document.body.removeEventListener('click', startMobileSlider);
+    }
+    
+    document.body.addEventListener('touchstart', startMobileSlider, { once: true });
+    document.body.addEventListener('click', startMobileSlider, { once: true });
+    
+    // Fallback: try to start after 3 seconds anyway
     setTimeout(() => {
-        if (!window.slideInterval) {
-            console.log('⏰ Fallback: starting anyway');
-            startMobileSlider();
+        if (!autoSlideTimer) {
+            console.log('⏰ Fallback: starting auto-slide');
+            startAutoSlide();
         }
-    }, 2000);
+    }, 3000);
 } else {
     // Desktop: Start immediately
     document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
-            window.slideInterval = setInterval(slideNext, 3000);
+            startAutoSlide();
         }, 1000);
     });
 }
+
+// Pause on hover
+document.querySelector('.slider-container')?.addEventListener('mouseenter', () => {
+    clearInterval(autoSlideTimer);
+});
+
+document.querySelector('.slider-container')?.addEventListener('mouseleave', () => {
+    startAutoSlide();
+});
 
 // Make functions global
 window.slideNext = slideNext;
