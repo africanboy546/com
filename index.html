@@ -399,6 +399,159 @@
             --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.3);
         }
 
+        /* ===== ANIMATED BACKGROUND ===== */
+.animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    overflow: hidden;
+}
+
+.bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translateX(-50%) translateY(-50%);
+    object-fit: cover;
+    opacity: 0.15; /* Subtle, doesn't overpower content */
+    filter: blur(4px);
+}
+
+.bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, 
+                rgba(15, 23, 42, 0.85) 0%, 
+                rgba(15, 23, 42, 0.95) 100%);
+}
+
+/* Alternative: Gradient Animation (if you don't have a video) */
+.animated-gradient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    background: linear-gradient(-45deg, #0f172a, #1e293b, #0f172a, #1e1b4b);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Abstract shape animation */
+.animated-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    filter: blur(60px);
+    opacity: 0.2;
+    animation: float 20s infinite;
+}
+
+.shape1 {
+    top: 20%;
+    left: 10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #8b5cf6, transparent 70%);
+    animation-delay: 0s;
+}
+
+.shape2 {
+    bottom: 10%;
+    right: 15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #ec4899, transparent 70%);
+    animation-delay: -5s;
+}
+
+.shape3 {
+    top: 60%;
+    left: 60%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #3b82f6, transparent 70%);
+    animation-delay: -10s;
+}
+
+.shape4 {
+    top: 5%;
+    right: 20%;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #10b981, transparent 70%);
+    animation-delay: -15s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+    25% { transform: translateY(-30px) translateX(20px) scale(1.1); }
+    50% { transform: translateY(-50px) translateX(-20px) scale(1); }
+    75% { transform: translateY(-20px) translateX(-40px) scale(0.9); }
+}
+
+/* Particles background */
+.particles-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    background: radial-gradient(circle at 20% 30%, #1e293b 0%, #0f172a 100%);
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(139, 92, 246, 0.5);
+    border-radius: 50%;
+    animation: particleFloat 15s linear infinite;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+    }
+}
         * {
             margin: 0;
             padding: 0;
@@ -1420,6 +1573,87 @@
         .tweet-stat.retweeted {
             color: #17bf63;
         }
+
+        /* ---------- HOMEPAGE DECORATIVE SLIDER ---------- */
+        .featured-slider {
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+        }
+        
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .slider-card {
+            flex: 0 0 300px;
+            margin-right: 20px;
+            background: rgba(26, 30, 36, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .slider-card:hover {
+            transform: translateY(-8px);
+            border-color: #8b5cf6;
+            box-shadow: 0 20px 40px rgba(139,92,246,0.3);
+        }
+        
+        .slider-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .slider-card-content {
+            padding: 20px;
+        }
+        
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(26,30,36,0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139,92,246,0.5);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slider-btn:hover {
+            background: linear-gradient(45deg, #8b5cf6, #ec4899);
+            border-color: transparent;
+            box-shadow: 0 0 30px rgba(139,92,246,0.5);
+        }
+        
+        .slider-btn.prev {
+            left: 20px;
+        }
+        
+        .slider-btn.next {
+            right: 20px;
+        }
+
 
         /* ===== SUBMISSION FORM ===== */
         .form-container {
@@ -3893,6 +4127,7 @@
 }
 
 
+
     </style>
 </head>
 <body>
@@ -3919,6 +4154,20 @@
             </p>
         </div>
     </div>
+
+    <!-- Option 1: Gradient Animation (works without video) -->
+<div class="animated-gradient-bg"></div>
+
+<!-- OR Option 2: Animated Shapes (more dynamic) -->
+<div class="animated-shapes">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+    <div class="shape shape4"></div>
+</div>
+
+<!-- OR Option 3: Particles (subtle and elegant) -->
+<div class="particles-bg" id="particles-bg"></div>
 
     <!-- Live Updates -->
     <div class="live-updates" id="live-updates"></div>
@@ -3988,6 +4237,101 @@
             </div>
         </div>
     </section>
+
+    <!-- ---------- DECORATIVE FEATURED SLIDER · HOMEPAGE ---------- -->
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="font-size: 28px; font-weight: 800; letter-spacing: -1px;">🔥 TRENDING</h2>
+        <div style="display: flex; gap: 12px;">
+            <button class="slider-btn prev" onclick="slidePrev()" style="position: relative; left: 0; right: auto; transform: none;">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-btn next" onclick="slideNext()" style="position: relative; left: 0; right: auto; transform: none;">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="featured-slider">
+        <div class="slider-container">
+            <div id="sliderWrapper" class="slider-wrapper">
+                <div class="slider-card">
+                    <img src="https://pbs.twimg.com/media/G_RwcQnWgAEVn_2?format=jpg&name=large" alt="creator">
+                    <div class="slider-card-content">
+                        <h3 style="font-size: 20px; font-weight: 800;">Miss Pearline 🍒</h3>
+                        <p style="color: #8b5cf6;">@Miss_Pearline</p>
+                        <p style="color: #94a3b8; margin-top: 10px;">1.2M followers</p>
+                    </div>
+                </div>
+                <div class="slider-card">
+                    <img src="https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=large" alt="creator">
+                    <div class="slider-card-content">
+                        <h3 style="font-size: 20px; font-weight: 800;">Caramel Mocha 🌸</h3>
+                        <p style="color: #8b5cf6;">@caramellmocha69</p>
+                        <p style="color: #94a3b8; margin-top: 10px;">885K followers</p>
+                    </div>
+                </div>
+                <div class="slider-card">
+                    <img src="https://pbs.twimg.com/media/GyJf5TMXYAAmiKQ?format=jpg&name=large" alt="creator">
+                    <div class="slider-card-content">
+                        <h3 style="font-size: 20px; font-weight: 800;">Seductress💦🍭</h3>
+                        <p style="color: #8b5cf6;">@Passionstars_</p>
+                        <p style="color: #94a3b8; margin-top: 10px;">1.2M followers</p>
+                    </div>
+                </div>
+                <div class="slider-card">
+                    <img src="https://pbs.twimg.com/media/G4cypUcX0AAy6E4?format=jpg&name=medium" alt="creator">
+                    <div class="slider-card-content">
+                        <h3 style="font-size: 20px; font-weight: 800;">🦋Main🦋</h3>
+                        <p style="color: #8b5cf6;">@Main_lifestyle</p>
+                        <p style="color: #94a3b8; margin-top: 10px;">523K followers</p>
+                    </div>
+                </div>
+                <div class="slider-card">
+                    <img src="https://pbs.twimg.com/media/G0R6YJJXYAE51LF?format=jpg&name=large" alt="creator">
+                    <div class="slider-card-content">
+                        <h3 style="font-size: 20px; font-weight: 800;">𝖡υ𐓣𐓣ɣ 𝗀ꪱ𝗋ᥣ🐇ྀི</h3>
+                        <p style="color: #8b5cf6;">@bubblebuttqutie</p>
+                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
+                    </div>
+                </div>
+                <div class="slider-card">
+                    <img src="https://pbs.twimg.com/media/HAx_G3tWgAEnIeH?format=jpg&name=large" alt="creator">
+                    <div class="slider-card-content">
+                        <h3 style="font-size: 20px; font-weight: 800;">Gray Africana 🔞</h3>
+                        <p style="color: #8b5cf6;">@gray_africana</p>
+                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
+                    </div>
+                </div>
+                <div class="slider-card">
+                    <img src="https://pbs.twimg.com/media/G48ogypXIAAmfPy?format=jpg&name=medium" alt="creator">
+                    <div class="slider-card-content">
+                        <h3 style="font-size: 20px; font-weight: 800;">Autumn’s Secret🍒</h3>
+                        <p style="color: #8b5cf6;">@callherautumn</p>
+                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
+                    </div>
+                </div>
+                <div class="slider-card">
+                    <img src="https://pbs.twimg.com/media/G_nDnMGWkAAcOc6?format=jpg&name=4096x4096" alt="creator">
+                    <div class="slider-card-content">
+                        <h3 style="font-size: 20px; font-weight: 800;">Di_a_na._💝</h3>
+                        <p style="color: #8b5cf6;">@di_a_na7</p>
+                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
+                    </div>
+                </div>
+                <div class="slider-card">
+                    <img src="https://pbs.twimg.com/media/G7uYGasW8AAs0Km?format=jpg&name=4096x4096" alt="creator">
+                    <div class="slider-card-content">
+                        <h3 style="font-size: 20px; font-weight: 800;">Queen Diva</h3>
+                        <p style="color: #8b5cf6;">@realqueendiva</p>
+                        <p style="color: #94a3b8; margin-top: 10px;">678K followers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
             
 
     <!-- Featured Creators with Search -->
@@ -9038,6 +9382,206 @@ optimizeForMobile();
             
             ticker.innerHTML = names + names;
         }
+    
+    function slidePrev() {
+        const wrapper = document.getElementById('sliderWrapper');
+        const cardWidth = document.querySelector('.slider-card')?.offsetWidth || 300;
+        sliderPosition = Math.max(sliderPosition - (cardWidth + 20), 0);
+        wrapper.style.transform = `translateX(-${sliderPosition}px)`;
+    }
+
+
+    // ===== GENERATE PARTICLES FOR BACKGROUND =====
+function generateParticles() {
+    const particlesContainer = document.getElementById('particles-bg');
+    if (!particlesContainer) return;
+    
+    particlesContainer.innerHTML = '';
+    const particleCount = window.innerWidth < 768 ? 30 : 50;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const size = Math.random() * 4 + 1;
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 15 + 10;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${left}%`;
+        particle.style.top = `${top}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.background = Math.random() > 0.5 
+            ? 'rgba(139, 92, 246, 0.5)' 
+            : 'rgba(236, 72, 153, 0.4)';
+        
+        particlesContainer.appendChild(particle);
+    }
+}
+
+window.addEventListener('load', generateParticles);
+window.addEventListener('resize', generateParticles);
+
+   // ============================================
+// ULTRA-SMOOTH INFINITE SLIDER (No visible reset)
+// ============================================
+let sliderPosition = 0;
+let autoSlideInterval;
+
+function initializeInfiniteSlider() {
+    const wrapper = document.getElementById('sliderWrapper');
+    if (!wrapper) return;
+    
+    // Get all original cards
+    const originalCards = Array.from(wrapper.children);
+    
+    // Store original card count
+    const originalCount = originalCards.length;
+    
+    // Clear wrapper
+    wrapper.innerHTML = '';
+    
+    // Create a massive loop by adding cards 5 times
+    for (let i = 0; i < 5; i++) {
+        originalCards.forEach(card => {
+            const clone = card.cloneNode(true);
+            wrapper.appendChild(clone);
+        });
+    }
+    
+    // Set initial position to start of the SECOND set (so we have room to go both directions)
+    const cardWidth = document.querySelector('.slider-card')?.offsetWidth || 300;
+    const gap = 20;
+    sliderPosition = (cardWidth + gap) * originalCount;
+    
+    // Set initial transform with no transition
+    wrapper.style.transition = 'none';
+    wrapper.style.transform = `translateX(-${sliderPosition}px)`;
+    
+    // Force reflow
+    wrapper.offsetHeight;
+    
+    // Add transition
+    wrapper.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    
+    // Start auto-slide
+    startAutoSlide();
+}
+
+function slideNext() {
+    const wrapper = document.getElementById('sliderWrapper');
+    const cardWidth = document.querySelector('.slider-card')?.offsetWidth || 300;
+    const gap = 20;
+    const totalCards = document.querySelectorAll('.slider-card').length;
+    const originalCount = totalCards / 5; // Since we added 5 sets
+    
+    sliderPosition += (cardWidth + gap);
+    
+    // If we've scrolled too far, jump back to the middle set
+    if (sliderPosition >= (cardWidth + gap) * (originalCount * 3)) {
+        sliderPosition = (cardWidth + gap) * originalCount;
+        wrapper.style.transition = 'none';
+        wrapper.style.transform = `translateX(-${sliderPosition}px)`;
+        wrapper.offsetHeight;
+        wrapper.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    } else {
+        wrapper.style.transform = `translateX(-${sliderPosition}px)`;
+    }
+}
+
+function slidePrev() {
+    const wrapper = document.getElementById('sliderWrapper');
+    const cardWidth = document.querySelector('.slider-card')?.offsetWidth || 300;
+    const gap = 20;
+    const totalCards = document.querySelectorAll('.slider-card').length;
+    const originalCount = totalCards / 5;
+    
+    sliderPosition -= (cardWidth + gap);
+    
+    // If we've scrolled back too far, jump forward to the middle set
+    if (sliderPosition < (cardWidth + gap) * originalCount) {
+        sliderPosition = (cardWidth + gap) * (originalCount * 3 - 1);
+        wrapper.style.transition = 'none';
+        wrapper.style.transform = `translateX(-${sliderPosition}px)`;
+        wrapper.offsetHeight;
+        wrapper.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    } else {
+        wrapper.style.transform = `translateX(-${sliderPosition}px)`;
+    }
+}
+
+function startAutoSlide() {
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(() => {
+        slideNext();
+    }, 2500); // Slide every 2.5 seconds
+}
+
+// Pause on hover
+document.querySelector('.slider-container')?.addEventListener('mouseenter', () => {
+    clearInterval(autoSlideInterval);
+});
+
+document.querySelector('.slider-container')?.addEventListener('mouseleave', () => {
+    startAutoSlide();
+});
+
+// Touch support
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.getElementById('sliderWrapper')?.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    clearInterval(autoSlideInterval);
+});
+
+document.getElementById('sliderWrapper')?.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const swipeThreshold = 50;
+    
+    if (touchEndX < touchStartX - swipeThreshold) {
+        slideNext();
+    }
+    if (touchEndX > touchStartX + swipeThreshold) {
+        slidePrev();
+    }
+    
+    startAutoSlide();
+});
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        initializeInfiniteSlider();
+    }, 500);
+});
+
+// Fix mobile styling
+function fixSliderForMobile() {
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.slider-btn').forEach(btn => {
+            btn.style.width = '40px';
+            btn.style.height = '40px';
+            btn.style.fontSize = '16px';
+        });
+        
+        // Adjust card size for mobile
+        document.querySelectorAll('.slider-card').forEach(card => {
+            card.style.flex = '0 0 260px';
+        });
+    }
+}
+
+window.addEventListener('load', fixSliderForMobile);
+window.addEventListener('resize', fixSliderForMobile);
+
+// Attach functions to window
+window.slideNext = slideNext;
+window.slidePrev = slidePrev;
 
     </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
