@@ -5513,6 +5513,24 @@
             searchResults.innerHTML = resultsHTML;
             searchResults.classList.add('active');
         }
+
+        // ===== FIX: Close search results when clicking outside =====
+        document.addEventListener('click', function(e) {
+            const searchContainer = document.querySelector('.search-container');
+            const searchResults = document.getElementById('search-results');
+            
+            if (!searchContainer.contains(e.target)) {
+                searchResults.classList.remove('active');
+            }
+        });
+
+        // Also close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const searchResults = document.getElementById('search-results');
+                searchResults.classList.remove('active');
+            }
+        });
         
         // ===== NEW: ADMIN CONTACT FUNCTIONS =====
         function openWhatsAppAdmin() {
@@ -9801,13 +9819,6 @@ optimizeForMobile();
             
             ticker.innerHTML = names + names;
         }
-    
-    function slidePrev() {
-        const wrapper = document.getElementById('sliderWrapper');
-        const cardWidth = document.querySelector('.slider-card')?.offsetWidth || 300;
-        sliderPosition = Math.max(sliderPosition - (cardWidth + 20), 0);
-        wrapper.style.transform = `translateX(-${sliderPosition}px)`;
-    }
 
 
     // ===== GENERATE PARTICLES FOR BACKGROUND =====
