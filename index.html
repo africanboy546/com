@@ -4126,6 +4126,87 @@
     }
 }
 
+/* ===== MOBILE SLIDER BUTTON FIX ===== */
+@media (max-width: 768px) {
+    .featured-slider {
+        position: relative;
+        margin: 30px 0;
+        padding: 10px 0;
+    }
+    
+    .slider-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+    }
+    
+    /* Make buttons visible and tappable */
+    .slider-btn {
+        position: absolute !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 48px !important;
+        height: 48px !important;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
+        border: 2px solid white !important;
+        border-radius: 50% !important;
+        color: white !important;
+        font-size: 20px !important;
+        cursor: pointer !important;
+        z-index: 100 !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .slider-btn.prev {
+        left: 10px !important;
+        right: auto !important;
+    }
+    
+    .slider-btn.next {
+        right: 10px !important;
+        left: auto !important;
+    }
+    
+    .slider-btn:active {
+        transform: translateY(-50%) scale(0.9) !important;
+        background: linear-gradient(135deg, #7c3aed, #db2777) !important;
+    }
+    
+    /* Hide button text on mobile if needed */
+    .slider-btn i {
+        font-size: 22px !important;
+    }
+    
+    /* Add a semi-transparent background for better visibility */
+    .slider-btn::after {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+        z-index: -1;
+    }
+    
+    /* Make cards touch-friendly */
+    .slider-card {
+        flex: 0 0 260px !important;
+        margin-right: 15px !important;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .slider-card:active {
+        transform: scale(0.98);
+    }
+}
+
 
 
     </style>
@@ -9426,18 +9507,20 @@ function generateParticles() {
 window.addEventListener('load', generateParticles);
 window.addEventListener('resize', generateParticles);
 
-   // ============================================
-// ULTRA-SMOOTH INFINITE SLIDER (No visible reset)
+// ============================================
+// INFINITE AUTO-SLIDING SLIDER - MOBILE OPTIMIZED
 // ============================================
 let sliderPosition = 0;
 let autoSlideInterval;
+let isMobile = window.innerWidth <= 768;
 
 function initializeInfiniteSlider() {
     const wrapper = document.getElementById('sliderWrapper');
     if (!wrapper) return;
     
-    // Get all original cards
+    // Clear existing content
     const originalCards = Array.from(wrapper.children);
+    if (originalCards.length === 0) return;
     
     // Store original card count
     const originalCount = originalCards.length;
@@ -9445,20 +9528,23 @@ function initializeInfiniteSlider() {
     // Clear wrapper
     wrapper.innerHTML = '';
     
-    // Create a massive loop by adding cards 5 times
-    for (let i = 0; i < 5; i++) {
+    // Add MORE clones for mobile to ensure smooth infinite loop
+    const cloneCount = isMobile ? 8 : 5;
+    
+    // Create seamless infinite loop by adding multiple copies
+    for (let i = 0; i < cloneCount; i++) {
         originalCards.forEach(card => {
             const clone = card.cloneNode(true);
             wrapper.appendChild(clone);
         });
     }
     
-    // Set initial position to start of the SECOND set (so we have room to go both directions)
-    const cardWidth = document.querySelector('.slider-card')?.offsetWidth || 300;
+    // Set initial position to start of the SECOND set
+    const cardWidth = getCardWidth();
     const gap = 20;
     sliderPosition = (cardWidth + gap) * originalCount;
     
-    // Set initial transform with no transition
+    // Set initial transform
     wrapper.style.transition = 'none';
     wrapper.style.transform = `translateX(-${sliderPosition}px)`;
     
@@ -9468,21 +9554,29 @@ function initializeInfiniteSlider() {
     // Add transition
     wrapper.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
     
-    // Start auto-slide
+    // Start auto-slide immediately
     startAutoSlide();
+}
+
+function getCardWidth() {
+    const card = document.querySelector('.slider-card');
+    if (!card) return isMobile ? 260 : 300;
+    return card.offsetWidth || (isMobile ? 260 : 300);
 }
 
 function slideNext() {
     const wrapper = document.getElementById('sliderWrapper');
-    const cardWidth = document.querySelector('.slider-card')?.offsetWidth || 300;
+    if (!wrapper) return;
+    
+    const cardWidth = getCardWidth();
     const gap = 20;
     const totalCards = document.querySelectorAll('.slider-card').length;
-    const originalCount = totalCards / 5; // Since we added 5 sets
+    const originalCount = totalCards / (isMobile ? 8 : 5);
     
     sliderPosition += (cardWidth + gap);
     
-    // If we've scrolled too far, jump back to the middle set
-    if (sliderPosition >= (cardWidth + gap) * (originalCount * 3)) {
+    // When we've scrolled too far, jump back to the middle
+    if (sliderPosition >= (cardWidth + gap) * (originalCount * (isMobile ? 4 : 2.5))) {
         sliderPosition = (cardWidth + gap) * originalCount;
         wrapper.style.transition = 'none';
         wrapper.style.transform = `translateX(-${sliderPosition}px)`;
@@ -9495,16 +9589,18 @@ function slideNext() {
 
 function slidePrev() {
     const wrapper = document.getElementById('sliderWrapper');
-    const cardWidth = document.querySelector('.slider-card')?.offsetWidth || 300;
+    if (!wrapper) return;
+    
+    const cardWidth = getCardWidth();
     const gap = 20;
     const totalCards = document.querySelectorAll('.slider-card').length;
-    const originalCount = totalCards / 5;
+    const originalCount = totalCards / (isMobile ? 8 : 5);
     
     sliderPosition -= (cardWidth + gap);
     
-    // If we've scrolled back too far, jump forward to the middle set
+    // If we've scrolled back too far, jump forward
     if (sliderPosition < (cardWidth + gap) * originalCount) {
-        sliderPosition = (cardWidth + gap) * (originalCount * 3 - 1);
+        sliderPosition = (cardWidth + gap) * (originalCount * (isMobile ? 4 : 2.5) - 1);
         wrapper.style.transition = 'none';
         wrapper.style.transform = `translateX(-${sliderPosition}px)`;
         wrapper.offsetHeight;
@@ -9515,13 +9611,18 @@ function slidePrev() {
 }
 
 function startAutoSlide() {
+    // Clear any existing interval
     if (autoSlideInterval) clearInterval(autoSlideInterval);
+    
+    // Different speeds for mobile vs desktop
+    const slideInterval = isMobile ? 2500 : 3000;
+    
     autoSlideInterval = setInterval(() => {
         slideNext();
-    }, 2500); // Slide every 2.5 seconds
+    }, slideInterval);
 }
 
-// Pause on hover
+// Pause on hover/touch
 document.querySelector('.slider-container')?.addEventListener('mouseenter', () => {
     clearInterval(autoSlideInterval);
 });
@@ -9530,58 +9631,178 @@ document.querySelector('.slider-container')?.addEventListener('mouseleave', () =
     startAutoSlide();
 });
 
-// Touch support
-let touchStartX = 0;
-let touchEndX = 0;
-
-document.getElementById('sliderWrapper')?.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-    clearInterval(autoSlideInterval);
-});
-
-document.getElementById('sliderWrapper')?.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    const swipeThreshold = 50;
+// ===== MOBILE TOUCH & BUTTON OPTIMIZATION =====
+function optimizeSliderForMobile() {
+    isMobile = window.innerWidth <= 768;
     
-    if (touchEndX < touchStartX - swipeThreshold) {
-        slideNext();
-    }
-    if (touchEndX > touchStartX + swipeThreshold) {
-        slidePrev();
-    }
+    // Make slider buttons VISIBLE and TAPPABLE on mobile
+    const prevBtn = document.querySelector('.slider-btn.prev');
+    const nextBtn = document.querySelector('.slider-btn.next');
+    const sliderContainer = document.querySelector('.slider-container');
     
-    startAutoSlide();
-});
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        initializeInfiniteSlider();
-    }, 500);
-});
-
-// Fix mobile styling
-function fixSliderForMobile() {
-    if (window.innerWidth <= 768) {
-        document.querySelectorAll('.slider-btn').forEach(btn => {
-            btn.style.width = '40px';
-            btn.style.height = '40px';
-            btn.style.fontSize = '16px';
-        });
+    if (isMobile) {
+        // Make buttons bigger and more visible
+        if (prevBtn) {
+            prevBtn.style.display = 'flex';
+            prevBtn.style.width = '48px';
+            prevBtn.style.height = '48px';
+            prevBtn.style.fontSize = '20px';
+            prevBtn.style.background = 'rgba(139, 92, 246, 0.9)';
+            prevBtn.style.border = '2px solid white';
+            prevBtn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+            prevBtn.style.zIndex = '100';
+            prevBtn.style.left = '10px';
+        }
+        
+        if (nextBtn) {
+            nextBtn.style.display = 'flex';
+            nextBtn.style.width = '48px';
+            nextBtn.style.height = '48px';
+            nextBtn.style.fontSize = '20px';
+            nextBtn.style.background = 'rgba(139, 92, 246, 0.9)';
+            nextBtn.style.border = '2px solid white';
+            nextBtn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+            nextBtn.style.zIndex = '100';
+            nextBtn.style.right = '10px';
+        }
         
         // Adjust card size for mobile
         document.querySelectorAll('.slider-card').forEach(card => {
             card.style.flex = '0 0 260px';
+            card.style.marginRight = '15px';
+        });
+        
+        // Ensure slider container has proper overflow
+        if (sliderContainer) {
+            sliderContainer.style.overflow = 'visible';
+        }
+    } else {
+        // Desktop styles
+        if (prevBtn) {
+            prevBtn.style.width = '50px';
+            prevBtn.style.height = '50px';
+            prevBtn.style.background = 'rgba(26,30,36,0.8)';
+            prevBtn.style.border = '1px solid rgba(139,92,246,0.5)';
+        }
+        
+        if (nextBtn) {
+            nextBtn.style.width = '50px';
+            nextBtn.style.height = '50px';
+            nextBtn.style.background = 'rgba(26,30,36,0.8)';
+            nextBtn.style.border = '1px solid rgba(139,92,246,0.5)';
+        }
+        
+        document.querySelectorAll('.slider-card').forEach(card => {
+            card.style.flex = '0 0 300px';
+            card.style.marginRight = '20px';
         });
     }
 }
 
-window.addEventListener('load', fixSliderForMobile);
-window.addEventListener('resize', fixSliderForMobile);
+// ===== ENHANCED MOBILE TOUCH SUPPORT =====
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartTime = 0;
+
+function setupTouchSupport() {
+    const wrapper = document.getElementById('sliderWrapper');
+    if (!wrapper) return;
+    
+    wrapper.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartTime = Date.now();
+        clearInterval(autoSlideInterval); // Pause while swiping
+    }, { passive: true });
+    
+    wrapper.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+        startAutoSlide(); // Resume auto-slide
+    }, { passive: true });
+    
+    // Prevent scroll while swiping slider
+    wrapper.addEventListener('touchmove', (e) => {
+        const touchX = e.changedTouches[0].screenX;
+        const diff = Math.abs(touchX - touchStartX);
+        
+        if (diff > 20) {
+            e.preventDefault(); // Prevent page scroll when swiping slider
+        }
+    }, { passive: false });
+}
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    const swipeDistance = touchEndX - touchStartX;
+    const swipeTime = Date.now() - touchStartTime;
+    
+    // Detect fast swipe vs slow drag
+    if (swipeTime < 300) {
+        // Fast swipe
+        if (swipeDistance < -swipeThreshold) {
+            slideNext();
+            addSwipeFeedback('left');
+        }
+        if (swipeDistance > swipeThreshold) {
+            slidePrev();
+            addSwipeFeedback('right');
+        }
+    } else {
+        // Slow drag - move based on distance
+        if (swipeDistance < -swipeThreshold * 2) {
+            slideNext();
+        }
+        if (swipeDistance > swipeThreshold * 2) {
+            slidePrev();
+        }
+    }
+}
+
+function addSwipeFeedback(direction) {
+    const wrapper = document.getElementById('sliderWrapper');
+    if (!wrapper) return;
+    
+    wrapper.style.transform = `translateX(${direction === 'left' ? '-10px' : '10px'})`;
+    setTimeout(() => {
+        wrapper.style.transform = `translateX(-${sliderPosition}px)`;
+    }, 50);
+}
+
+// ===== INITIALIZE EVERYTHING =====
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait a bit for images to load
+    setTimeout(() => {
+        initializeInfiniteSlider();
+        optimizeSliderForMobile();
+        setupTouchSupport();
+        
+        // Force start auto-slide
+        startAutoSlide();
+    }, 500);
+});
+
+// Handle resize
+window.addEventListener('resize', () => {
+    isMobile = window.innerWidth <= 768;
+    optimizeSliderForMobile();
+    
+    // Reinitialize slider on resize
+    setTimeout(() => {
+        initializeInfiniteSlider();
+    }, 200);
+});
+
+// Ensure slider starts on page load
+window.addEventListener('load', () => {
+    optimizeSliderForMobile();
+    startAutoSlide();
+});
 
 // Attach functions to window
 window.slideNext = slideNext;
 window.slidePrev = slidePrev;
+
+   
 
     </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
