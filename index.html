@@ -4125,6 +4125,36 @@
         margin: 0 auto !important;
     }
 }
+
+@media (max-width: 768px) {
+    .slider-btn {
+        position: absolute !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 44px !important;
+        height: 44px !important;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
+        border: 2px solid white !important;
+        border-radius: 50% !important;
+        color: white !important;
+        font-size: 20px !important;
+        z-index: 100 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
+    }
+    
+    .slider-btn.prev {
+        left: 10px !important;
+        right: auto !important;
+    }
+    
+    .slider-btn.next {
+        right: 10px !important;
+        left: auto !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -9409,9 +9439,8 @@ function generateParticles() {
 window.addEventListener('load', generateParticles);
 window.addEventListener('resize', generateParticles);
 
-// ===== ULTRA SIMPLE SLIDER - WORKS EVERYWHERE =====
+// ===== SIMPLE SLIDER - FORCED FOR MOBILE =====
 let sliderPosition = 0;
-let autoSlideInterval;
 
 function slideNext() {
     const wrapper = document.getElementById('sliderWrapper');
@@ -9419,14 +9448,11 @@ function slideNext() {
     
     const cardWidth = 300;
     const gap = 20;
-    const totalWidth = (cardWidth + gap) * 9; // 9 cards
-    const maxPosition = totalWidth - wrapper.parentElement.offsetWidth;
+    const totalWidth = (cardWidth + gap) * 9;
+    const maxPosition = totalWidth - (wrapper.parentElement?.offsetWidth || 1200);
     
     sliderPosition += (cardWidth + gap);
-    
-    if (sliderPosition > maxPosition) {
-        sliderPosition = 0;
-    }
+    if (sliderPosition > maxPosition) sliderPosition = 0;
     
     wrapper.style.transform = `translateX(-${sliderPosition}px)`;
 }
@@ -9437,41 +9463,56 @@ function slidePrev() {
     
     const cardWidth = 300;
     const gap = 20;
-    const totalWidth = (cardWidth + gap) * 9; // 9 cards
-    const maxPosition = totalWidth - wrapper.parentElement.offsetWidth;
+    const totalWidth = (cardWidth + gap) * 9;
+    const maxPosition = totalWidth - (wrapper.parentElement?.offsetWidth || 1200);
     
     sliderPosition -= (cardWidth + gap);
-    
-    if (sliderPosition < 0) {
-        sliderPosition = maxPosition;
-    }
+    if (sliderPosition < 0) sliderPosition = maxPosition;
     
     wrapper.style.transform = `translateX(-${sliderPosition}px)`;
 }
 
-// Start auto-slide
-function startSlider() {
-    if (autoSlideInterval) clearInterval(autoSlideInterval);
-    autoSlideInterval = setInterval(slideNext, 2500);
-}
-
-// Stop on hover
-document.querySelector('.slider-container')?.addEventListener('mouseenter', () => {
-    clearInterval(autoSlideInterval);
-});
-
-document.querySelector('.slider-container')?.addEventListener('mouseleave', () => {
-    startSlider();
-});
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    // Start after 1 second
+// ===== MOBILE FIX: Start on ANY touch =====
+if (window.innerWidth <= 768) {
+    console.log('📱 Mobile mode - waiting for touch');
+    
+    function startMobileSlider() {
+        console.log('✅ Mobile slider ACTIVATED');
+        // Clear any existing intervals
+        if (window.slideInterval) clearInterval(window.slideInterval);
+        // Start sliding every 2.5 seconds
+        window.slideInterval = setInterval(slideNext, 2500);
+        // Also trigger immediately
+        slideNext();
+    }
+    
+    // Start on first touch anywhere on screen
+    document.body.addEventListener('touchstart', function once() {
+        startMobileSlider();
+        document.body.removeEventListener('touchstart', once);
+    }, { once: true });
+    
+    // Also start on first click (for testing)
+    document.body.addEventListener('click', function once() {
+        startMobileSlider();
+        document.body.removeEventListener('click', once);
+    }, { once: true });
+    
+    // FALLBACK: Try to start after 2 seconds anyway (some mobile browsers allow it)
     setTimeout(() => {
-        startSlider();
-        console.log('✅ Slider started');
-    }, 1000);
-});
+        if (!window.slideInterval) {
+            console.log('⏰ Fallback: starting anyway');
+            startMobileSlider();
+        }
+    }, 2000);
+} else {
+    // Desktop: Start immediately
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            window.slideInterval = setInterval(slideNext, 3000);
+        }, 1000);
+    });
+}
 
 // Make functions global
 window.slideNext = slideNext;
