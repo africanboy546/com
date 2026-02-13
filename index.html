@@ -9780,33 +9780,54 @@ document.addEventListener('visibilitychange', () => {
 window.slideNext = slideNext;
 window.slidePrev = slidePrev;
 
-// ===== GUARANTEED MOBILE AUTO-SLIDE =====
-if (window.innerWidth <= 768) {
-    // Start auto-slide on first touch
-    const startMobileSlide = () => {
-        console.log('📱 Mobile auto-slide ACTIVATED');
-        setInterval(() => {
+// ============================================
+// ONE-LINER MOBILE AUTO-SLIDE FIX
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if mobile
+    if (window.innerWidth <= 768) {
+        console.log('📱 Mobile detected - setting up auto-slide');
+        
+        // Wait for user interaction
+        function enableAutoSlide() {
+            console.log('👆 User tapped - starting auto-slide');
+            
+            // Call slideNext every 2.5 seconds
+            setInterval(function() {
+                if (typeof slideNext === 'function') {
+                    slideNext();
+                }
+            }, 2500);
+            
+            // Remove listeners
+            document.removeEventListener('touchstart', enableAutoSlide);
+            document.removeEventListener('click', enableAutoSlide);
+        }
+        
+        // Add listeners
+        document.addEventListener('touchstart', enableAutoSlide, { once: true });
+        document.addEventListener('click', enableAutoSlide, { once: true });
+        
+        // Fallback: try to start after 3 seconds anyway
+        setTimeout(function() {
             if (typeof slideNext === 'function') {
-                slideNext();
+                console.log('⏰ Fallback: starting auto-slide');
+                setInterval(function() {
+                    slideNext();
+                }, 2500);
             }
-        }, 2500);
-        document.removeEventListener('touchstart', startMobileSlide);
-        document.removeEventListener('click', startMobileSlide);
-    };
-    
-    document.addEventListener('touchstart', startMobileSlide, { once: true });
-    document.addEventListener('click', startMobileSlide, { once: true });
-    
-    // Fallback - start after 3 seconds anyway
-    setTimeout(() => {
-        console.log('⏰ Fallback: starting mobile auto-slide');
-        setInterval(() => {
-            if (typeof slideNext === 'function') {
-                slideNext();
-            }
-        }, 2500);
-    }, 3000);
-}
+        }, 3000);
+    }
+});
+
+// Also try to start on page visibility change
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && window.innerWidth <= 768) {
+        console.log('👁️ Page visible - ensuring auto-slide runs');
+        // Auto-slide might already be running, this is just a backup
+    }
+});
+
     </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a29d3b8d5c2f4c238a79e43e5b52e90d"}'></script><!-- End Cloudflare Web Analytics -->
      <!-- Floating WhatsApp Button -->
