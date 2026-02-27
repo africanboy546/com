@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
-from werkzeug.urls import url_parse as url_parse
+from urllib.parse import urlparse  # <-- CHANGE THIS LINE
 
 from models import db, User, Notification
 from forms import LoginForm, RegistrationForm
@@ -35,11 +35,11 @@ def login():
 
         # Redirect to next page or dashboard
         next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
+        # CHANGE THIS LINE - use urlparse instead of url_parse
+        if not next_page or urlparse(next_page).netloc != '':
             next_page = url_for('dashboard')
 
-        flash(
-            f'Welcome back, {user.display_name or user.username}!', 'success')
+        flash(f'Welcome back, {user.display_name or user.username}!', 'success')
         return redirect(next_page)
 
     return render_template('auth/login.html', form=form)
@@ -111,4 +111,5 @@ def forgot_password():
     # Implementation would go here
     flash('Password reset functionality coming soon!', 'info')
     return redirect(url_for('auth.login'))
+
 
