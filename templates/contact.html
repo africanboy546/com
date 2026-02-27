@@ -1,0 +1,436 @@
+<!-- templates/contact.html -->
+{% extends "base.html" %}
+
+{% block title %}Contact Us - VelvetSignals{% endblock %}
+
+{% block content %}
+<div class="contact-page">
+    <div class="container">
+        <div class="page-header">
+            <h1>Contact Us</h1>
+            <p>Get in touch with the VelvetSignals team</p>
+        </div>
+
+        <div class="contact-grid">
+            <!-- Contact Information -->
+            <div class="contact-info-section">
+                <h2>Get in Touch</h2>
+                <p>Have questions about your creator profile? Need help with verification? Our team is here to help.</p>
+
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p><a href="mailto:support@velvetsignals.com">support@velvetsignals.com</a></p>
+                            <p class="contact-note">We'll respond within 24 hours</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>WhatsApp</h3>
+                            <p><a href="https://wa.me/233502469601" target="_blank">+233 50 246 9601</a></p>
+                            <p class="contact-note">Fastest response time (1-2 hours)</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Instagram</h3>
+                            <p><a href="https://instagram.com/velvetsignals_" target="_blank">@velvetsignals_</a></p>
+                            <p class="contact-note">Follow for updates and news</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Twitter/X</h3>
+                            <p><a href="https://twitter.com/velvetsignals" target="_blank">@velvetsignals</a></p>
+                            <p class="contact-note">Join the conversation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="office-hours">
+                    <h3>Support Hours</h3>
+                    <div class="hours-grid">
+                        <div class="hour-item">
+                            <span class="day">Monday - Friday</span>
+                            <span class="time">9:00 AM - 10:00 PM GMT</span>
+                        </div>
+                        <div class="hour-item">
+                            <span class="day">Saturday</span>
+                            <span class="time">10:00 AM - 6:00 PM GMT</span>
+                        </div>
+                        <div class="hour-item">
+                            <span class="day">Sunday</span>
+                            <span class="time">Closed (Emergency only)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-section">
+                <h2>Send us a Message</h2>
+                <form method="POST" action="{{ url_for('contact') }}" class="contact-form">
+                    {{ form.hidden_tag() }}
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-user"></i>
+                            Your Name
+                        </label>
+                        {{ form.name(class="form-control", placeholder="Enter your full name") }}
+                        {% if form.name.errors %}
+                        {% for error in form.name.errors %}
+                        <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        {{ form.email(class="form-control", placeholder="Enter your email") }}
+                        {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                        <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-tag"></i>
+                            Subject
+                        </label>
+                        {{ form.subject(class="form-control", placeholder="What is this about?") }}
+                        {% if form.subject.errors %}
+                        {% for error in form.subject.errors %}
+                        <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-comment"></i>
+                            Message
+                        </label>
+                        {{ form.message(class="form-control form-textarea", rows="6", placeholder="Tell us how we can
+                        help...") }}
+                        {% if form.message.errors %}
+                        {% for error in form.message.errors %}
+                        <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+
+                <div class="contact-note">
+                    <i class="fas fa-lock"></i>
+                    <p>Your information is secure and will only be used to respond to your inquiry.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .contact-page {
+        padding-top: 100px;
+        min-height: 100vh;
+        padding-bottom: 4rem;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .page-header p {
+        color: var(--gray);
+        font-size: 1.125rem;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+
+    @media (max-width: 1024px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Contact Information Section */
+    .contact-info-section {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 2.5rem;
+    }
+
+    .contact-info-section h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--light);
+    }
+
+    .contact-info-section>p {
+        color: var(--gray);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .contact-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .contact-method {
+        display: flex;
+        gap: 1.5rem;
+        padding: 1rem;
+        background: var(--dark);
+        border-radius: var(--radius-lg);
+        transition: var(--transition);
+    }
+
+    .contact-method:hover {
+        transform: translateX(5px);
+        border-left: 3px solid var(--primary);
+    }
+
+    .contact-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .contact-details {
+        flex: 1;
+    }
+
+    .contact-details h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: var(--light);
+    }
+
+    .contact-details p {
+        margin-bottom: 0.25rem;
+    }
+
+    .contact-details a {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .contact-details a:hover {
+        color: var(--secondary);
+        text-decoration: underline;
+    }
+
+    .contact-note {
+        color: var(--gray);
+        font-size: 0.875rem;
+    }
+
+    .office-hours {
+        background: var(--dark);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .office-hours h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--light);
+    }
+
+    .hours-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .hour-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--dark-lighter);
+    }
+
+    .hour-item:last-child {
+        border-bottom: none;
+    }
+
+    .day {
+        color: var(--gray);
+        font-weight: 500;
+    }
+
+    .time {
+        color: var(--light);
+    }
+
+    /* Contact Form Section */
+    .contact-form-section {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 2.5rem;
+    }
+
+    .contact-form-section h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: var(--light);
+    }
+
+    .contact-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        color: var(--light);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-label i {
+        color: var(--primary);
+        width: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+        background: var(--dark);
+        border: 2px solid var(--dark-lighter);
+        border-radius: var(--radius-md);
+        color: var(--light);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    .btn-block {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .error-message {
+        color: var(--danger);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    .contact-note {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background: var(--dark);
+        border-radius: var(--radius-md);
+        color: var(--gray);
+        font-size: 0.875rem;
+    }
+
+    .contact-note i {
+        color: var(--success);
+        font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .page-header h1 {
+            font-size: 2rem;
+        }
+
+        .contact-info-section,
+        .contact-form-section {
+            padding: 1.5rem;
+        }
+
+        .contact-method {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1rem;
+        }
+
+        .hour-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25rem;
+        }
+    }
+</style>
+{% endblock %}

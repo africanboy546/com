@@ -1,0 +1,1229 @@
+<!-- templates/edit_profile.html -->
+{% extends "base.html" %}
+
+{% block title %}Edit Profile - {{ current_user.display_name or current_user.username }}{% endblock %}
+
+{% block content %}
+<div class="edit-profile-container">
+    <div class="container">
+        <div class="edit-profile-header">
+            <h1>Edit Your Profile</h1>
+            <p>Customize how you appear to the VelvetSignals community</p>
+        </div>
+
+        <div class="edit-profile-grid">
+            <!-- Left Column - Avatar & Cover -->
+            <div class="edit-profile-left">
+                <!-- Avatar Upload -->
+                <div class="edit-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-camera"></i>
+                        Profile Picture
+                    </h2>
+
+                    <div class="avatar-preview-container">
+                        <img src="{{ current_user.avatar }}" alt="{{ current_user.username }}" class="avatar-preview"
+                            id="avatarPreview">
+                    </div>
+
+                    <form action="{{ url_for('upload_avatar') }}" method="POST" enctype="multipart/form-data"
+                        class="upload-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <label class="upload-btn">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            Choose Image
+                            <input type="file" name="avatar" accept="image/*" hidden onchange="this.form.submit()">
+                        </label>
+                        <p class="upload-hint">Recommended: 400x400px, max 10MB</p>
+                    </form>
+                </div>
+
+                <!-- Cover Upload -->
+                <div class="edit-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-image"></i>
+                        Cover Image
+                    </h2>
+
+                    <div class="cover-preview-container">
+                        <img src="{{ current_user.wallpaper }}" alt="Cover" class="cover-preview" id="coverPreview">
+                    </div>
+
+                    <form action="{{ url_for('upload_wallpaper') }}" method="POST" enctype="multipart/form-data"
+                        class="upload-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <label class="upload-btn">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            Choose Image
+                            <input type="file" name="wallpaper" accept="image/*" hidden onchange="this.form.submit()">
+                        </label>
+                        <p class="upload-hint">Recommended: 1920x1080px, max 20MB</p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column - Profile Info -->
+            <div class="edit-profile-right">
+                <!-- Account Settings Card -->
+                <div class="edit-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Account Settings
+                    </h2>
+
+                    <!-- Username Update -->
+                    <form id="usernameForm" class="settings-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-at"></i>
+                                Username
+                            </label>
+                            <div class="input-with-validation">
+                                <input type="text" id="username" name="username" class="form-control"
+                                    value="{{ current_user.username }}" placeholder="Enter username" required>
+                                <span id="usernameStatus" class="validation-status"></span>
+                            </div>
+                            <div class="field-requirements">
+                                <small>3-30 characters, letters, numbers, and underscores only</small>
+                            </div>
+                            <div class="field-actions">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="updateUsername()"
+                                    id="updateUsernameBtn">
+                                    <i class="fas fa-save"></i> Update Username
+                                </button>
+                                <span id="usernameMessage" class="field-message"></span>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Email Update -->
+                    <form id="emailForm" class="settings-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-envelope"></i>
+                                Email Address
+                            </label>
+                            <div class="input-with-validation">
+                                <input type="email" id="email" name="email" class="form-control"
+                                    value="{{ current_user.email }}" placeholder="Enter email" required>
+                                <span id="emailStatus" class="validation-status"></span>
+                            </div>
+                            <div class="field-actions">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="updateEmail()"
+                                    id="updateEmailBtn">
+                                    <i class="fas fa-save"></i> Update Email
+                                </button>
+                                <span id="emailMessage" class="field-message"></span>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Password Change -->
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Current Password
+                            </label>
+                            <input type="password" id="currentPassword" class="form-control"
+                                placeholder="Enter current password">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-lock"></i>
+                                New Password
+                            </label>
+                            <div class="input-with-validation">
+                                <input type="password" id="newPassword" class="form-control"
+                                    placeholder="Enter new password">
+                                <span id="passwordStrength" class="password-strength-badge"></span>
+                            </div>
+                            <div class="password-requirements">
+                                <div class="requirement" id="lengthReq"> At least 8 characters</div>
+                                <div class="requirement" id="uppercaseReq"> At least one uppercase letter</div>
+                                <div class="requirement" id="lowercaseReq"> At least one lowercase letter</div>
+                                <div class="requirement" id="numberReq"> At least one number</div>
+                                <div class="requirement" id="specialReq"> At least one special character</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Confirm New Password
+                            </label>
+                            <div class="input-with-validation">
+                                <input type="password" id="confirmPassword" class="form-control"
+                                    placeholder="Confirm new password">
+                                <span id="confirmStatus" class="validation-status"></span>
+                            </div>
+                        </div>
+
+                        <div class="field-actions">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="updatePassword()"
+                                id="updatePasswordBtn">
+                                <i class="fas fa-key"></i> Change Password
+                            </button>
+                            <span id="passwordMessage" class="field-message"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Information Card -->
+                <div class="edit-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-user"></i>
+                        Profile Information
+                    </h2>
+
+                    <form method="POST" action="{{ url_for('edit_profile') }}" id="profileForm">
+                        {{ form.hidden_tag() }}
+
+                        <div class="form-group">
+                            <label class="form-label">Display Name</label>
+                            {{ form.display_name(class="form-control", placeholder="How should we display your name?",
+                            id="displayName") }}
+                            {% if form.display_name.errors %}
+                            {% for error in form.display_name.errors %}
+                            <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Bio</label>
+                            {{ form.bio(class="form-control form-textarea", rows="5", placeholder="Tell your story...",
+                            id="bio") }}
+                            <div class="char-counter">
+                                <span id="bioCount">{{ form.bio.data|length if form.bio.data else 0 }}</span>/500
+                            </div>
+                            {% if form.bio.errors %}
+                            {% for error in form.bio.errors %}
+                            <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Location</label>
+                            {{ form.location(class="form-control", placeholder="City, Country", id="location") }}
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Website</label>
+                            {{ form.website(class="form-control", placeholder="https://yourwebsite.com", id="website")
+                            }}
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Birth Date</label>
+                            {{ form.birth_date(class="form-control", type="date", id="birthDate") }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-save"></i> Save Profile Changes
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Social Links Section -->
+                <div class="edit-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-link"></i>
+                        Social Links
+                    </h2>
+
+                    <div class="social-links-list" id="socialLinksList">
+                        {% set social_links = current_user.social_links.all() %}
+                        {% for link in social_links %}
+                        <div class="social-link-item" id="social-{{ link.id }}">
+                            <div class="social-link-info">
+                                <i class="fab fa-{{ link.platform }}"></i>
+                                <span>{{ link.platform|title }}</span>
+                                <span class="social-handle">{{ link.handle or link.url }}</span>
+                            </div>
+                            <button class="btn-icon" onclick="deleteSocialLink({{ link.id }})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <button class="btn btn-secondary btn-block" onclick="showAddSocialModal()">
+                        <i class="fas fa-plus"></i> Add Social Link
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Social Modal -->
+<div id="addSocialModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add Social Link</h3>
+            <button class="modal-close" onclick="closeModal('addSocialModal')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form action="{{ url_for('add_social_link') }}" method="POST" id="addSocialForm">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label class="form-label">Platform</label>
+                <select name="platform" class="form-control" id="platform" required>
+                    <option value="twitter">Twitter/X</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="onlyfans">OnlyFans</option>
+                    <option value="fansly">Fansly</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="discord">Discord</option>
+                    <option value="snapchat">Snapchat</option>
+                    <option value="twitch">Twitch</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">URL</label>
+                <input type="url" name="url" class="form-control" id="url" placeholder="https://..." required>
+                <span id="urlStatus" class="validation-status"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Handle/Username</label>
+                <input type="text" name="handle" class="form-control" id="handle" placeholder="@username">
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('addSocialModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Add Link</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Success Toast -->
+<div id="successToast" class="toast-notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Changes saved successfully!</span>
+</div>
+
+<style>
+    /* Main Container */
+    .edit-profile-container {
+        padding-top: 100px;
+        min-height: 100vh;
+        padding-bottom: 4rem;
+    }
+
+    /* Header Styles */
+    .edit-profile-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .edit-profile-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .edit-profile-header p {
+        color: var(--gray);
+        font-size: 1.125rem;
+    }
+
+    /* Grid Layout */
+    .edit-profile-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+        .edit-profile-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Card Styles */
+    .edit-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--dark-lighter);
+    }
+
+    .card-title i {
+        color: var(--primary);
+    }
+
+    /* Avatar and Cover Styles */
+    .avatar-preview-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .avatar-preview {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--primary);
+        box-shadow: var(--shadow-xl);
+    }
+
+    .cover-preview-container {
+        margin-bottom: 1.5rem;
+    }
+
+    .cover-preview {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: var(--radius-lg);
+        border: 2px solid var(--primary);
+    }
+
+    /* Upload Form Styles */
+    .upload-form {
+        text-align: center;
+    }
+
+    .upload-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        background: var(--gradient-primary);
+        color: white;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 600;
+        border: none;
+    }
+
+    .upload-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .upload-hint {
+        margin-top: 0.5rem;
+        color: var(--gray);
+        font-size: 0.75rem;
+    }
+
+    /* Form Group Styles */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        color: var(--light);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-label i {
+        color: var(--primary);
+        width: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+        background: var(--dark);
+        border: 2px solid var(--dark-lighter);
+        border-radius: var(--radius-md);
+        color: var(--light);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .char-counter {
+        text-align: right;
+        margin-top: 0.25rem;
+        color: var(--gray);
+        font-size: 0.75rem;
+    }
+
+    .error-message {
+        color: var(--danger);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    /* Button Styles */
+    .btn-block {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .btn-sm {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .btn-secondary {
+        background: var(--dark-lighter);
+        color: var(--light);
+        border: 1px solid var(--dark-lighter);
+    }
+
+    .btn-secondary:hover {
+        background: var(--dark-lighter);
+        filter: brightness(1.2);
+    }
+
+    /* Settings Form Styles */
+    .settings-form {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--dark-lighter);
+    }
+
+    .settings-form:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .input-with-validation {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .validation-status {
+        position: absolute;
+        right: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .validation-status.valid {
+        color: var(--success);
+    }
+
+    .validation-status.invalid {
+        color: var(--danger);
+    }
+
+    .field-requirements {
+        margin-top: 0.25rem;
+        color: var(--gray);
+        font-size: 0.75rem;
+    }
+
+    .field-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .field-message {
+        font-size: 0.875rem;
+        transition: opacity 0.3s ease;
+    }
+
+    .field-message.success {
+        color: var(--success);
+    }
+
+    .field-message.error {
+        color: var(--danger);
+    }
+
+    /* Password Strength Styles */
+    .password-strength-badge {
+        position: absolute;
+        right: 1rem;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: var(--radius-full);
+        font-weight: 600;
+    }
+
+    .strength-weak {
+        background: rgba(239, 68, 68, 0.2);
+        color: var(--danger);
+    }
+
+    .strength-fair {
+        background: rgba(245, 158, 11, 0.2);
+        color: #f59e0b;
+    }
+
+    .strength-good {
+        background: rgba(16, 185, 129, 0.2);
+        color: var(--success);
+    }
+
+    .strength-strong {
+        background: rgba(139, 92, 246, 0.2);
+        color: var(--primary);
+    }
+
+    .password-requirements {
+        margin-top: 0.5rem;
+        padding: 0.75rem;
+        background: var(--dark);
+        border-radius: var(--radius-md);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .requirement {
+        font-size: 0.75rem;
+        color: var(--gray);
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .requirement.met {
+        color: var(--success);
+    }
+
+    .requirement i {
+        font-size: 0.75rem;
+    }
+
+    /* Social Links Styles */
+    .social-links-list {
+        margin-bottom: 1rem;
+    }
+
+    .social-link-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem;
+        background: var(--dark);
+        border-radius: var(--radius-md);
+        margin-bottom: 0.5rem;
+    }
+
+    .social-link-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .social-link-info i {
+        font-size: 1.25rem;
+        color: var(--primary);
+    }
+
+    .social-handle {
+        color: var(--gray);
+        font-size: 0.875rem;
+    }
+
+    .btn-icon {
+        background: none;
+        border: none;
+        color: var(--gray);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: var(--radius-sm);
+        transition: var(--transition);
+    }
+
+    .btn-icon:hover {
+        color: var(--danger);
+        background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background: var(--dark-light);
+        border-radius: var(--radius-xl);
+        padding: 2rem;
+        max-width: 500px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        border: 1px solid var(--dark-lighter);
+        animation: modalSlideUp 0.3s ease;
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--dark-lighter);
+    }
+
+    .modal-header h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--light);
+    }
+
+    .modal-close {
+        background: none;
+        border: none;
+        color: var(--gray);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .modal-close:hover {
+        color: var(--danger);
+        transform: rotate(90deg);
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    /* Toast Notification */
+    .toast-notification {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--success);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: var(--shadow-xl);
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        z-index: 3000;
+    }
+
+    .toast-notification.show {
+        transform: translateX(0);
+    }
+
+    .toast-notification i {
+        font-size: 1.25rem;
+    }
+
+    /* Loading Spinner */
+    .spinner-small {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes modalSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .edit-profile-header h1 {
+            font-size: 2rem;
+        }
+
+        .avatar-preview {
+            width: 150px;
+            height: 150px;
+        }
+
+        .password-requirements {
+            grid-template-columns: 1fr;
+        }
+
+        .field-actions {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+
+<script>
+    // Toast notification
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('successToast');
+        const toastMessage = document.getElementById('toastMessage');
+        toastMessage.textContent = message;
+
+        if (type === 'success') {
+            toast.style.background = 'var(--success)';
+        } else if (type === 'error') {
+            toast.style.background = 'var(--danger)';
+        } else if (type === 'warning') {
+            toast.style.background = '#f59e0b';
+        }
+
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    // Username validation and update
+    let usernameTimeout;
+    document.getElementById('username')?.addEventListener('input', function () {
+        clearTimeout(usernameTimeout);
+        const username = this.value;
+        const status = document.getElementById('usernameStatus');
+
+        // Validate format
+        const usernameRegex = /^[a-zA-Z0-9_]{3,30}$/;
+        if (!usernameRegex.test(username)) {
+            status.innerHTML = '❌';
+            status.className = 'validation-status invalid';
+            return;
+        }
+
+        status.innerHTML = '<div class="spinner-small"></div>';
+
+        usernameTimeout = setTimeout(() => {
+            fetch('/check-username', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ username: username })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.available) {
+                        status.innerHTML = '✓';
+                        status.className = 'validation-status valid';
+                    } else {
+                        status.innerHTML = '❌';
+                        status.className = 'validation-status invalid';
+                    }
+                });
+        }, 500);
+    });
+
+    function updateUsername() {
+        const username = document.getElementById('username').value;
+        const status = document.getElementById('usernameStatus');
+        const message = document.getElementById('usernameMessage');
+        const btn = document.getElementById('updateUsernameBtn');
+
+        if (status.classList.contains('invalid')) {
+            message.textContent = 'Please enter a valid username';
+            message.className = 'field-message error';
+            return;
+        }
+
+        // Show loading
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<div class="spinner-small"></div> Updating...';
+        btn.disabled = true;
+
+        fetch('/update-username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ username: username })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    message.textContent = 'Username updated successfully!';
+                    message.className = 'field-message success';
+                    showToast('Username updated successfully!');
+                } else {
+                    message.textContent = data.error || 'Failed to update username';
+                    message.className = 'field-message error';
+                }
+            })
+            .catch(error => {
+                message.textContent = 'An error occurred';
+                message.className = 'field-message error';
+            })
+            .finally(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+    }
+
+    // Email validation and update
+    let emailTimeout;
+    document.getElementById('email')?.addEventListener('input', function () {
+        clearTimeout(emailTimeout);
+        const email = this.value;
+        const status = document.getElementById('emailStatus');
+
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            status.innerHTML = '❌';
+            status.className = 'validation-status invalid';
+            return;
+        }
+
+        status.innerHTML = '<div class="spinner-small"></div>';
+
+        emailTimeout = setTimeout(() => {
+            fetch('/check-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ email: email })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.available) {
+                        status.innerHTML = '✓';
+                        status.className = 'validation-status valid';
+                    } else {
+                        status.innerHTML = '❌';
+                        status.className = 'validation-status invalid';
+                    }
+                });
+        }, 500);
+    });
+
+    function updateEmail() {
+        const email = document.getElementById('email').value;
+        const status = document.getElementById('emailStatus');
+        const message = document.getElementById('emailMessage');
+        const btn = document.getElementById('updateEmailBtn');
+
+        if (status.classList.contains('invalid')) {
+            message.textContent = 'Please enter a valid email';
+            message.className = 'field-message error';
+            return;
+        }
+
+        // Show loading
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<div class="spinner-small"></div> Updating...';
+        btn.disabled = true;
+
+        fetch('/update-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ email: email })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    message.textContent = 'Email updated successfully!';
+                    message.className = 'field-message success';
+                    showToast('Email updated successfully!');
+                } else {
+                    message.textContent = data.error || 'Failed to update email';
+                    message.className = 'field-message error';
+                }
+            })
+            .catch(error => {
+                message.textContent = 'An error occurred';
+                message.className = 'field-message error';
+            })
+            .finally(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+    }
+
+    // Password strength checker
+    const newPassword = document.getElementById('newPassword');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const strengthBadge = document.getElementById('passwordStrength');
+    const confirmStatus = document.getElementById('confirmStatus');
+
+    if (newPassword) {
+        newPassword.addEventListener('input', checkPasswordStrength);
+        newPassword.addEventListener('input', checkPasswordMatch);
+    }
+
+    if (confirmPassword) {
+        confirmPassword.addEventListener('input', checkPasswordMatch);
+    }
+
+    function checkPasswordStrength() {
+        const password = newPassword.value;
+        let strength = 0;
+
+        // Check requirements
+        const lengthReq = password.length >= 8;
+        const uppercaseReq = /[A-Z]/.test(password);
+        const lowercaseReq = /[a-z]/.test(password);
+        const numberReq = /[0-9]/.test(password);
+        const specialReq = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+        // Update requirement indicators
+        document.getElementById('lengthReq').className = lengthReq ? 'requirement met' : 'requirement';
+        document.getElementById('uppercaseReq').className = uppercaseReq ? 'requirement met' : 'requirement';
+        document.getElementById('lowercaseReq').className = lowercaseReq ? 'requirement met' : 'requirement';
+        document.getElementById('numberReq').className = numberReq ? 'requirement met' : 'requirement';
+        document.getElementById('specialReq').className = specialReq ? 'requirement met' : 'requirement';
+
+        // Calculate strength
+        if (lengthReq) strength++;
+        if (uppercaseReq) strength++;
+        if (lowercaseReq) strength++;
+        if (numberReq) strength++;
+        if (specialReq) strength++;
+
+        // Update badge
+        if (strength <= 2) {
+            strengthBadge.textContent = 'Weak';
+            strengthBadge.className = 'password-strength-badge strength-weak';
+        } else if (strength <= 3) {
+            strengthBadge.textContent = 'Fair';
+            strengthBadge.className = 'password-strength-badge strength-fair';
+        } else if (strength <= 4) {
+            strengthBadge.textContent = 'Good';
+            strengthBadge.className = 'password-strength-badge strength-good';
+        } else {
+            strengthBadge.textContent = 'Strong';
+            strengthBadge.className = 'password-strength-badge strength-strong';
+        }
+    }
+
+    function checkPasswordMatch() {
+        if (confirmPassword.value) {
+            if (newPassword.value === confirmPassword.value) {
+                confirmStatus.innerHTML = '✓';
+                confirmStatus.className = 'validation-status valid';
+            } else {
+                confirmStatus.innerHTML = '❌';
+                confirmStatus.className = 'validation-status invalid';
+            }
+        } else {
+            confirmStatus.innerHTML = '';
+        }
+    }
+
+    function updatePassword() {
+        const currentPass = document.getElementById('currentPassword').value;
+        const newPass = newPassword.value;
+        const confirmPass = confirmPassword.value;
+        const message = document.getElementById('passwordMessage');
+        const btn = document.getElementById('updatePasswordBtn');
+
+        // Validation
+        if (!currentPass) {
+            message.textContent = 'Please enter your current password';
+            message.className = 'field-message error';
+            return;
+        }
+
+        if (newPass !== confirmPass) {
+            message.textContent = 'New passwords do not match';
+            message.className = 'field-message error';
+            return;
+        }
+
+        // Check if all requirements are met
+        const requirements = ['lengthReq', 'uppercaseReq', 'lowercaseReq', 'numberReq', 'specialReq'];
+        const allMet = requirements.every(req =>
+            document.getElementById(req).classList.contains('met')
+        );
+
+        if (!allMet) {
+            message.textContent = 'Please meet all password requirements';
+            message.className = 'field-message error';
+            return;
+        }
+
+        // Show loading
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<div class="spinner-small"></div> Updating...';
+        btn.disabled = true;
+
+        fetch('/update-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                current_password: currentPass,
+                new_password: newPass
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    message.textContent = 'Password updated successfully!';
+                    message.className = 'field-message success';
+                    showToast('Password updated successfully!');
+
+                    // Clear password fields
+                    document.getElementById('currentPassword').value = '';
+                    newPassword.value = '';
+                    confirmPassword.value = '';
+                    confirmStatus.innerHTML = '';
+                    checkPasswordStrength();
+                } else {
+                    message.textContent = data.error || 'Failed to update password';
+                    message.className = 'field-message error';
+                }
+            })
+            .catch(error => {
+                message.textContent = 'An error occurred';
+                message.className = 'field-message error';
+            })
+            .finally(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+    }
+
+    // Social Links
+    function showAddSocialModal() {
+        document.getElementById('addSocialModal').classList.add('active');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+
+    function deleteSocialLink(linkId) {
+        if (confirm('Are you sure you want to delete this social link?')) {
+            fetch(`/social/delete/${linkId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                }
+            }).then(() => {
+                document.getElementById(`social-${linkId}`).remove();
+                showToast('Social link deleted successfully!');
+            });
+        }
+    }
+
+    // URL validation for social modal
+    document.getElementById('url')?.addEventListener('input', function () {
+        const url = this.value;
+        const status = document.getElementById('urlStatus');
+
+        try {
+            new URL(url);
+            status.innerHTML = '✓';
+            status.className = 'validation-status valid';
+        } catch {
+            status.innerHTML = '❌';
+            status.className = 'validation-status invalid';
+        }
+    });
+
+    // Bio character counter
+    const bio = document.getElementById('bio');
+    const bioCount = document.getElementById('bioCount');
+
+    if (bio) {
+        bio.addEventListener('input', function () {
+            if (this.value.length <= 500) {
+                bioCount.textContent = this.value.length;
+            } else {
+                this.value = this.value.substring(0, 500);
+                bioCount.textContent = '500';
+            }
+        });
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function (event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.classList.remove('active');
+        }
+    }
+
+    // Prevent form submission on enter in single input forms
+    document.querySelectorAll('.settings-form').forEach(form => {
+        form.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,613 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block title %}VelvetSignals 🚀 - Premium Creator Promotion Platform{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-slider">
+        <div class="slider-tracks">
+            <div class="slider-item"
+                style="background-image: url('https://pbs.twimg.com/media/G_RwcQnWgAEVn_2?format=jpg&name=large');">
+            </div>
+            <div class="slider-item"
+                style="background-image: url('https://pbs.twimg.com/media/G5FnpoxWIAAEEDp?format=jpg&name=large');">
+            </div>
+            <div class="slider-item"
+                style="background-image: url('https://pbs.twimg.com/media/GyJf5TMXYAAmiKQ?format=jpg&name=large');">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title animate__animated animate__fadeInUp">
+                STEP INTO THE HOUSE OF HEAT
+            </h1>
+            <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">
+                <span class="gradient-text">Join {{ total_creators }}+ content creators getting real-time promotion,
+                    detailed profiles, and exponential audience growth. 100% free, forever.</span>
+            </p>
+            <div class="hero-buttons animate__animated animate__fadeInUp animate__delay-2s">
+                <a href="{{ url_for('submit_profile') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-bolt"></i> Start Free Promotion
+                </a>
+                <a href="{{ url_for('creators') }}" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-users"></i> Browse Creators
+                </a>
+                <button id="demo-btn" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-play-circle"></i> Watch Demo
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card animate__animated animate__fadeInUp">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-value" id="live-creators">{{ total_creators }}</div>
+                <div class="stat-label">Active Creators</div>
+                <div class="stat-trend">
+                    <i class="fas fa-arrow-up"></i> +12% this month
+                </div>
+            </div>
+
+            <div class="stat-card animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="stat-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stat-value" id="live-views">{{ "{:.1f}".format(total_views/1000000) }}M</div>
+                <div class="stat-label">Total Views</div>
+                <div class="stat-trend">
+                    <i class="fas fa-arrow-up"></i> +8% this week
+                </div>
+            </div>
+
+            <div class="stat-card animate__animated animate__fadeInUp animate__delay-2s">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-value" id="live-growth">{{ total_posts }}</div>
+                <div class="stat-label">Total Posts</div>
+                <div class="stat-trend">
+                    <i class="fas fa-arrow-up"></i> +23% engagement
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Slider -->
+<div class="featured-slider">
+    <div class="container">
+        <div class="slider-header">
+            <h2>🔥 TRENDING CREATORS</h2>
+            <div class="slider-controls">
+                <button class="slider-btn prev" onclick="slidePrev()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slider-btn next" onclick="slideNext()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="slider-container">
+            <div class="slider-track" id="sliderTrack">
+                {% for creator in featured_creators %}
+                <div class="slider-card"
+                    onclick="window.location.href='{{ url_for('creator_profile', username=creator.username) }}'">
+                    <img src="{{ creator.wallpaper or creator.avatar }}"
+                        alt="{{ creator.display_name or creator.username }}">
+                    <div class="slider-card-content">
+                        <h3>{{ creator.display_name or creator.username }}</h3>
+                        <p class="slider-username">@{{ creator.username }}</p>
+                        <p class="slider-followers">{{ creator.followers_count }} followers</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Creators Grid -->
+<section id="creators" class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">🔍 Find Your Favorite Creators</h2>
+            <p class="section-subtitle">Search by name, username, or tags. Click any creator to view detailed profile
+            </p>
+
+            <!-- Search Box -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="search-box" class="search-box"
+                    placeholder="Search creators by name, username, or tags...">
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </div>
+
+        <div class="creators-grid" id="creators-grid">
+            {% for creator in recent_creators %}
+            <div class="creator-card"
+                onclick="window.location.href='{{ url_for('creator_profile', username=creator.username) }}'">
+                <div class="creator-cover">
+                    <img src="{{ creator.wallpaper or '/static/images/default-wallpaper.jpg' }}"
+                        alt="{{ creator.display_name or creator.username }}" class="creator-cover-img">
+                    <div class="creator-badges">
+                        {% if creator.is_featured %}<span class="badge badge-featured">Featured</span>{% endif %}
+                        {% if creator.is_verified %}<span class="badge badge-verified">Verified</span>{% endif %}
+                    </div>
+                    <img src="{{ creator.avatar }}" alt="{{ creator.display_name or creator.username }}"
+                        class="creator-avatar">
+                </div>
+                <div class="creator-info">
+                    <div class="creator-name-container">
+                        <h3 class="creator-display-name">{{ creator.display_name or creator.username }}</h3>
+                        <span class="creator-username-tag">@{{ creator.username }}</span>
+                    </div>
+                    <p class="creator-bio">{{ creator.bio or 'No bio yet' }}</p>
+
+                    <div class="creator-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Followers</span>
+                            <span class="stat-value">{{ creator.followers_count }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Views</span>
+                            <span class="stat-value">{{ creator.views_count }}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Likes</span>
+                            <span class="stat-value">{{ creator.likes_count }}</span>
+                        </div>
+                    </div>
+
+                    <div class="creator-actions">
+                        <button class="btn btn-primary btn-sm"
+                            onclick="event.stopPropagation(); window.location.href='{{ url_for('creator_profile', username=creator.username) }}'">
+                            <i class="fas fa-eye"></i> View Profile
+                        </button>
+                        <button class="btn btn-secondary btn-sm"
+                            onclick="event.stopPropagation(); followCreator({{ creator.id }})">
+                            <i class="fas fa-plus"></i> Follow
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="load-more-container">
+            <button id="load-more" class="btn btn-primary btn-lg" data-page="1">
+                <span class="btn-text">
+                    <i class="fas fa-sync-alt"></i> Load More Creators
+                </span>
+                <div class="load-more-spinner"></div>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Admin Support Section -->
+<section id="admin-support" class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">👑 Admin & Support Center</h2>
+            <p class="section-subtitle">Contact the VelvetSignals team directly for assistance, verification, or support
+            </p>
+        </div>
+
+        <div class="admin-contact-section">
+            <div class="admin-contact-header">
+                <h3 class="admin-contact-title">Direct Contact Channels</h3>
+                <p class="admin-contact-subtitle">Reach out to us 24/7 for creator verification, profile assistance, or
+                    platform support</p>
+            </div>
+
+            <div class="admin-contact-grid">
+                <div class="admin-contact-card" onclick="openWhatsAppAdmin()">
+                    <div class="admin-contact-icon whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h4 class="admin-contact-name">WhatsApp Admin</h4>
+                    <div class="admin-contact-role">Primary Contact</div>
+                    <p class="admin-contact-desc">
+                        Fastest response time. Contact for profile verification, urgent issues, or quick questions.
+                    </p>
+                    <button class="btn btn-primary" style="background: linear-gradient(135deg, #25D366, #128C7E);">
+                        <i class="fab fa-whatsapp"></i> Message on WhatsApp
+                    </button>
+                </div>
+
+                <div class="admin-contact-card" onclick="openInstagramAdmin()">
+                    <div class="admin-contact-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h4 class="admin-contact-name">Instagram</h4>
+                    <div class="admin-contact-role">Social Media Manager</div>
+                    <p class="admin-contact-desc">
+                        Connect with us on Instagram for updates, promotions, and community engagement.
+                    </p>
+                    <button class="btn btn-primary"
+                        style="background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);">
+                        <i class="fab fa-instagram"></i> Follow on Instagram
+                    </button>
+                </div>
+
+                <div class="admin-contact-card" onclick="openSupportCenter()">
+                    <div class="admin-contact-icon support">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4 class="admin-contact-name">Support Center</h4>
+                    <div class="admin-contact-role">Technical & Account Support</div>
+                    <p class="admin-contact-desc">
+                        Get help with platform issues, account management, or feature requests.
+                    </p>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-headset"></i> Contact Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Twitter Feed Section -->
+<section id="twitter" class="section">
+    <div class="container">
+        <div class="twitter-section">
+            <div class="twitter-header">
+                <div class="twitter-title">
+                    <i class="fab fa-twitter twitter-logo"></i>
+                    <div>
+                        <h2>Community Highlights</h2>
+                        <p>Live from @africanboyyyyy & Featured Creators</p>
+                    </div>
+                </div>
+                <button id="refresh-tweets" class="btn btn-twitter">
+                    <i class="fas fa-sync-alt"></i> Refresh Feed
+                </button>
+            </div>
+
+            <div class="twitter-feed-container" id="twitter-feed">
+                <!-- Tweets will be loaded via JavaScript -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section section">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to Showcase Your Profile? 🚀</h2>
+            <p class="cta-subtitle">
+                Join thousands of creators who've already connected with their audience through our platform.
+                No fees, no commissions, just pure growth.
+            </p>
+            <a href="{{ url_for('submit_profile') }}" class="cta-button">
+                <i class="fas fa-rocket"></i> Create Your Profile Now
+            </a>
+            <p class="cta-stats">
+                ⚡ 24-hour approval • 🔒 100% free forever • 📈 Real-time analytics
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Updated Creator Card Styles */
+    .creator-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        transition: var(--transition);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .creator-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: var(--shadow-2xl);
+    }
+
+    .creator-cover {
+        height: 180px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .creator-cover-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .creator-card:hover .creator-cover-img {
+        transform: scale(1.1);
+    }
+
+    .creator-cover::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50%;
+        background: linear-gradient(to top, var(--dark), transparent);
+    }
+
+    .creator-avatar {
+        position: absolute;
+        bottom: -45px;
+        left: 20px;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: 4px solid var(--dark-light);
+        object-fit: cover;
+        z-index: 2;
+        transition: var(--transition);
+    }
+
+    .creator-card:hover .creator-avatar {
+        transform: scale(1.1);
+    }
+
+    .creator-badges {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        gap: 0.5rem;
+        z-index: 3;
+    }
+
+    .badge {
+        padding: 0.375rem 0.875rem;
+        border-radius: var(--radius-full);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .badge-featured {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+    }
+
+    .badge-verified {
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: white;
+    }
+
+    .creator-info {
+        padding: 3.5rem 1.5rem 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Updated Name Container - Username below name */
+    .creator-name-container {
+        margin-bottom: 0.75rem;
+    }
+
+    .creator-display-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--light);
+        margin: 0 0 0.25rem 0;
+        line-height: 1.3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .creator-username-tag {
+        display: block;
+        color: var(--primary);
+        font-weight: 500;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .creator-bio {
+        color: var(--gray);
+        margin-bottom: 1.25rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        flex: 1;
+    }
+
+    .creator-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+        padding: 0.75rem;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: var(--radius-lg);
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.7rem;
+        color: var(--gray);
+        margin-bottom: 0.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+    }
+
+    .stat-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--light);
+        line-height: 1.2;
+    }
+
+    .creator-actions {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: auto;
+    }
+
+    .creator-actions .btn {
+        flex: 1;
+        padding: 0.6rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .creators-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .creator-cover {
+            height: 140px;
+        }
+
+        .creator-avatar {
+            width: 70px;
+            height: 70px;
+            bottom: -35px;
+            left: 15px;
+        }
+
+        .creator-info {
+            padding: 2.5rem 1rem 1rem;
+        }
+
+        .creator-display-name {
+            font-size: 1rem;
+        }
+
+        .creator-username-tag {
+            font-size: 0.75rem;
+        }
+
+        .creator-bio {
+            font-size: 0.8rem;
+            -webkit-line-clamp: 2;
+            margin-bottom: 0.75rem;
+        }
+
+        .creator-stats {
+            padding: 0.5rem;
+            gap: 0.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+        }
+
+        .stat-value {
+            font-size: 0.9rem;
+        }
+
+        .creator-actions {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .creator-actions .btn {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 0.75rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .creators-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .creator-cover {
+            height: 160px;
+        }
+
+        .creator-avatar {
+            width: 80px;
+            height: 80px;
+            bottom: -40px;
+        }
+
+        .creator-info {
+            padding: 3rem 1.25rem 1.25rem;
+        }
+
+        .creator-display-name {
+            font-size: 1.1rem;
+        }
+
+        .creator-username-tag {
+            font-size: 0.85rem;
+        }
+
+        .stat-value {
+            font-size: 1rem;
+        }
+    }
+
+    /* Keep all your existing styles below */
+    /* ... (rest of your existing styles remain the same) ... */
+</style>
+
+<script>
+    function openWhatsAppAdmin() {
+        const phoneNumber = '233502469601';
+        const message = encodeURIComponent(
+            "Hello VelvetSignals Admin! I need assistance with my creator profile."
+        );
+        window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+    }
+
+    function openInstagramAdmin() {
+        window.open('https://instagram.com/velvetsignals_', '_blank');
+    }
+
+    function openSupportCenter() {
+        showToast('🎫 Support center coming soon! Use WhatsApp for immediate assistance.', 'info');
+    }
+
+    function slidePrev() {
+        const track = document.getElementById('sliderTrack');
+        const cardWidth = track.querySelector('.slider-card')?.offsetWidth || 300;
+        track.scrollBy({ left: -cardWidth - 20, behavior: 'smooth' });
+    }
+
+    function slideNext() {
+        const track = document.getElementById('sliderTrack');
+        const cardWidth = track.querySelector('.slider-card')?.offsetWidth || 300;
+        track.scrollBy({ left: cardWidth + 20, behavior: 'smooth' });
+    }
+</script>
+{% endblock %}

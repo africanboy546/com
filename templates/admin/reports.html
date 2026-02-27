@@ -1,0 +1,56 @@
+<!-- templates/admin/reports.html -->
+{% extends "base.html" %}
+
+{% block title %}Reports - Admin{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <div class="container">
+        <div class="admin-header">
+            <h1>Reports Management</h1>
+            <p>View and moderate reported content</p>
+        </div>
+
+        <div class="coming-soon">
+            <i class="fas fa-flag"></i>
+            <h2>Reports Feature Coming Soon</h2>
+            <p>The reports management system is currently under development.</p>
+            <a href="{{ url_for('admin.dashboard') }}" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .coming-soon {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        margin: 2rem 0;
+    }
+
+    .coming-soon i {
+        font-size: 5rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        opacity: 0.8;
+    }
+
+    .coming-soon h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--light);
+        margin-bottom: 1rem;
+    }
+
+    .coming-soon p {
+        color: var(--gray);
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+    }
+</style>
+{% endblock %}

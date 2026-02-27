@@ -1,0 +1,211 @@
+<!-- templates/auth/login.html -->
+{% extends "base.html" %}
+
+{% block title %}Login - VelvetSignals{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card animate__animated animate__fadeIn">
+        <div class="auth-header">
+            <span class="logo">🚀 VelvetSignals</span>
+            <h2>Welcome Back</h2>
+            <p>Log in to manage your creator profile</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-user"></i>
+                    Username
+                </label>
+                {{ form.username(class="form-control", placeholder="Enter your username") }}
+                {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                <span class="error-message">{{ error }}</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-lock"></i>
+                    Password
+                </label>
+                {{ form.password(class="form-control", placeholder="Enter your password") }}
+                {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                <span class="error-message">{{ error }}</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-check">
+                {{ form.remember_me(class="form-check-input") }}
+                <label for="remember_me">Remember me for 30 days</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+                <i class="fas fa-sign-in-alt"></i>
+                Log In
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Sign up now</a></p>
+            <p class="forgot-password">
+                <a href="{{ url_for('auth.forgot_password') }}">Forgot your password?</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .auth-container {
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .auth-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 3rem;
+        width: 100%;
+        max-width: 480px;
+        box-shadow: var(--shadow-2xl);
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .auth-header .logo {
+        font-size: 2rem;
+        font-weight: 900;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    .auth-header h2 {
+        color: var(--light);
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .auth-header p {
+        color: var(--gray);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        color: var(--light);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-label i {
+        color: var(--primary);
+        width: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        background: var(--dark);
+        border: 2px solid var(--dark-lighter);
+        border-radius: var(--radius-md);
+        color: var(--light);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-check-input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+    }
+
+    .form-check label {
+        color: var(--gray);
+    }
+
+    .btn-block {
+        width: 100%;
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--dark-lighter);
+    }
+
+    .auth-footer p {
+        color: var(--gray);
+        margin-bottom: 0.5rem;
+    }
+
+    .auth-footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+
+    .auth-footer a:hover {
+        color: var(--secondary);
+        text-decoration: underline;
+    }
+
+    .forgot-password a {
+        color: var(--gray);
+        font-size: 0.875rem;
+        font-weight: normal;
+    }
+
+    .error-message {
+        color: var(--danger);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    @media (max-width: 480px) {
+        .auth-card {
+            padding: 2rem;
+        }
+    }
+</style>
+{% endblock %}

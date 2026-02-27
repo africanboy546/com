@@ -1,0 +1,382 @@
+<!-- templates/submit.html -->
+{% extends "base.html" %}
+
+{% block title %}Get Listed - VelvetSignals{% endblock %}
+
+{% block content %}
+<div class="submit-page">
+    <div class="container">
+        <div class="page-header">
+            <h1>Get Listed on VelvetSignals 🚀</h1>
+            <p>Complete our verification process and start growing your audience today</p>
+        </div>
+
+        <div class="submit-content">
+            <div class="submit-info">
+                <h2>Why Get Listed?</h2>
+                <ul class="benefits-list">
+                    <li>
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <h3>Increased Visibility</h3>
+                            <p>Get featured alongside top creators and reach thousands of potential followers</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <h3>Free Promotion</h3>
+                            <p>We promote your profile across our social media channels and newsletter</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h3>Verified Status</h3>
+                            <p>Build trust with your audience through our verification process</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-chart-pie"></i>
+                        <div>
+                            <h3>Detailed Analytics</h3>
+                            <p>Track your profile views, follower growth, and engagement metrics</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="submit-form-container">
+                <form class="submit-form" method="POST" action="{{ url_for('submit_profile') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-user"></i>
+                            Full Name / Stage Name *
+                        </label>
+                        <input type="text" name="name" class="form-control" required placeholder="Your public name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-envelope"></i>
+                            Email Address *
+                        </label>
+                        <input type="email" name="email" class="form-control" required
+                            placeholder="Where we can contact you">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-link"></i>
+                            Social Media Links
+                        </label>
+                        <input type="url" name="twitter" class="form-control" placeholder="Twitter/X URL">
+                        <input type="url" name="instagram" class="form-control" style="margin-top: 0.5rem;"
+                            placeholder="Instagram URL">
+                        <input type="url" name="onlyfans" class="form-control" style="margin-top: 0.5rem;"
+                            placeholder="OnlyFans URL">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-edit"></i>
+                            Tell us about yourself *
+                        </label>
+                        <textarea name="bio" class="form-control form-textarea" rows="5" required
+                            placeholder="Describe your content, niche, and what makes you unique..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-tags"></i>
+                            Content Categories
+                        </label>
+                        <div class="categories-grid">
+                            {% set categories = ['Cosplay', 'Gaming', 'Fitness', 'Lifestyle', 'ASMR', 'Art', 'Music',
+                            'Cooking', 'Comedy', 'Dance', 'Fashion', 'Beauty', 'Travel', 'Photography', 'Modeling'] %}
+                            {% for category in categories %}
+                            <label class="category-checkbox">
+                                <input type="checkbox" name="categories" value="{{ category }}">
+                                <span>{{ category }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="terms-check">
+                        <input type="checkbox" name="terms" id="terms" required>
+                        <label for="terms">
+                            I confirm that I am at least 18 years old and agree to the
+                            <a href="#">Terms of Service</a> and <a href="#">Content Guidelines</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-paper-plane"></i> Submit for Review
+                    </button>
+                </form>
+
+                <div class="submit-note">
+                    <i class="fas fa-clock"></i>
+                    <p>Profile reviews typically take 24-48 hours. You'll be notified via email once your profile is
+                        live.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .submit-page {
+        padding-top: 100px;
+        min-height: 100vh;
+        padding-bottom: 4rem;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .page-header p {
+        color: var(--gray);
+        font-size: 1.125rem;
+    }
+
+    .submit-content {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 3rem;
+    }
+
+    @media (max-width: 1024px) {
+        .submit-content {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .submit-info {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 2.5rem;
+    }
+
+    .submit-info h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: var(--light);
+    }
+
+    .benefits-list {
+        list-style: none;
+    }
+
+    .benefits-list li {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--dark-lighter);
+    }
+
+    .benefits-list li:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .benefits-list li i {
+        font-size: 2rem;
+        color: var(--primary);
+        width: 48px;
+    }
+
+    .benefits-list li h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: var(--light);
+    }
+
+    .benefits-list li p {
+        color: var(--gray);
+        line-height: 1.6;
+    }
+
+    .submit-form-container {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 2.5rem;
+    }
+
+    .submit-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        color: var(--light);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-label i {
+        color: var(--primary);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        background: var(--dark);
+        border: 2px solid var(--dark-lighter);
+        border-radius: var(--radius-md);
+        color: var(--light);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+    }
+
+    .category-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        background: var(--dark);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .category-checkbox:hover {
+        background: var(--dark-lighter);
+    }
+
+    .category-checkbox input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--primary);
+    }
+
+    .category-checkbox span {
+        color: var(--light);
+        font-size: 0.875rem;
+    }
+
+    .terms-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+    }
+
+    .terms-check input {
+        margin-top: 0.25rem;
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+    }
+
+    .terms-check label {
+        color: var(--gray);
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+
+    .terms-check a {
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .terms-check a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-block {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .submit-note {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: rgba(16, 185, 129, 0.1);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--success);
+    }
+
+    .submit-note i {
+        font-size: 2rem;
+        color: var(--success);
+    }
+
+    .submit-note p {
+        color: var(--light);
+        font-size: 0.9375rem;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .page-header h1 {
+            font-size: 2rem;
+        }
+
+        .submit-info,
+        .submit-form-container {
+            padding: 1.5rem;
+        }
+
+        .benefits-list li {
+            gap: 1rem;
+        }
+
+        .benefits-list li i {
+            font-size: 1.5rem;
+            width: 36px;
+        }
+
+        .categories-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+{% endblock %}

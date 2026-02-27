@@ -1,0 +1,42 @@
+<!-- templates/gallery_item.html -->
+<div class="gallery-item" data-id="{{ media.id }}" data-type="{{ media.media_type }}">
+    {% if media.media_type == 'video' %}
+    <!-- Video Display -->
+    {% if media.thumbnail_url %}
+    <img src="{{ media.thumbnail_url }}" alt="{{ media.caption }}" class="video-thumbnail">
+    {% else %}
+    <video src="{{ media.media_url }}"></video>
+    {% endif %}
+    <div class="video-play-icon">
+        <i class="fas fa-play"></i>
+    </div>
+    {% if media.duration %}
+    <div class="video-duration-badge">
+        {{ (media.duration // 60) }}:{{ '%02d' % (media.duration % 60) }}
+    </div>
+    {% endif %}
+    {% else %}
+    <!-- Image Display -->
+    <img src="{{ media.media_url }}" alt="{{ media.caption }}">
+    {% endif %}
+
+    <!-- Overlay with actions -->
+    <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+            <span class="gallery-item-caption">{{ media.caption or 'No caption' }}</span>
+            <span class="gallery-item-date">{{ media.created_at.strftime('%b %d, %Y') }}</span>
+            {% if media.file_size %}
+            <span class="gallery-item-size">{{ (media.file_size / 1024 / 1024)|round(1) }} MB</span>
+            {% endif %}
+        </div>
+        <div class="gallery-item-actions">
+            <button class="btn-icon view-btn" onclick="viewMedia('{{ media.media_url }}', '{{ media.media_type }}')"
+                title="View">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button class="btn-icon delete-btn" onclick="deleteGalleryItem({{ media.id }})" title="Delete">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>
+</div>

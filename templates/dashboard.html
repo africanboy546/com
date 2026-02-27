@@ -1,0 +1,1338 @@
+<!-- templates/dashboard.html -->
+{% extends "base.html" %}
+
+{% block title %}Dashboard - {{ current_user.display_name or current_user.username }}{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <div class="container">
+            <h1>Welcome back, {{ current_user.display_name or current_user.username }}! 👋</h1>
+            <p>Manage your creator profile, track performance, and grow your audience.</p>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <span
+                        class="status-badge {% if current_user.is_verified %}badge-verified{% else %}badge-pending{% endif %}">
+                        <i
+                            class="fas {% if current_user.is_verified %}fa-check-circle{% else %}fa-clock{% endif %}"></i>
+                        {{ 'Verified' if current_user.is_verified else 'Pending' }}
+                    </span>
+                </div>
+                <div class="stat-value">{{ total_views }}</div>
+                <div class="stat-label">Profile Views</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
+                <div class="stat-value">{{ current_user.likes_count }}</div>
+                <div class="stat-label">Total Likes</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="stat-value">{{ total_followers }}</div>
+                <div class="stat-label">Followers</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                </div>
+                <div class="stat-value">{{ current_user.created_at.strftime('%b %d, %Y') }}</div>
+                <div class="stat-label">Member Since</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Left Column -->
+            <div class="dashboard-left">
+                <!-- Profile Overview -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-user"></i>
+                            Profile Overview
+                        </h2>
+                        <a href="{{ url_for('edit_profile') }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </a>
+                    </div>
+
+                    <div class="profile-preview">
+                        <img src="{{ current_user.avatar }}" alt="{{ current_user.username }}" class="profile-avatar">
+                        <div class="profile-info">
+                            <h3>{{ current_user.display_name or current_user.username }}</h3>
+                            <div class="username">@{{ current_user.username }}</div>
+                            <div class="bio">{{ current_user.bio or 'No bio yet. Tell your story!' }}</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <a href="{{ url_for('creator_profile', username=current_user.username) }}" target="_blank"
+                            class="btn btn-secondary">
+                            <i class="fas fa-external-link-alt"></i> View Public Profile
+                        </a>
+                        <button class="btn btn-secondary" onclick="shareProfile()">
+                            <i class="fas fa-share-alt"></i> Share Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Unified Gallery Upload Section -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-images"></i>
+                            Media Gallery
+                        </h2>
+                    </div>
+
+                    <!-- Unified Upload Form -->
+                    <form action="{{ url_for('upload_gallery_media') }}" method="POST" enctype="multipart/form-data"
+                        class="upload-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                        <div class="upload-area" onclick="document.getElementById('media-input').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload image or video</p>
+                            <small>Supported: JPG, PNG, GIF, MP4, MOV, AVI (Max 100MB)</small>
+                            <input type="file" id="media-input" name="media" accept="image/*,video/*" hidden
+                                onchange="this.form.submit()">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="caption" class="form-control"
+                                placeholder="Add a caption (optional)">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-upload"></i> Upload to Gallery
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Gallery Display Section -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-images"></i>
+                            Your Media Gallery
+                        </h2>
+                        <div class="gallery-stats">
+                            <span><i class="fas fa-image"></i> {{ gallery_media|selectattr('media_type', 'equalto',
+                                'image')|list|length }}</span>
+                            <span><i class="fas fa-video"></i> {{ gallery_media|selectattr('media_type', 'equalto',
+                                'video')|list|length }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Tabs -->
+                    <div class="gallery-tabs">
+                        <button class="tab-btn active" onclick="showGalleryTab('all')">
+                            <i class="fas fa-layer-group"></i> All
+                            <span class="tab-count">{{ gallery_media|length }}</span>
+                        </button>
+                        <button class="tab-btn" onclick="showGalleryTab('images')">
+                            <i class="fas fa-image"></i> Images
+                            <span class="tab-count">{{ gallery_media|selectattr('media_type', 'equalto',
+                                'image')|list|length }}</span>
+                        </button>
+                        <button class="tab-btn" onclick="showGalleryTab('videos')">
+                            <i class="fas fa-video"></i> Videos
+                            <span class="tab-count">{{ gallery_media|selectattr('media_type', 'equalto',
+                                'video')|list|length }}</span>
+                        </button>
+                    </div>
+
+                    <!-- All Media Gallery -->
+                    <div id="gallery-all" class="tab-content active">
+                        <div class="gallery-grid">
+                            {% for media in gallery_media %}
+                            {% include 'gallery_item.html' %}
+                            {% else %}
+                            <div class="empty-state">
+                                <i class="fas fa-images"></i>
+                                <p>No media yet. Upload your first image or video!</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Images Gallery -->
+                    <div id="gallery-images" class="tab-content">
+                        <div class="gallery-grid">
+                            {% for media in gallery_media if media.media_type == 'image' %}
+                            {% include 'gallery_item.html' %}
+                            {% else %}
+                            <div class="empty-state">
+                                <i class="fas fa-image"></i>
+                                <p>No images yet. Upload your first image!</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Videos Gallery -->
+                    <div id="gallery-videos" class="tab-content">
+                        <div class="gallery-grid">
+                            {% for media in gallery_media if media.media_type == 'video' %}
+                            {% include 'gallery_item.html' %}
+                            {% else %}
+                            <div class="empty-state">
+                                <i class="fas fa-video"></i>
+                                <p>No videos yet. Upload your first video!</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% if gallery_media|length > 12 %}
+                    <div class="load-more-container">
+                        <button class="btn btn-secondary" onclick="loadMoreMedia()">
+                            <i class="fas fa-sync-alt"></i> Load More
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Media View Modal -->
+                <div id="mediaModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="mediaModalTitle">Media View</h3>
+                            <button class="modal-close" onclick="closeMediaModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="mediaModalBody">
+                            <!-- Content loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delete Confirmation Modal -->
+                <div id="deleteModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Confirm Delete</h3>
+                            <button class="modal-close" onclick="closeDeleteModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                            <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Posts -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-pen"></i>
+                            Recent Posts
+                        </h2>
+                        <button class="btn btn-secondary btn-sm" onclick="showCreatePostModal()">
+                            <i class="fas fa-plus"></i> New Post
+                        </button>
+                    </div>
+
+                    {% if recent_posts %}
+                    {% for post in recent_posts %}
+                    <div class="post-item">
+                        <div class="post-content">{{ post.content }}</div>
+                        <div class="post-meta">
+                            <span><i class="far fa-heart"></i> {{ post.likes }}</span>
+                            <span><i class="far fa-comment"></i> {{ post.comments.count() }}</span>
+                            <span class="post-time">{{ post.created_at.strftime('%b %d, %Y') }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-pen"></i>
+                        <p>No posts yet. Create your first post!</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="dashboard-right">
+                <!-- Quick Actions -->
+                <div class="dashboard-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-bolt"></i>
+                        Quick Actions
+                    </h2>
+
+                    <div class="quick-actions-grid">
+                        <a href="{{ url_for('edit_profile') }}" class="quick-action">
+                            <i class="fas fa-user-edit"></i>
+                            <span>Edit Profile</span>
+                        </a>
+                        <a href="#" class="quick-action" onclick="document.getElementById('media-input').click()">
+                            <i class="fas fa-camera"></i>
+                            <span>Upload Media</span>
+                        </a>
+                        <a href="#" class="quick-action" onclick="showUploadModal('avatar')">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Update Avatar</span>
+                        </a>
+                        <a href="#" class="quick-action" onclick="showUploadModal('wallpaper')">
+                            <i class="fas fa-image"></i>
+                            <span>Update Cover</span>
+                        </a>
+                        <a href="#" class="quick-action" onclick="showAddSocialModal()">
+                            <i class="fas fa-link"></i>
+                            <span>Add Links</span>
+                        </a>
+                        {% if not current_user.is_verified %}
+                        <a href="{{ url_for('request_verification') }}" class="quick-action">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Get Verified</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Social Links -->
+                <div class="dashboard-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-link"></i>
+                        Social Links
+                    </h2>
+
+                    <div class="social-links-list">
+                        {% set social_links = current_user.social_links.all() %}
+                        {% if social_links %}
+                        {% for link in social_links %}
+                        <div class="social-link-item">
+                            <div class="social-link-info">
+                                <i class="fab fa-{{ link.platform }}"></i>
+                                <span>{{ link.platform|title }}</span>
+                                <span class="social-handle">{{ link.handle }}</span>
+                            </div>
+                            <button class="btn-icon" onclick="deleteSocialLink({{ link.id }})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="empty-state">
+                            <i class="fas fa-link"></i>
+                            <p>No social links added yet</p>
+                        </div>
+                        {% endif %}
+
+                        <button class="btn btn-secondary btn-block" onclick="showAddSocialModal()">
+                            <i class="fas fa-plus"></i> Add Social Link
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="dashboard-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-bell"></i>
+                        Recent Notifications
+                    </h2>
+
+                    {% if notifications %}
+                    {% for notification in notifications %}
+                    <div class="notification-item {% if not notification.is_read %}unread{% endif %}">
+                        <div class="notification-icon">
+                            <i class="fas fa-{{ notification.type }}"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-message">{{ notification.message }}</div>
+                            <div class="notification-time">{{ notification.created_at.strftime('%b %d, %Y') }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-bell"></i>
+                        <p>No notifications yet</p>
+                    </div>
+                    {% endif %}
+
+                    <a href="{{ url_for('notifications') }}" class="btn btn-secondary btn-block">
+                        View All Notifications
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<div id="createPostModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Create New Post</h3>
+            <button class="modal-close" onclick="closeModal('createPostModal')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form action="{{ url_for('create_post') }}" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <textarea name="content" class="form-control" rows="4" placeholder="What's on your mind?"
+                    required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="upload-label">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Add Photo or Video</span>
+                    <input type="file" name="media" accept="image/*,video/*" hidden>
+                </label>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('createPostModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="addSocialModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add Social Link</h3>
+            <button class="modal-close" onclick="closeModal('addSocialModal')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form action="{{ url_for('add_social_link') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label class="form-label">Platform</label>
+                <select name="platform" class="form-control" required>
+                    <option value="twitter">Twitter/X</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="onlyfans">OnlyFans</option>
+                    <option value="fansly">Fansly</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="discord">Discord</option>
+                    <option value="snapchat">Snapchat</option>
+                    <option value="twitch">Twitch</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">URL</label>
+                <input type="url" name="url" class="form-control" placeholder="https://..." required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Handle/Username</label>
+                <input type="text" name="handle" class="form-control" placeholder="@username">
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('addSocialModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Add Link</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .dashboard-container {
+        padding-top: 100px;
+        min-height: 100vh;
+    }
+
+    .welcome-section {
+        background: var(--gradient-primary);
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .welcome-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    }
+
+    .welcome-section h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 0.5rem;
+    }
+
+    .welcome-section p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.125rem;
+    }
+
+    .stat-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .status-badge {
+        padding: 0.25rem 1rem;
+        border-radius: var(--radius-full);
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .badge-verified {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--success);
+        border: 1px solid var(--success);
+    }
+
+    .badge-pending {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+        border: 1px solid #f59e0b;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .dashboard-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--dark-lighter);
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .card-title i {
+        color: var(--primary);
+    }
+
+    .profile-preview {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--primary);
+    }
+
+    .profile-info h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .profile-info .username {
+        color: var(--primary);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .profile-info .bio {
+        color: var(--gray);
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+
+    .profile-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .btn-block {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    /* Upload Area Styles */
+    .upload-area {
+        border: 2px dashed var(--dark-lighter);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+        margin-bottom: 1rem;
+    }
+
+    .upload-area:hover {
+        border-color: var(--primary);
+        background: rgba(139, 92, 246, 0.05);
+    }
+
+    .upload-area i {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .upload-area p {
+        color: var(--light);
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+
+    .upload-area small {
+        color: var(--gray);
+        font-size: 0.75rem;
+    }
+
+    /* Gallery Styles */
+    .gallery-stats {
+        display: flex;
+        gap: 1rem;
+        color: var(--gray);
+    }
+
+    .gallery-stats span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .gallery-stats i {
+        color: var(--primary);
+    }
+
+    .gallery-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid var(--dark-lighter);
+        padding-bottom: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .tab-btn {
+        padding: 0.5rem 1rem;
+        background: none;
+        border: none;
+        color: var(--gray);
+        cursor: pointer;
+        transition: var(--transition);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .tab-btn:hover {
+        background: var(--dark-lighter);
+        color: var(--light);
+    }
+
+    .tab-btn.active {
+        background: var(--primary);
+        color: white;
+    }
+
+    .tab-count {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.125rem 0.5rem;
+        border-radius: var(--radius-full);
+        font-size: 0.75rem;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .gallery-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid var(--dark-lighter);
+        transition: var(--transition);
+    }
+
+    .gallery-item:hover {
+        transform: scale(1.02);
+        border-color: var(--primary);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .gallery-item img,
+    .gallery-item video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-item {
+        position: relative;
+    }
+
+    .video-play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.25rem;
+        border: 2px solid var(--primary);
+        pointer-events: none;
+    }
+
+    .gallery-item-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1rem;
+        opacity: 0;
+        transition: var(--transition);
+    }
+
+    .gallery-item:hover .gallery-item-overlay {
+        opacity: 1;
+    }
+
+    .gallery-item-info {
+        color: white;
+    }
+
+    .gallery-item-caption {
+        font-size: 0.875rem;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .gallery-item-actions {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+    }
+
+    .gallery-item-actions .btn-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: var(--transition);
+        background: var(--primary);
+    }
+
+    .gallery-item-actions .btn-icon:hover {
+        transform: scale(1.1);
+        background: var(--primary-dark);
+    }
+
+    .gallery-item-actions .delete-btn {
+        background: var(--danger);
+    }
+
+    .gallery-item-actions .delete-btn:hover {
+        background: #dc2626;
+    }
+
+    .quick-actions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .quick-action {
+        background: var(--dark);
+        border-radius: var(--radius-md);
+        padding: 1.5rem 1rem;
+        text-align: center;
+        text-decoration: none;
+        color: var(--light);
+        transition: var(--transition);
+        border: 1px solid transparent;
+        cursor: pointer;
+    }
+
+    .quick-action:hover {
+        border-color: var(--primary);
+        transform: translateY(-3px);
+    }
+
+    .quick-action i {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .quick-action span {
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .post-item {
+        padding: 1rem;
+        border-bottom: 1px solid var(--dark-lighter);
+    }
+
+    .post-item:last-child {
+        border-bottom: none;
+    }
+
+    .post-content {
+        color: var(--light);
+        margin-bottom: 0.5rem;
+        line-height: 1.5;
+    }
+
+    .post-meta {
+        display: flex;
+        gap: 1.5rem;
+        color: var(--gray);
+        font-size: 0.75rem;
+    }
+
+    .post-time {
+        margin-left: auto;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--gray);
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    .social-links-list {
+        margin-top: 1rem;
+    }
+
+    .social-link-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem;
+        background: var(--dark);
+        border-radius: var(--radius-md);
+        margin-bottom: 0.5rem;
+    }
+
+    .social-link-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .social-link-info i {
+        font-size: 1.25rem;
+        color: var(--primary);
+    }
+
+    .social-handle {
+        color: var(--gray);
+        font-size: 0.875rem;
+    }
+
+    .btn-icon {
+        background: none;
+        border: none;
+        color: var(--gray);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: var(--radius-sm);
+        transition: var(--transition);
+    }
+
+    .btn-icon:hover {
+        color: var(--danger);
+        background: rgba(239, 68, 68, 0.1);
+    }
+
+    .notification-item {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        border-bottom: 1px solid var(--dark-lighter);
+        transition: var(--transition);
+    }
+
+    .notification-item:last-child {
+        border-bottom: none;
+    }
+
+    .notification-item.unread {
+        background: rgba(139, 92, 246, 0.05);
+    }
+
+    .notification-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(139, 92, 246, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+    }
+
+    .notification-content {
+        flex: 1;
+    }
+
+    .notification-message {
+        color: var(--light);
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .notification-time {
+        color: var(--gray);
+        font-size: 0.75rem;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background: var(--dark-light);
+        border-radius: var(--radius-xl);
+        padding: 2rem;
+        max-width: 500px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        border: 1px solid var(--dark-lighter);
+        animation: modalSlideUp 0.3s ease;
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--dark-lighter);
+    }
+
+    .modal-header h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--light);
+    }
+
+    .modal-close {
+        background: none;
+        border: none;
+        color: var(--gray);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .modal-close:hover {
+        color: var(--danger);
+        transform: rotate(90deg);
+    }
+
+    .modal-footer {
+        display: flex;
+        gap: 1rem;
+        padding: 1.5rem;
+        border-top: 1px solid var(--dark-lighter);
+    }
+
+    .btn-danger {
+        background: var(--danger);
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background: #dc2626;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .upload-label {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: var(--dark);
+        border: 2px dashed var(--dark-lighter);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .upload-label:hover {
+        border-color: var(--primary);
+        background: rgba(139, 92, 246, 0.05);
+    }
+
+    .upload-label i {
+        font-size: 2rem;
+        color: var(--primary);
+    }
+
+    .load-more-container {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    @keyframes modalSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .welcome-section h1 {
+            font-size: 1.75rem;
+        }
+
+        .profile-preview {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .profile-actions {
+            flex-direction: column;
+        }
+
+        .quick-actions-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+
+        .gallery-tabs {
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    let currentDeleteId = null;
+
+    // Tab switching
+    function showGalleryTab(tab) {
+        document.querySelectorAll('.gallery-tabs .tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.currentTarget.classList.add('active');
+
+        document.querySelectorAll('#gallery-all, #gallery-images, #gallery-videos').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById('gallery-' + tab).classList.add('active');
+    }
+
+    // Modal functions
+    function showCreatePostModal() {
+        document.getElementById('createPostModal').classList.add('active');
+    }
+
+    function showAddSocialModal() {
+        document.getElementById('addSocialModal').classList.add('active');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+
+    // Delete functionality
+    function deleteGalleryItem(itemId) {
+        currentDeleteId = itemId;
+        document.getElementById('deleteModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('active');
+        currentDeleteId = null;
+    }
+
+    // Confirm delete
+    document.getElementById('confirmDeleteBtn')?.addEventListener('click', function () {
+        if (!currentDeleteId) return;
+
+        fetch(`/gallery/delete/${currentDeleteId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to delete. Please try again.');
+            })
+            .finally(() => {
+                closeDeleteModal();
+            });
+    });
+
+    // Share profile
+    function shareProfile() {
+        const url = window.location.origin + '/creator/{{ current_user.username }}';
+        if (navigator.share) {
+            navigator.share({
+                title: '{{ current_user.display_name or current_user.username }} on VelvetSignals',
+                text: 'Check out my profile on VelvetSignals!',
+                url: url
+            });
+        } else {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('Profile link copied to clipboard!', 'success');
+            }).catch(() => {
+                showToast('Failed to copy link', 'danger');
+            });
+        }
+    }
+
+    // Delete social link
+    function deleteSocialLink(linkId) {
+        if (confirm('Are you sure you want to delete this social link?')) {
+            fetch(`/social/delete/${linkId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                }
+            }).then(() => {
+                location.reload();
+            });
+        }
+    }
+
+    // Media view
+    function viewMedia(mediaUrl, mediaType) {
+        const modal = document.getElementById('mediaModal');
+        const body = document.getElementById('mediaModalBody');
+        const title = document.getElementById('mediaModalTitle');
+
+        if (mediaType === 'video') {
+            title.textContent = 'Video Player';
+            body.innerHTML = `
+                <video controls autoplay style="width: 100%; max-height: 70vh;">
+                    <source src="${mediaUrl}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+        } else {
+            title.textContent = 'Image View';
+            body.innerHTML = `<img src="${mediaUrl}" style="width: 100%; max-height: 70vh; border-radius: var(--radius-md);">`;
+        }
+
+        modal.classList.add('active');
+    }
+
+    function closeMediaModal() {
+        document.getElementById('mediaModal').classList.remove('active');
+        document.getElementById('mediaModalBody').innerHTML = '';
+    }
+
+    // Load more function
+    function loadMoreMedia() {
+        // Implement pagination if needed
+        showToast('Loading more media...', 'info');
+    }
+
+    // Upload modal functions (for avatar/wallpaper)
+    function showUploadModal(type) {
+        if (type === 'avatar') {
+            document.getElementById('avatar-input')?.click();
+        } else if (type === 'wallpaper') {
+            document.getElementById('wallpaper-input')?.click();
+        }
+    }
+
+    // Toast notification
+    function showToast(message, type) {
+        if (typeof Toastify !== 'undefined') {
+            const colors = {
+                success: 'linear-gradient(135deg, #10b981, #059669)',
+                warning: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                info: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                danger: 'linear-gradient(135deg, #ef4444, #dc2626)'
+            };
+
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: 'top',
+                position: 'right',
+                backgroundColor: colors[type] || colors.info,
+                stopOnFocus: true
+            }).showToast();
+        } else {
+            alert(message);
+        }
+    }
+
+    // Close modals when clicking outside
+    window.onclick = function (event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.classList.remove('active');
+        }
+
+        const mediaModal = document.getElementById('mediaModal');
+        if (event.target == mediaModal) {
+            closeMediaModal();
+        }
+
+        const deleteModal = document.getElementById('deleteModal');
+        if (event.target == deleteModal) {
+            closeDeleteModal();
+        }
+    }
+</script>
+{% endblock %}

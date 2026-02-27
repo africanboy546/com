@@ -1,0 +1,434 @@
+<!-- templates/verify.html -->
+{% extends "base.html" %}
+
+{% block title %}Request Verification - VelvetSignals{% endblock %}
+
+{% block content %}
+<div class="verify-container">
+    <div class="container">
+        <div class="verify-header">
+            <h1>Request Account Verification</h1>
+            <p>Get the verified badge and build trust with your audience</p>
+        </div>
+
+        <div class="verify-content">
+            <div class="verify-info">
+                <h2>Why Get Verified?</h2>
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h3>Trust & Credibility</h3>
+                            <p>The verified badge shows your audience that you're authentic</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <h3>Priority Features</h3>
+                            <p>Get access to exclusive features and higher visibility</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h3>Protection</h3>
+                            <p>Verified accounts get additional protection against impersonation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="requirements">
+                    <h3>Requirements</h3>
+                    <ul>
+                        <li><i class="fas fa-id-card"></i> Valid government-issued ID</li>
+                        <li><i class="fas fa-camera"></i> Clear photo holding your ID</li>
+                        <li><i class="fas fa-users"></i> Minimum 1000 followers</li>
+                        <li><i class="fas fa-calendar"></i> Account at least 30 days old</li>
+                        <li><i class="fas fa-image"></i> Complete profile with avatar and bio</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="verify-form-container">
+                <h2>Submit Verification Request</h2>
+                <form method="POST" action="{{ url_for('request_verification') }}" enctype="multipart/form-data"
+                    class="verify-form">
+                    {{ form.hidden_tag() }}
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-id-card"></i>
+                            ID Document
+                        </label>
+                        <div class="upload-area" onclick="document.getElementById('id_proof').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload your ID</p>
+                            <small>Supported: JPG, PNG, PDF (Max 5MB)</small>
+                            <input type="file" id="id_proof" name="id_proof" accept=".jpg,.jpeg,.png,.pdf" hidden
+                                required>
+                        </div>
+                        <div id="id_proof_name" class="file-name"></div>
+                        {% if form.id_proof.errors %}
+                        {% for error in form.id_proof.errors %}
+                        <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-camera"></i>
+                            Selfie with ID
+                        </label>
+                        <div class="upload-area" onclick="document.getElementById('selfie').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload your selfie with ID</p>
+                            <small>Supported: JPG, PNG (Max 5MB)</small>
+                            <input type="file" id="selfie" name="selfie" accept=".jpg,.jpeg,.png" hidden required>
+                        </div>
+                        <div id="selfie_name" class="file-name"></div>
+                        {% if form.selfie.errors %}
+                        {% for error in form.selfie.errors %}
+                        <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-edit"></i>
+                            Additional Notes (Optional)
+                        </label>
+                        {{ form.notes(class="form-control", rows="4", placeholder="Any additional information you'd like
+                        to share...") }}
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            I confirm that the information provided is accurate and I am the person in the uploaded
+                            documents.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-paper-plane"></i> Submit Verification Request
+                    </button>
+                </form>
+
+                <div class="verify-note">
+                    <i class="fas fa-clock"></i>
+                    <p>Verification requests are typically reviewed within 24-48 hours. You'll be notified via email
+                        once your request is processed.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .verify-container {
+        padding-top: 100px;
+        min-height: 100vh;
+        padding-bottom: 4rem;
+    }
+
+    .verify-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .verify-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .verify-header p {
+        color: var(--gray);
+        font-size: 1.125rem;
+    }
+
+    .verify-content {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+        .verify-content {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Info Section */
+    .verify-info {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 2rem;
+    }
+
+    .verify-info h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--light);
+    }
+
+    .benefits-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .benefit-item {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .benefit-item i {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-top: 0.25rem;
+    }
+
+    .benefit-item h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--light);
+        margin-bottom: 0.25rem;
+    }
+
+    .benefit-item p {
+        color: var(--gray);
+        font-size: 0.9375rem;
+        line-height: 1.5;
+    }
+
+    .requirements {
+        background: var(--dark);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+    }
+
+    .requirements h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--light);
+        margin-bottom: 1rem;
+    }
+
+    .requirements ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .requirements li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--gray);
+        margin-bottom: 0.75rem;
+        font-size: 0.9375rem;
+    }
+
+    .requirements li i {
+        color: var(--primary);
+        width: 20px;
+    }
+
+    /* Form Section */
+    .verify-form-container {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 2rem;
+    }
+
+    .verify-form-container h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: var(--light);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        color: var(--light);
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-label i {
+        color: var(--primary);
+        width: 20px;
+    }
+
+    .upload-area {
+        border: 2px dashed var(--dark-lighter);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .upload-area:hover {
+        border-color: var(--primary);
+        background: rgba(139, 92, 246, 0.05);
+    }
+
+    .upload-area i {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .upload-area p {
+        color: var(--light);
+        margin-bottom: 0.25rem;
+        font-weight: 500;
+    }
+
+    .upload-area small {
+        color: var(--gray);
+    }
+
+    .file-name {
+        margin-top: 0.5rem;
+        color: var(--primary);
+        font-size: 0.875rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 1rem;
+        background: var(--dark);
+        border: 2px solid var(--dark-lighter);
+        border-radius: var(--radius-md);
+        color: var(--light);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .form-checkbox {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+    }
+
+    .form-checkbox input {
+        margin-top: 0.25rem;
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+    }
+
+    .form-checkbox label {
+        color: var(--gray);
+        font-size: 0.9375rem;
+        line-height: 1.5;
+    }
+
+    .btn-block {
+        width: 100%;
+    }
+
+    .error-message {
+        color: var(--danger);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    .verify-note {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding: 1rem;
+        background: rgba(16, 185, 129, 0.1);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--success);
+    }
+
+    .verify-note i {
+        font-size: 1.5rem;
+        color: var(--success);
+    }
+
+    .verify-note p {
+        color: var(--light);
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .verify-header h1 {
+            font-size: 2rem;
+        }
+
+        .verify-info,
+        .verify-form-container {
+            padding: 1.5rem;
+        }
+
+        .benefit-item {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+
+<script>
+    // Display file names when selected
+    document.getElementById('id_proof').addEventListener('change', function (e) {
+        const fileName = e.target.files[0]?.name;
+        document.getElementById('id_proof_name').textContent = fileName ? `Selected: ${fileName}` : '';
+    });
+
+    document.getElementById('selfie').addEventListener('change', function (e) {
+        const fileName = e.target.files[0]?.name;
+        document.getElementById('selfie_name').textContent = fileName ? `Selected: ${fileName}` : '';
+    });
+
+    // Form validation
+    document.querySelector('.verify-form').addEventListener('submit', function (e) {
+        const idProof = document.getElementById('id_proof').files[0];
+        const selfie = document.getElementById('selfie').files[0];
+        const terms = document.getElementById('terms').checked;
+
+        if (!idProof || !selfie) {
+            e.preventDefault();
+            alert('Please upload both ID document and selfie');
+        } else if (!terms) {
+            e.preventDefault();
+            alert('Please confirm the terms');
+        }
+    });
+</script>
+{% endblock %}

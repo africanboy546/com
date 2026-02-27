@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VelvetSignals - Premium Creator Promotion Platform">
+    <meta name="author" content="VelvetSignals">
+
+    <title>{% block title %}VelvetSignals 🚀 - Premium Creator Promotion Platform{% endblock %}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- Toastify -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block extra_css %}{% endblock %}
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🚀</text></svg>">
+</head>
+
+<body>
+    <!-- Age Gate -->
+    <div id="age-gate" class="age-gate" style="display: none;">
+        <div class="age-gate-content">
+            <div class="age-gate-icon">🔞</div>
+            <h2>Age Verification Required</h2>
+            <p>This website contains adult-oriented promotional content. You must be at least 18 years old to enter.</p>
+            <div class="age-gate-buttons">
+                <button id="enter-btn" class="btn btn-primary btn-lg">
+                    <i class="fas fa-check-circle"></i> I am 18+ years old
+                </button>
+                <button id="exit-btn" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-times-circle"></i> Exit Site
+                </button>
+            </div>
+            <p class="age-gate-terms">By entering, you agree to our <a href="#">Terms of Service</a></p>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="animated-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+    </div>
+
+    <!-- Live Updates -->
+    <div class="live-updates" id="live-updates"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="{{ url_for('index') }}" class="logo">
+                <span class="logo-icon">🚀</span>
+                <span>VelvetSignals</span>
+                <span class="badge badge-trending">PREMIUM</span>
+            </a>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="{{ url_for('index') }}"
+                        class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">Home</a></li>
+                <li><a href="{{ url_for('creators') }}"
+                        class="nav-link {% if request.endpoint == 'creators' %}active{% endif %}">Creators</a></li>
+                <li><a href="#twitter" class="nav-link">Community</a></li>
+                <li><a href="#analytics" class="nav-link">Analytics</a></li>
+                <li><a href="{{ url_for('submit_profile') }}"
+                        class="nav-link {% if request.endpoint == 'submit_profile' %}active{% endif %}">Get Listed</a>
+                </li>
+                <li><a href="{{ url_for('contact') }}"
+                        class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}">Contact</a></li>
+
+                <div class="nav-actions">
+                    <button id="theme-toggle" class="btn btn-sm btn-secondary">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    {% if current_user.is_authenticated %}
+                    <div class="user-dropdown">
+                        <button class="btn btn-secondary btn-sm" onclick="toggleUserMenu()">
+                            <img src="{{ current_user.avatar }}" alt="{{ current_user.username }}"
+                                class="user-avatar-small">
+                            <span>{{ current_user.display_name or current_user.username }}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div id="userMenu" class="dropdown-menu">
+                            <a href="{{ url_for('dashboard') }}" class="dropdown-item">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                            <a href="{{ url_for('edit_profile') }}" class="dropdown-item">
+                                <i class="fas fa-user-edit"></i> Edit Profile
+                            </a>
+                            <a href="{{ url_for('creator_profile', username=current_user.username) }}"
+                                class="dropdown-item">
+                                <i class="fas fa-eye"></i> View Profile
+                            </a>
+                            {% if current_user.is_admin %}
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for('admin.dashboard') }}" class="dropdown-item">
+                                <i class="fas fa-crown"></i> Admin Panel
+                            </a>
+                            {% endif %}
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for('auth.logout') }}" class="dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Sign Up
+                    </a>
+                    {% endif %}
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }} animate__animated animate__fadeIn">
+            <i
+                class="fas {% if category == 'success' %}fa-check-circle{% elif category == 'danger' %}fa-exclamation-circle{% elif category == 'warning' %}fa-exclamation-triangle{% else %}fa-info-circle{% endif %}"></i>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="{{ url_for('index') }}" class="logo">
+                        <span>🚀</span>
+                        <span>VelvetSignals</span>
+                    </a>
+                    <p>Advanced promotion platform for content creators. Real-time analytics, detailed profiles, and
+                        audience growth tools.</p>
+                    <div class="social-links">
+                        <a href="https://twitter.com/velvetsignals" target="_blank" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com/velvetsignals" target="_blank" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://t.me/velvetsignals" target="_blank" class="social-link">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Platform</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('creators') }}"><i class="fas fa-chevron-right"></i> Browse Creators</a>
+                        </li>
+                        <li><a href="#twitter"><i class="fas fa-chevron-right"></i> Community</a></li>
+                        <li><a href="#analytics"><i class="fas fa-chevron-right"></i> Analytics</a></li>
+                        <li><a href="{{ url_for('submit_profile') }}"><i class="fas fa-chevron-right"></i> Submit
+                                Profile</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#blog"><i class="fas fa-chevron-right"></i> Creator Blog</a></li>
+                        <li><a href="#guides"><i class="fas fa-chevron-right"></i> Growth Guides</a></li>
+                        <li><a href="#tools"><i class="fas fa-chevron-right"></i> Free Tools</a></li>
+                        <li><a href="#api"><i class="fas fa-chevron-right"></i> API Access</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#help"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="{{ url_for('contact') }}"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#status"><i class="fas fa-chevron-right"></i> System Status</a></li>
+                        <li><a href="#report"><i class="fas fa-chevron-right"></i> Report Issues</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 VelvetSignals. All rights reserved. This platform does not host explicit content.</p>
+                <p>
+                    <i class="fas fa-shield-alt"></i> 100% Secure •
+                    <i class="fas fa-bolt"></i> Real-time Updates •
+                    <i class="fas fa-server"></i> 99.9% Uptime
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div id="whatsapp-float" class="whatsapp-float">
+        <div onclick="openWhatsApp()" class="whatsapp-button">
+            <i class="fab fa-whatsapp"></i>
+            <span>Contact Admin</span>
+            <div class="pulse-ring"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+        function toggleUserMenu() {
+            const menu = document.getElementById('userMenu');
+            menu.classList.toggle('show');
+        }
+
+        // Close user menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const menu = document.getElementById('userMenu');
+            const button = event.target.closest('.user-dropdown');
+
+            if (!button && menu && menu.classList.contains('show')) {
+                menu.classList.remove('show');
+            }
+        });
+
+        function openWhatsApp() {
+            const phoneNumber = '233502469601';
+            const message = encodeURIComponent(
+                "Hello VelvetSignals! I need assistance with my creator profile."
+            );
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>
