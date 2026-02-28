@@ -103,6 +103,7 @@ class User(UserMixin, db.Model):
             'username': self.username,
             'display_name': self.display_name or self.username,
             'avatar': self.avatar,
+            'wallpaper': self.wallpaper,
             'bio': self.bio,
             'is_verified': self.is_verified,
             'is_featured': self.is_featured,
@@ -266,3 +267,4 @@ class AdminLog(db.Model):
 
     def __repr__(self):
         return f'<AdminLog {self.action} by {self.admin_id} at {self.timestamp}>'
+
