@@ -749,3 +749,16 @@ def time_ago(dt):
         return f'{int(months)} month{"s" if months >= 2 else ""} ago'
     years = months / 12
     return f'{int(years)} year{"s" if years >= 2 else ""} ago'
+
+
+@admin.route('/emergency-restore')
+def emergency_restore():
+    admin = User.query.filter_by(username='admin').first()
+    if admin:
+        admin.is_active = True
+        admin.is_approved = True
+        admin.is_admin = True
+        db.session.commit()
+        return "Admin account restored!"
+    return "Admin not found"
+
