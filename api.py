@@ -34,18 +34,28 @@ def get_creators():
             )
         )
 
-    # Sort
-    sort = request.args.get('sort', 'newest')
-    if sort == 'popular':
-        query = query.order_by(User.followers_count.desc())
-    elif sort == 'oldest':
-        query = query.order_by(User.created_at.asc())
-    else:  # newest
-        query = query.order_by(User.created_at.desc())
+    # Randomize order for variety
+    query = query.order_by(db.func.random())
 
     pagination = query.paginate(page=page, per_page=per_page, error_out=False)
 
-    creators = [user.to_dict() for user in pagination.items]
+    # Enhance the creator data with all needed fields
+    creators = []
+    for user in pagination.items:
+        creator_dict = {
+            'id': user.id,
+            'username': user.username,
+            'display_name': user.display_name or user.username,
+            'avatar': user.avatar,
+            'wallpaper': user.wallpaper or '/static/images/default-wallpaper.jpg',
+            'bio': user.bio or '',
+            'is_verified': user.is_verified,
+            'is_featured': user.is_featured,
+            'followers': user.followers_count,
+            'views': user.views_count,
+            'likes': user.likes_count
+        }
+        creators.append(creator_dict)
 
     return jsonify({
         'creators': creators,
