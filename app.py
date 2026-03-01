@@ -494,7 +494,7 @@ def create_app(config_name='default'):
     @app.route('/gallery/upload', methods=['POST'])
     @login_required
     def upload_gallery_media():
-        """Upload image or video to gallery"""
+        """Upload image or video to gallery - Memory optimized with ffmpeg thumbnails"""
         if 'media' not in request.files:
             flash('No file selected', 'danger')
             return redirect(url_for('dashboard'))
@@ -504,18 +504,6 @@ def create_app(config_name='default'):
     
         if file.filename == '':
             flash('No file selected', 'danger')
-            return redirect(url_for('dashboard'))
-    
-        # Check file size before processing
-        file.seek(0, os.SEEK_END)
-        file_size = file.tell()
-        file.seek(0)  # Reset position
-        
-        # Check against your configured limit (should be increased in config.py)
-        max_size = app.config.get('MAX_CONTENT_LENGTH', 16 * 1024 * 1024)
-        if file_size > max_size:
-            max_size_mb = max_size / (1024 * 1024)
-            flash(f'File too large. Maximum size is {max_size_mb:.0f}MB', 'danger')
             return redirect(url_for('dashboard'))
     
         # Determine file type
@@ -535,58 +523,71 @@ def create_app(config_name='default'):
             filepath = os.path.join(
                 app.config['UPLOAD_FOLDER'], 'gallery', unique_filename)
     
+            # Save the file directly to disk
+            file.save(filepath)
+            
+            # Get file size
+            file_size = os.path.getsize(filepath)
+            
             thumbnail_url = None
             duration = None
     
             if is_video:
-                # Save video file
-                file.save(filepath)
                 print(f"✅ Video saved: {filepath}")
-    
-                # ENHANCED THUMBNAIL GENERATION
+                
+                # ===== MEMORY-EFFICIENT THUMBNAIL GENERATION WITH ffmpeg =====
                 try:
-                    # Create thumbnails directory if it doesn't exist
-                    thumb_dir = os.path.join(
-                        app.config['UPLOAD_FOLDER'], 'gallery', 'thumbnails')
+                    # First, get video duration using ffprobe (very low memory)
+                    import subprocess
+                    import json
+                    
+                    # Get duration
+                    duration_cmd = [
+                        'ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+                        '-of', 'json', filepath
+                    ]
+                    result = subprocess.run(duration_cmd, capture_output=True, text=True, timeout=10)
+                    if result.returncode == 0:
+                        data = json.loads(result.stdout)
+                        duration = int(float(data['format']['duration']))
+                    
+                    # Generate thumbnail at 1 second using ffmpeg (streaming, low memory)
+                    thumb_dir = os.path.join(app.config['UPLOAD_FOLDER'], 'gallery', 'thumbnails')
                     os.makedirs(thumb_dir, exist_ok=True)
-    
-                    # Try moviepy first
-                    try:
-                        from moviepy.editor import VideoFileClip
-                        video = VideoFileClip(filepath)
-                        duration = int(video.duration)
-    
-                        # Generate thumbnail at 1 second
-                        thumbnail_filename = f"thumb_{unique_filename}.jpg"
-                        thumbnail_path = os.path.join(thumb_dir, thumbnail_filename)
-    
-                        # Save frame at 1 second (or middle if video is shorter)
-                        time_to_capture = min(1, duration/2)
-                        video.save_frame(thumbnail_path, t=time_to_capture)
-                        video.close()
-    
+                    
+                    thumbnail_filename = f"thumb_{unique_filename}.jpg"
+                    thumbnail_path = os.path.join(thumb_dir, thumbnail_filename)
+                    
+                    # ffmpeg command to extract a single frame at 1 second
+                    # This streams the video and doesn't load it into memory
+                    ffmpeg_cmd = [
+                        'ffmpeg', '-i', filepath, '-ss', '00:00:01', 
+                        '-vframes', '1', '-q:v', '2', thumbnail_path, '-y'
+                    ]
+                    
+                    subprocess.run(ffmpeg_cmd, capture_output=True, timeout=30)
+                    
+                    if os.path.exists(thumbnail_path):
                         thumbnail_url = f'/static/uploads/gallery/thumbnails/{thumbnail_filename}'
-                        print(f"✅ Thumbnail generated: {thumbnail_url}")
-    
-                    except ImportError:
-                        print("⚠️ moviepy not installed - skipping thumbnail generation")
-                    except Exception as e:
-                        print(f"⚠️ Error generating thumbnail: {e}")
-    
+                        print(f"✅ Thumbnail generated with ffmpeg: {thumbnail_url}")
+                    
+                except FileNotFoundError:
+                    print("⚠️ ffmpeg not installed on server - skipping thumbnail")
+                except subprocess.TimeoutExpired:
+                    print("⚠️ ffmpeg timeout - skipping thumbnail")
                 except Exception as e:
-                    print(f"⚠️ Thumbnail generation failed: {e}")
-                    # Continue without thumbnail
+                    print(f"⚠️ ffmpeg error: {e}")
+                    # Continue without thumbnail - better than crashing
             else:
-                # Process and save image
-                img = Image.open(file)
-    
+                # For images, process as before
+                img = Image.open(filepath)
+                
                 # Convert RGBA to RGB if necessary
                 if img.mode in ('RGBA', 'LA', 'P'):
                     rgb_img = Image.new('RGB', img.size, (255, 255, 255))
                     if img.mode == 'P':
                         img = img.convert('RGBA')
-                    rgb_img.paste(img, mask=img.split()
-                                  [-1] if img.mode == 'RGBA' else None)
+                    rgb_img.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
                     img = rgb_img
                 elif img.mode != 'RGB':
                     img = img.convert('RGB')
@@ -594,7 +595,7 @@ def create_app(config_name='default'):
                 # Resize to max 1200x1200
                 img.thumbnail((1200, 1200), Image.Resampling.LANCZOS)
                 img.save(filepath, 'JPEG', quality=85, optimize=True)
-                print(f"✅ Image saved: {filepath}")
+                print(f"✅ Image processed: {filepath}")
     
             # Create gallery entry
             gallery_media = GalleryImage(
@@ -612,13 +613,10 @@ def create_app(config_name='default'):
             flash(f'{"Video" if is_video else "Image"} added to gallery successfully!', 'success')
     
         except Exception as e:
-            # Log the full error for debugging
             print(f"❌ Upload error: {str(e)}")
             import traceback
             traceback.print_exc()
-            
-            # Show user-friendly message
-            flash(f'Upload failed. Please try again or contact support.', 'danger')
+            flash(f'Upload failed. Please try again.', 'danger')
     
         return redirect(url_for('dashboard'))
 
@@ -1014,4 +1012,5 @@ app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
