@@ -498,24 +498,35 @@ def create_app(config_name='default'):
         if 'media' not in request.files:
             flash('No file selected', 'danger')
             return redirect(url_for('dashboard'))
-
+    
         file = request.files['media']
         caption = request.form.get('caption', '')
-
+    
         if file.filename == '':
             flash('No file selected', 'danger')
             return redirect(url_for('dashboard'))
-
+    
+        # Check file size before processing
+        file.seek(0, os.SEEK_END)
+        file_size = file.tell()
+        file.seek(0)  # Reset position
+        
+        # Check against your configured limit (should be increased in config.py)
+        max_size = app.config.get('MAX_CONTENT_LENGTH', 16 * 1024 * 1024)
+        if file_size > max_size:
+            max_size_mb = max_size / (1024 * 1024)
+            flash(f'File too large. Maximum size is {max_size_mb:.0f}MB', 'danger')
+            return redirect(url_for('dashboard'))
+    
         # Determine file type
         filename = file.filename.lower()
         is_video = filename.endswith(('.mp4', '.mov', '.avi', '.webm', '.mkv'))
-        is_image = filename.endswith(
-            ('.jpg', '.jpeg', '.png', '.gif', '.webp'))
-
+        is_image = filename.endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp'))
+    
         if not (is_video or is_image):
             flash('Invalid file format. Please upload an image or video.', 'danger')
             return redirect(url_for('dashboard'))
-
+    
         try:
             # Generate unique filename
             file_ext = filename.split('.')[-1]
@@ -523,59 +534,52 @@ def create_app(config_name='default'):
                 f"{'video' if is_video else 'image'}_{current_user.id}_{secrets.token_hex(8)}.{file_ext}")
             filepath = os.path.join(
                 app.config['UPLOAD_FOLDER'], 'gallery', unique_filename)
-
-            # Get file size
-            file.seek(0, os.SEEK_END)
-            file_size = file.tell()
-            file.seek(0)
-
+    
             thumbnail_url = None
             duration = None
-
+    
             if is_video:
                 # Save video file
                 file.save(filepath)
-
+                print(f"✅ Video saved: {filepath}")
+    
                 # ENHANCED THUMBNAIL GENERATION
                 try:
                     # Create thumbnails directory if it doesn't exist
                     thumb_dir = os.path.join(
                         app.config['UPLOAD_FOLDER'], 'gallery', 'thumbnails')
                     os.makedirs(thumb_dir, exist_ok=True)
-
+    
                     # Try moviepy first
                     try:
                         from moviepy.editor import VideoFileClip
                         video = VideoFileClip(filepath)
                         duration = int(video.duration)
-
+    
                         # Generate thumbnail at 1 second
                         thumbnail_filename = f"thumb_{unique_filename}.jpg"
-                        thumbnail_path = os.path.join(
-                            thumb_dir, thumbnail_filename)
-
+                        thumbnail_path = os.path.join(thumb_dir, thumbnail_filename)
+    
                         # Save frame at 1 second (or middle if video is shorter)
                         time_to_capture = min(1, duration/2)
                         video.save_frame(thumbnail_path, t=time_to_capture)
                         video.close()
-
+    
                         thumbnail_url = f'/static/uploads/gallery/thumbnails/{thumbnail_filename}'
                         print(f"✅ Thumbnail generated: {thumbnail_url}")
-
+    
                     except ImportError:
-                        # Fallback: Create a simple placeholder
-                        print("moviepy not installed - using placeholder")
-
+                        print("⚠️ moviepy not installed - skipping thumbnail generation")
                     except Exception as e:
-                        print(f"Error generating thumbnail: {e}")
-
+                        print(f"⚠️ Error generating thumbnail: {e}")
+    
                 except Exception as e:
-                    print(f"Thumbnail generation failed: {e}")
+                    print(f"⚠️ Thumbnail generation failed: {e}")
                     # Continue without thumbnail
             else:
-                # Process and save image (your existing code)
+                # Process and save image
                 img = Image.open(file)
-
+    
                 # Convert RGBA to RGB if necessary
                 if img.mode in ('RGBA', 'LA', 'P'):
                     rgb_img = Image.new('RGB', img.size, (255, 255, 255))
@@ -586,11 +590,12 @@ def create_app(config_name='default'):
                     img = rgb_img
                 elif img.mode != 'RGB':
                     img = img.convert('RGB')
-
+    
                 # Resize to max 1200x1200
                 img.thumbnail((1200, 1200), Image.Resampling.LANCZOS)
                 img.save(filepath, 'JPEG', quality=85, optimize=True)
-
+                print(f"✅ Image saved: {filepath}")
+    
             # Create gallery entry
             gallery_media = GalleryImage(
                 user_id=current_user.id,
@@ -603,14 +608,18 @@ def create_app(config_name='default'):
             )
             db.session.add(gallery_media)
             db.session.commit()
-
-            flash(
-                f'{"Video" if is_video else "Image"} added to gallery successfully!', 'success')
-
+    
+            flash(f'{"Video" if is_video else "Image"} added to gallery successfully!', 'success')
+    
         except Exception as e:
-            flash(f'Error uploading file: {str(e)}', 'danger')
-            print(f"Upload error: {e}")
-
+            # Log the full error for debugging
+            print(f"❌ Upload error: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            
+            # Show user-friendly message
+            flash(f'Upload failed. Please try again or contact support.', 'danger')
+    
         return redirect(url_for('dashboard'))
 
     @app.route('/gallery/add', methods=['POST'])
@@ -1005,3 +1014,4 @@ app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 if __name__ == '__main__':
     app.run(debug=True)
+
